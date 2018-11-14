@@ -1,0 +1,15 @@
+data.txt results:
+
+Max num: 102.0
+Min num: -34.0
+
+data.txt results:
+
+Max num: 102.0
+Min num: -34.0
+
+data.txt results:
+
+Max num: 102.0
+Min num: -34.0
+

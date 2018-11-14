@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"Vending","l":"ImproperCoinsException"},{"p":"Vending","l":"ImproperPurchaseException"},{"p":"Vending","l":"ImproperSelectionException"},{"p":"Vending","l":"iVend"},{"p":"Vending","l":"VendingMachine"},{"p":"Vending","l":"VendingMachineInterface"},{"p":"Vending","l":"VendingMachineTester"}]

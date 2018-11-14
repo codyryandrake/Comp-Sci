@@ -1,0 +1,6 @@
+Ketchup.choice price.heinz price.hunts price.delmonte price.stb
+heinz 1.19 1.39 1.49 0.89
+heinz 0.99 1.36 1.39 0.95
+hunts 1.46 1.43 1.49 0.99
+hunts 1.46 1.43 1.45 0.99
+stb 1.46 1.36 1.39 0.95

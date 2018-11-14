@@ -1,0 +1,79 @@
+Enter tweet data file: tweetdata.txt
+Enter a word or phrase to search for: computer
+Your search returned 935 results. You can do the following:
+0: Exit
+1: Print results
+2: Search within these results
+What would you like to do? 2
+Enter search term: science
+Your search returned 10 results. You can do the following:
+0: Exit
+1: Print results
+2: Search within these results
+What would you like to do? 1
+
+Text:   @AmazeAndBlaze computer science
+Location: 40.6196, -79.1548
+Date: 9/9/2011
+Time: 1:45:57
+
+
+Text:   Database Associate I at Covance (Madison, WI): University/college degree (computer science, life science, pharma... http://t.co/ZekYyk2
+Location: 43.0735, 89.3956
+Date: 9/8/2011
+Time: 20:36:38
+
+
+Text:   Practica practica practica y mas practica #computerscience :)
+Location: 33.2538, -97.1527
+Date: 9/8/2011
+Time: 15:29:23
+
+
+Text:   @crantosz computer science
+Location: 40.44, -79.9543
+Date: 9/2/2011
+Time: 11:40:5
+
+
+Text:   @_labelmeloyal lol computer science. Bloomfield was too expensive for no reason
+Location: 40.6851, -74.2396
+Date: 9/1/2011
+Time: 22:12:15
+
+
+Text:   French test, math test next week..computer science too, I think ”
+Location: 30.5262, -91.1916
+Date: 9/1/2011
+Time: 18:48:41
+
+
+Text:   Can someone save me from this 4hr computer science
+Location: 42.0212, -87.7488
+Date: 8/31/2011
+Time: 2:1:18
+
+
+Text:   Ok this guy jus picked his nose in my computer science #ewwwww
+Location: 41.062, -80.0377
+Date: 8/30/2011
+Time: 19:38:39
+
+
+Text:   ?Á„
+???«?ü?È ???¡ „???±?µ„?µ?«?????¡???ü?µ ?? ?µ?À?¡??. ? computer science ?À???«„„??„„„)) „?µ?á„?È„„?¡„?¡ „???±?µ„?µ?«?????¡???ü„ ?À???¼?¡ ???µ ?á???¡„
+Location: 53.907, 27.6293
+Date: 8/30/2011
+Time: 12:46:29
+
+
+Text:   Spent $2 at the computer lab printer instead of $45 at the bookstore for my lab manual!! Love my environmental science lab professor!!
+Location: 35.0486, -85.3033
+Date: 8/29/2011
+Time: 17:49:57
+
+Your search returned 10 results. You can do the following:
+0: Exit
+1: Print results
+2: Search within these results
+What would you like to do? 
