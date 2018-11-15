@@ -51,7 +51,7 @@ public class TweetList {
     	return count;
     }
     
-    // Checks if the Tweet List is empty.
+    // Checks if the Tweet List is empty. 
     public boolean isEmpty()
     {        
         return (head == null); //Does head point to an element in the list or just to null?       
@@ -60,29 +60,33 @@ public class TweetList {
    
     // Removes any Tweet lacking the given keyword from the Tweet List.
 
-	public void filter(String keyword)
+	public TweetList filter(String keyword)
     {
+		TweetList fList = new TweetList();
+		Tweet t;
 		try {
 			Node c = head; //Initialize our 'current' Node to point to the same Node as 'head'
 			Node p = null; //Our 'previous' Node
 			
 			while (!isEmpty()) { //While the Tweet List is not empty
-				if (head.value.textContains(keyword))
+				if((head.value.textContains(keyword))) {
+					t = c.value; //Create a Tweet from the currenty Node's value
+					fList.prepend(t); //Append the new Tweet to a filtered list
 					head = head.next;
-				
-				if ((c.value.textContains(keyword))) {   //If the keyword is not found in the 'value' data of the 'current' Node
-					p.next = c.next;
-					System.out.println("KEEP");
 				}
-				else
-					System.out.println("DONT KEEP");
-				
+				if ((c.value.textContains(keyword))) {   //If the keyword is found in the 'value' data of the 'current' Node
+					t = c.value; //Create a Tweet from the currenty Node's value
+					fList.prepend(t); //Append the new Tweet to a filtered list
+				}			
 				p = c;
 				c = c.next;
 			}
-		} catch (NullPointerException e) {
 
+		} catch (NullPointerException e) {
+			//System.out.println("Null Pointer Exception occurred.");
 		}
+		//fList.print(); //Once the filtered list is fully created, return it
+		return fList;
     }
 }
 
