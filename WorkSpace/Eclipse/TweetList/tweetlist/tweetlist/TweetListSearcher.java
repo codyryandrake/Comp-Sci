@@ -6,14 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 
 public class TweetListSearcher {
 
 	public static void main(String[] args) {
 		
-		//String fName = "smalltweetdata.txt";
-		String fName = "tweetdata.txt";
+		String fName = "smalltweetdata.txt";
+		//String fName = "tweetdata.txt";
 		Scanner keyboard = new Scanner(System.in);
 		String line;
 		Tweet t;
