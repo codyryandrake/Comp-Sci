@@ -18,8 +18,8 @@ public class TweetListSearcher {
 
 	public static void main(String[] args) {
 		
-		String fName = "smalltweetdata.txt";
-		//String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+		//String fName = "smalltweetdata.txt";
+		String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 		Scanner keyboard = new Scanner(System.in);
 		String[] searchList = new String[100]; //create list of searched terms
 		String line;
