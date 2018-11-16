@@ -6,11 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 20aaf12798b9bf405947b4818a3ebb1024ae2b37
-
 public class TweetListSearcher {
 
 	public static void main(String[] args) {
