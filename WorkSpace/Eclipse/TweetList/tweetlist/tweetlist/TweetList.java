@@ -1,6 +1,7 @@
 package tweetlist;
 
 public class TweetList {
+
     private class Node
     {
         Tweet value;   
@@ -13,7 +14,9 @@ public class TweetList {
             next = n;
         } 
         
-    }	
+    }
+
+	private static TweetList filteredList = new TweetList();	
 	 
     private Node head;
     
@@ -21,7 +24,7 @@ public class TweetList {
     {
     	head = null;
     }
-    
+
     public void print()
     {
     	String strBuilder = "";
@@ -60,20 +63,14 @@ public class TweetList {
    
     // Removes any Tweet lacking the given keyword from the Tweet List.
 
-	public TweetList filter(String keyword)
+	public void filter(String keyword)
     {
 		TweetList fList = new TweetList();
 		Tweet t;
 		try {
 			Node c = head; //Initialize our 'current' Node to point to the same Node as 'head'
 			Node p = null; //Our 'previous' Node
-			
 			while (!isEmpty()) { //While the Tweet List is not empty
-				if((head.value.textContains(keyword))) {
-					t = c.value; //Create a Tweet from the currenty Node's value
-					fList.prepend(t); //Append the new Tweet to a filtered list
-					head = head.next;
-				}
 				if ((c.value.textContains(keyword))) {   //If the keyword is found in the 'value' data of the 'current' Node
 					t = c.value; //Create a Tweet from the currenty Node's value
 					fList.prepend(t); //Append the new Tweet to a filtered list
@@ -81,46 +78,16 @@ public class TweetList {
 				p = c;
 				c = c.next;
 			}
-
 		} catch (NullPointerException e) {
 			//System.out.println("Null Pointer Exception occurred.");
 		}
-		//fList.print(); //Once the filtered list is fully created, return it
-		return fList;
+		setFList(fList);
     }
+	public void setFList(TweetList T) {
+		filteredList = T;
+	}
+	public TweetList getFList() {
+		return filteredList;
+	}
 }
-
-
-
-
-
-
-//
-//Node curr = head;
-//Node prev = null;
-//
-//if(!(head.value.textContains(keyword)))
-//	System.out.println("head.next");
-//	head = head.next;
-//	
-//
-//while (curr != null) {
-//	System.out.println("Curr is valid!");
-//	if(curr.value.textContains(keyword)) 
-//		System.out.println("Tweet kept.");
-//	else 
-//			try {	    			
-//				prev = curr.next; //Skip around the invalid Node
-//				System.out.println("Tweet deleted.");
-//			} catch (NullPointerException e) {
-//				System.out.println("NULL");
-//			}
-//		
-//	System.out.println("Prev = Curr");	
-//	prev = curr;
-//	System.out.println("Curr.next");
-//	curr = curr.next;
-//
-//}
-//
 

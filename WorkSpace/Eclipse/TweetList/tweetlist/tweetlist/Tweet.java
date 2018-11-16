@@ -37,7 +37,7 @@ public class Tweet {
 		System.out.println(
 			  "\nLatitude: " + lat
 			+ "\nLongitude: " + lon
-			+ "\nDate: " + day + "." + month + "." + year
+			+ "\nDate: " + day + "/" + month + "/" + year
 			+ "\nTime: " + time
 			+ "\nText: " + text);
 	}
