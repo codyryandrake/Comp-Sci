@@ -34,13 +34,11 @@ public class TweetList {
 
     public void print()
     {
-    	String strBuilder = "";
     	Node curr = head;
-    	while(curr != null) {
-    		curr.value.print();
-    		curr = curr.next;
+    	while(!isEmpty()) {
+    		curr.value.print(); //Print the current Tweet
+    		curr = curr.next; //Advance curr
     	}
-    	System.out.println(strBuilder);
     }
     
     public void prepend(Tweet newValue)
@@ -88,11 +86,14 @@ public class TweetList {
 		} catch (NullPointerException e) {
 			//System.out.println("Null Pointer Exception occurred.");
 		}
-		setFList(fList);
+		setFList(fList); //Pass the filtered list to our pre-designated 'filteredList' 
     }
+	
+	/*Setter and getter for the filtered list */
 	public void setFList(TweetList T) {
 		filteredList = T;
 	}
+	
 	public TweetList getFList() {
 		return filteredList;
 	}
