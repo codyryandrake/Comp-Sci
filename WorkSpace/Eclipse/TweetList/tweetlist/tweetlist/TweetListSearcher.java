@@ -31,15 +31,15 @@ public class TweetListSearcher {
 		TweetList filteredList;
 
 		int index = 0;
+		do {
 		try {
 			file = new FileReader(fName);
 			read = new BufferedReader(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("The file " + fName + " has not been found.");
 		} 
-		
-			do {
 
+				
 				System.out.println("Would you like to specify an initial search term?");
 				if(promptContinue(keyboard.nextLine())) {
 					System.out.println("Please enter a word or phrase to perform an intial search...");
@@ -60,17 +60,15 @@ public class TweetListSearcher {
 						}
 					if(tList.size() == 0)
 						System.out.println("Sorry, the initial search returned 0 results. Resetting database...");
-				 
+					
+					read.close(); 
 			} while (tList.size() == 0); //If the initial search returns 0 hits, ask for a new initial search term.
 			
 			System.out.println("List created!\n");
 			System.out.println("The Tweet database contains " + tList.size() + " tweets. ");
-			if (initialSearch != null) {
-				System.out.println("Initial search term: [" + initialSearch + "]");
-			}
-			read.close();
-		
-		
+			System.out.println("Initial search term: [" + initialSearch + "]");
+			
+			
 
 		do {
 			
