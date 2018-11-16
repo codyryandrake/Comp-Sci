@@ -1,3 +1,11 @@
+/*
+Name: Cody Ryan
+Date: 11.15.18
+Description: This class specifies the properties of a Tweet object.
+Sources Cited: Homework instructions, class slides
+*/
+
+
 package tweetlist;
 
 import java.util.Scanner;

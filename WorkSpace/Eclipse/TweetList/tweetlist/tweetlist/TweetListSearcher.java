@@ -1,3 +1,11 @@
+/*
+Name: Cody Ryan
+Date: 11.15.18
+Description: This class contains a main method for searching through a precompiled TweetList database.
+			Throughout all searches the original database remains intact and a filtered list is returned to the user.
+Sources Cited: Homework instructions, class slides
+*/
+
 package tweetlist;
 
 import java.io.BufferedReader;
@@ -11,10 +19,9 @@ public class TweetListSearcher {
 	public static void main(String[] args) {
 		
 		String fName = "smalltweetdata.txt";
-		//String fName = "tweetdata.txt";
+		//String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 		Scanner keyboard = new Scanner(System.in);
 		String[] searchList = new String[100]; //create list of searched terms
-//		String prompt = keyboard.nextLine();
 		String line;
 		Tweet t;
 		TweetList tList = new TweetList();

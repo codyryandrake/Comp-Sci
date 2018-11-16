@@ -1,3 +1,10 @@
+/*
+Name: Cody Ryan
+Date: 11.15.18
+Description: This class specifies the properties of a TweetList object, a linked list of Tweets. 
+Sources Cited: Homework instructions, class slides
+*/
+
 package tweetlist;
 
 public class TweetList {
