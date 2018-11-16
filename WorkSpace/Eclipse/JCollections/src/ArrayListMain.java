@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ArrayListMain {
 
@@ -15,36 +16,40 @@ public class ArrayListMain {
 //		System.out.println(numbers.get(2));
 		
 
-		for (int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
+//		for (int i = 0; i < numbers.size(); i++) {
+//			System.out.println(numbers.get(i));
+//		}
+//		System.out.println("\nSize of 'numbers' arrayList: " + numbers.size() + "\n");
+//		
+//		numbers.add(0, 53);
+//		for (int i = 0; i < numbers.size(); i++) {
+//			System.out.println(numbers.get(i));
+//		}
+//		System.out.println("\nSize of 'numbers' arrayList: " + numbers.size() + "\n");
+//		
+//		numbers.remove(0);
+//		System.out.println("\nIndex 0 removed.");
+//		for (int i = 0; i < numbers.size(); i++) {
+//			System.out.println(numbers.get(i));
+//		}
+//		
+//		System.out.println("\nIndex 0 now contains the value of 3.");
+//		numbers.set(0, 3);
+//		for (int i = 0; i < numbers.size(); i++) {
+//			System.out.println(numbers.get(i));
+//		}
+//		
+//		numbers.clear();
+//		System.out.println("\n'numbers' arrayList cleared...");
+//		for (int i = 0; i < numbers.size(); i++) {
+//			System.out.println(numbers.get(i));
+//		}
+		
+		Iterator<Integer> iter = numbers.iterator();
+		while (iter.hasNext()) {
+			System.out.println("Next Iterated Num: " + iter.next());
 		}
-		System.out.println("\nSize of 'numbers' arrayList: " + numbers.size() + "\n");
-		
-		numbers.add(0, 53);
-		for (int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
-		}
-		System.out.println("\nSize of 'numbers' arrayList: " + numbers.size() + "\n");
-		
-		numbers.remove(0);
-		System.out.println("\nIndex 0 removed.");
-		for (int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
-		}
-		
-		System.out.println("\nIndex 0 now contains the value of 3.");
-		numbers.set(0, 3);
-		for (int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
-		}
-		
-		numbers.clear();
-		System.out.println("\n'numbers' arrayList cleared...");
-		for (int i = 0; i < numbers.size(); i++) {
-			System.out.println(numbers.get(i));
-		}
-		
-		
+		//iter.next(); //No more elements!
 		
 	}
 

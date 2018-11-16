@@ -34,11 +34,13 @@ public class TweetList {
 
     public void print()
     {
+
     	Node curr = head;
-    	while(!isEmpty()) {
+    	while(curr != null) {
     		curr.value.print(); //Print the current Tweet
     		curr = curr.next; //Advance curr
-    	}
+    	} 
+
     }
     
     public void prepend(Tweet newValue)
@@ -91,6 +93,7 @@ public class TweetList {
 	
 	/*Setter and getter for the filtered list */
 	public void setFList(TweetList T) {
+		filteredList = null;
 		filteredList = T;
 	}
 	

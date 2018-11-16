@@ -16,11 +16,14 @@ import java.util.Scanner;
 
 public class TweetListSearcher {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		String fName = "smalltweetdata.txt";
 		//String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 		Scanner keyboard = new Scanner(System.in);
+		FileReader file = null;
+		BufferedReader read = null;
+		String initialSearch = null;
 		String[] searchList = new String[100]; //create list of searched terms
 		String line;
 		Tweet t;
@@ -29,21 +32,44 @@ public class TweetListSearcher {
 
 		int index = 0;
 		try {
-			FileReader file = new FileReader(fName);
-			BufferedReader read = new BufferedReader(file);
-
-			while ((line = read.readLine()) != null) {
-				t = new Tweet(line);
-				tList.prepend(t);
-			}
-			System.out.println("List created!\n");
-			System.out.println("The Tweet database contains " + tList.size() + " tweets.");
-			read.close();
+			file = new FileReader(fName);
+			read = new BufferedReader(file);
 		} catch (FileNotFoundException e) {
 			System.out.println("The file " + fName + " has not been found.");
-		} catch(IOException e) {
-			System.out.println("An error occurred while reading " + fName + ".");
-		}
+		} 
+		
+			do {
+
+				System.out.println("Would you like to specify an initial search term?");
+				if(promptContinue(keyboard.nextLine())) {
+					System.out.println("Please enter a word or phrase to perform an intial search...");
+					initialSearch = keyboard.nextLine();
+				}
+				else
+					initialSearch = null;
+				
+					System.out.println("Please wait. Building list...");	
+					while ((line = read.readLine()) != null ) {
+						t = new Tweet(line);
+						if(initialSearch != null) { //If the user has specified an initial search term 					
+							if (t.textContains(initialSearch)) 
+								tList.prepend(t); //Only prepend MATCHING tweets to the main list
+						}
+						else
+							tList.prepend(t); //Else, prepend ALL tweets to the main list
+						}
+					if(tList.size() == 0)
+						System.out.println("Sorry, the initial search returned 0 results. Resetting database...");
+				 
+			} while (tList.size() == 0); //If the initial search returns 0 hits, ask for a new initial search term.
+			
+			System.out.println("List created!\n");
+			System.out.println("The Tweet database contains " + tList.size() + " tweets. ");
+			if (initialSearch != null) {
+				System.out.println("Initial search term: [" + initialSearch + "]");
+			}
+			read.close();
+		
 		
 
 		do {
@@ -61,6 +87,7 @@ public class TweetListSearcher {
 				filteredList.print();
 				System.out.println("All " + filteredList.size() + " Tweets containing:");
 					for (int i = 0; i < index+1; i++) {
+						System.out.print("[" + initialSearch + "] ==>");
 						System.out.println("[" + searchList[i] + "]\n");
 					}
 				System.out.println("Would you like to REFINE the search with an additional word or phrase?\n");
@@ -83,6 +110,7 @@ public class TweetListSearcher {
 						break; 			
 					}
 					System.out.println("All " + filteredList.size() + " Tweets containing:");
+					System.out.print("[" + initialSearch + "] ");
 					for (int i = 0; i < index+1; i++) {
 						System.out.print(" ==>[" + searchList[i] + "]");
 					}
