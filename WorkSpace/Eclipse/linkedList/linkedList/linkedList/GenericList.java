@@ -62,7 +62,7 @@ public class GenericList<T>
     	Node curr = head;
     	while(curr != null)
     	{
-    		strBuilder = strBuilder + curr.value.toString() + " ";
+    		strBuilder = strBuilder + curr.value.toString();
     		curr = curr.next;
     	}
     	return strBuilder;

@@ -22,8 +22,7 @@ public class TweetList {
         } 
         
     }
-
-	private static TweetList filteredList = new TweetList();	
+	
 	 
     private Node head;
     
@@ -32,21 +31,24 @@ public class TweetList {
     	head = null;
     }
 
-    public void print()
-    {
+    public void print() {
 
     	Node curr = head;
-    	while(curr != null) {
-    		curr.value.print(); //Print the current Tweet
-    		curr = curr.next; //Advance curr
-    	} 
 
-    }
+    		while(!isEmpty())
+			{
+				curr.value.print(); //Print the current Tweet
+				curr = curr.next; //Advance curr
+				if (curr == null)
+					break;
+			} 
+//    	System.out.println("LIST EMPTY");
+    } 
     
-    public void prepend(Tweet newValue)
+    public void prepend(Tweet t)
     {
-    	Node newNode = new Node(newValue, head);
-    	head = newNode;
+    	Node newTweet = new Node(t, head);
+    	head = newTweet;
     }
     
 
@@ -64,41 +66,39 @@ public class TweetList {
     // Checks if the Tweet List is empty. 
     public boolean isEmpty()
     {        
-        return (head == null); //Does head point to an element in the list or just to null?       
+        return head == null; //Does head point to an element in the list or just to null?       
     }
     
    
-    // Removes any Tweet lacking the given keyword from the Tweet List.
+    // Deletes (circumvents around) any Tweet lacking the given keyword from the Tweet List.
 
-	public void filter(String keyword)
-    {
-		TweetList fList = new TweetList();
-		Tweet t;
-		try {
-			Node c = head; //Initialize our 'current' Node to point to the same Node as 'head'
-			Node p = null; //Our 'previous' Node
-			while (!isEmpty()) { //While the Tweet List is not empty
-				if ((c.value.textContains(keyword))) {   //If the keyword is found in the 'value' data of the 'current' Node
-					t = c.value; //Create a Tweet from the currenty Node's value
-					fList.prepend(t); //Append the new Tweet to a filtered list
-				}			
-				p = c;
-				c = c.next;
-			}
-		} catch (NullPointerException e) {
-			//System.out.println("Null Pointer Exception occurred.");
-		}
-		setFList(fList); //Pass the filtered list to our pre-designated 'filteredList' 
+	public void filter(String keyword) { 
+		Node prev = null;
+		Node curr = head;
+		
+//		if(isEmpty()) {
+//			return;
+//		}
+		
+		try
+		{
+			while (!isEmpty())
+			{ //While the Tweet List is not empty			
+					if (!(head.value.textContains(keyword))) { //If the head doesn't contain the keyword, advance it
+						head = head.next;
+					}
+					else if (!(curr.value.textContains(keyword))) {   //If the keyword is not found in the 'value' data of the 'current' Node
+						prev = curr.next;
+					}
+						
+					prev.next = curr;
+					curr = curr.next;
+			} 
+		} catch(NullPointerException e) {}
+
+		return; //If we try to filter an empty list, return
+			
     }
 	
-	/*Setter and getter for the filtered list */
-	public void setFList(TweetList T) {
-		filteredList = null;
-		filteredList = T;
-	}
-	
-	public TweetList getFList() {
-		return filteredList;
-	}
 }
 

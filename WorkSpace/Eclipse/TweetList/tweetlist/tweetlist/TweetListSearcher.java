@@ -12,126 +12,87 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+//import java.util.Random;
 import java.util.Scanner;
 
 public class TweetListSearcher {
-
+	static Scanner keyboard = new Scanner(System.in); //Our User input Scanner
 	public static void main(String[] args) throws IOException {
 		
-		String fName = "smalltweetdata.txt";
-		//String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
-		Scanner keyboard = new Scanner(System.in);
-		FileReader file = null;
-		BufferedReader read = null;
-		String initialSearch = null;
+		//String fName = "smalltweetdata.txt";
+		String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 		String[] searchList = new String[100]; //create list of searched terms
-		String line;
-		Tweet t;
-		TweetList tList = new TweetList();
-		TweetList filteredList;
-
+		searchList[0] = "";
 		int index = 0;
-		do {
-		try {
-			file = new FileReader(fName);
-			read = new BufferedReader(file);
-		} catch (FileNotFoundException e) {
-			System.out.println("The file " + fName + " has not been found.");
-		} 
-
-				
-				System.out.println("Would you like to specify an initial search term?");
-				if(promptContinue(keyboard.nextLine())) {
-					System.out.println("Please enter a word or phrase to perform an intial search...");
-					initialSearch = keyboard.nextLine();
-				}
-				else
-					initialSearch = null;
-				
-					System.out.println("Please wait. Building list...");	
-					while ((line = read.readLine()) != null ) {
-						t = new Tweet(line);
-						if(initialSearch != null) { //If the user has specified an initial search term 					
-							if (t.textContains(initialSearch)) 
-								tList.prepend(t); //Only prepend MATCHING tweets to the main list
+		Tweet t;
+		String line = null;
+		TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
+		
+		/*
+		 * Initial read-in of matching Tweets to the database. 
+		 * The initial read-in can take 5+ min for large files.
+		 * We return to this location whenever the user would like
+		 * to refresh the database.
+		 */
+		do 
+		{
+			try 
+			{
+				if(Prompt("Welcome to TweetSearcher-2011! Would you like to run the program?  "))
+				{
+					if (Prompt("Rebuild database?  ")) 
+					{
+						if(Prompt("Would you like to specify an inital query?  ")) 
+						{
+							System.out.print("INITIAL QUERY:  ");
+							searchList[0] = keyboard.nextLine(); //Grab User input for initial query
 						}
-						else
-							tList.prepend(t); //Else, prepend ALL tweets to the main list
-						}
-					if(tList.size() == 0)
-						System.out.println("Sorry, the initial search returned 0 results. Resetting database...");
-					
-					read.close(); 
-			} while (tList.size() == 0); //If the initial search returns 0 hits, ask for a new initial search term.
-			
-			System.out.println("List created!\n");
-			System.out.println("The Tweet database contains " + tList.size() + " tweets. ");
-			System.out.println("Initial search term: [" + initialSearch + "]");
-			
-			
+							FileReader file = new FileReader(fName);
+							BufferedReader read = new BufferedReader(file);
+							System.out.println("Performing intial query [" + searchList[0] + "]\nPlease wait...");
 
-		do {
-			
-			do {	
-													//get search term
-				System.out.println("Please enter a word or phrase to search for:   ");
-													//Add search term to search list
-				searchList[index] = keyboard.nextLine();
-													//create new list from filter(search term)
-				tList.filter("" + searchList[index] + "");
-													//Throw filtered list into temp var
-				filteredList = tList.getFList();
-													//print filtered list
-				filteredList.print();
-				System.out.println("All " + filteredList.size() + " Tweets containing:");
-					for (int i = 0; i < index+1; i++) {
-						System.out.print("[" + initialSearch + "] ==>");
-						System.out.println("[" + searchList[i] + "]\n");
-					}
-				System.out.println("Would you like to REFINE the search with an additional word or phrase?\n");
-													//refine search or revert search
-				while (promptContinue(keyboard.nextLine())) {
-													//increment index		
-					index++; 
-					System.out.println("Please enter a REFINED word or phrase to search for:   ");
-													//Add search term to search list
-					searchList[index] = keyboard.nextLine();
-					String refinedSearch = searchList[index];
-					filteredList.filter("" + refinedSearch + "");			
-					filteredList = filteredList.getFList();
-					System.out.println();
-					filteredList.print();
-					if (filteredList.size() == 0) {
-						System.out.println("0 Tweets match search criteria.\nResetting search...\n");
-													//Return to the start of the current loop
-						index = 0;
-						break; 			
-					}
-					System.out.println("All " + filteredList.size() + " Tweets containing:");
-					System.out.print("[" + initialSearch + "] ");
-					for (int i = 0; i < index+1; i++) {
-						System.out.print(" ==>[" + searchList[i] + "]");
-					}
-													//If we've filtered out every item in the list
+							while ((line = read.readLine()) != null ) 
+								{
+									t = new Tweet(line); //Take in the current line and organize it into a tweet.
+									if ((t.textContains(searchList[0]))) //If the tweet contains the keyword in it's text field
+										tList.prepend(t); //Prepend the tweet to our list
+								}
+							tList.print(); //Print our initial list
+							System.out.println("Initial database search with keyword [" + searchList[0] + "]\n"
+											 + "returned " + tList.size() + " results.\n");
+							System.out.println("Processing Options...");
+							file.close(); //This will force a Scanner reset in the case we want to rebuild the database.
+							read.close();
+							searchList[0] = ""; //Reset our initial query
 
-					System.out.println();
-					System.out.println("Would you like to REFINE the search?\n");
-					continue;
+						
+					}
 				}
-				System.out.println("Would you like to perform a new search?\n");
-				index = 0; //If the User declines refining the search, index should reset	
-		} while(promptContinue(keyboard.nextLine()));
-			System.out.println("Would you like to quit the program?\n");
-	} while (!promptContinue(keyboard.nextLine()));
+			} catch (FileNotFoundException e) {
+				System.out.println("The file " + fName + " has not been found.");
+			} 
+		} while(!Prompt("Are you sure you want to quit?  ")); //Prompt for confirmation before terminating program.
+		
 		keyboard.close();
-		System.out.println("Program terminated by User");
-		System.exit(0); //Gracefully close the program
-	}
+		System.exit(0);	
+}
 	
-	public static boolean promptContinue(String s) {
+	public static boolean Prompt(String str) {
+		System.out.print(str);
+		String s = keyboard.nextLine();
 		if (s.contains("y"))
 			return true;
-		return false;
+		else
+			return false;
+	}
+	
+
+	public static boolean refineList(TweetList tList, String[] searchList, int index, int mode) 
+	{ 
+		index = 1; 										//Index comes into loop and is immediately set to 1
+		
+		
 	}
 
 }
+
