@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 public class Tweet {
 	private double lat, lon;
+	private Double dist = null;
 	int year, month, day;
 	String time, text;
 	static Scanner keyboard = new Scanner(System.in);
@@ -21,48 +22,73 @@ public class Tweet {
 	{
 		Scanner scan = new Scanner(s);
 		lat = scan.nextDouble(); //Scan in Latitude
-		//System.out.println("Latitude: " + lat);
+
 		lon = scan.nextDouble(); //Scan in Longitude
-		//System.out.println("Longitude: " + lon);
+
 		scan.next(); //Scan in the '6' 
 		
 		String date = scan.next(); //Scan in the date string
-		String[] d = date.split("-");
-		year = Integer.parseInt(d[0]);
-		month = Integer.parseInt(d[1]);
-		day = Integer.parseInt(d[2]);		
-		//System.out.printf("Date: " + year + "." + month + "." + day);
-		
-		time = scan.next(); //Scan in the time string
-		//System.out.println("Time: " + time);
-		
+			String[] d = date.split("-");
+			year =  Integer.parseInt(d[0]);
+			month = Integer.parseInt(d[1]);
+			day =   Integer.parseInt(d[2]);				
+		time = scan.next(); //Scan in the time string		
 		text = scan.nextLine();
-		//System.out.println("Text: " + text);
 		
 		scan.close();
 	}
 	
 	public void print() //Print a formatted representation of the entire Tweet
 	{
+		System.out.print(
+			  "\n\t\t\tLatitude: " + lat
+			+ "\n\t\t\tLongitude: " + lon);
+		if(dist != null)
+			System.out.print(
+			  "\n\t\t\tDistance From Query: " + dist);
 		System.out.println(
-			  "\nLatitude: " + lat
-			+ "\nLongitude: " + lon
-			+ "\nDate: " + day + "/" + month + "/" + year
-			+ "\nTime: " + time
-			+ "\nText: " + text);
+			  "\n\t\t\tDate: " + day + "/" + month + "/" + year
+			+ "\n\t\t\tTime: " + time
+			+ "\n\t\t\tText: " + text);
+
 	}
 	
 	public boolean textContains(String s)
 	{
-		return !(text.indexOf(s) == -1);
+		if (text.contains(s)) //If the phrase is found within
+		{
+			System.out.println("\t\t\t\t\tTERM FOUND WITHIN");
+			return true;
+		}
+		
+		return false; //Otherwise return false
+			
 	}
+	
 	
 	public boolean locationContains(int lx, int ly, double maxDist)
 	{		
-		double dist = Point.distance(lat, lon, lx, ly);
+		dist = Point.distance(lat, lon, lx, ly);
 		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
 	}
 	
+	public boolean dateContains(int m)
+	{
+		System.out.println(day);
+		return (m == month);
+	}
+	
+	public boolean dateContains(int m, int d)
+	{
+		return (m== month && d == day);
+	}
+	
+	public boolean dateContains(int m, int d, int y)
+	{
+		return (m== day && d == month && y == year);
+	}
+	
+
 	
 	
 	

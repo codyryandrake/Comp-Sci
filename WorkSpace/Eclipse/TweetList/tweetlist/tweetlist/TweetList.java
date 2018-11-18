@@ -71,49 +71,102 @@ public class TweetList {
         return (head == null); //Does head point to an element in the list or just to null?       
     }
     
-    @Override
-    public String toString()
-    {
-    	String strBuilder = "";
-    	Node curr = head;
-    	while(curr != null)
-    	{
-    		strBuilder = strBuilder + curr.value;
-    		curr = curr.next;
-    	}
-    	return strBuilder;
-    }
+//    @Override
+//    public String toString()
+//    {
+//    	String strBuilder = "";
+//    	Node curr = head;
+//    	while(curr != null)
+//    	{
+//    		strBuilder = strBuilder + curr.value;
+//    		curr = curr.next;
+//    	}
+//    	return strBuilder;
+//    }
     
    
     // Deletes (circumvents) any Tweet lacking the given keyword from the Tweet List.
+	
 
-	public void filterText(String keyword) 
-	{ 
+	public void filterDate(int d) //Overloaded constructor
+	{
+
 		Node prev = null;
 		Node curr = head;
 	
 		while (!isEmpty())
 		{ //While the Tweet List is not empty			
-			if (!(head.value.textContains(keyword))) 	
+			if (!(head.value.dateContains(d)))	
 			{ 
 				//If the head doesn't contain the keyword, advance it
 				head = head.next;
 			}
-			else if (!(curr.value.textContains(keyword))) 
+			else if (!(curr.value.dateContains(d))) 
 			{   //If the keyword is not found in the 'value' data of the 'current' Node
 				prev.next = curr.next; //skip around the node
 			}
-				
-			
+
 			prev = curr;
 			curr = curr.next;
 			if(curr == null) //If we reach the end of the list
 				break;
 		}
 		return; //If we try to filter an empty list, return			
-    }
+	}
+    
+	public void filterDate(int d, int m) //Overloaded constructor
+	{
+
+		Node prev = null;
+		Node curr = head;
 	
-	public void filterLocation(int lx, int ly, double maxDist)
+		while (!isEmpty())
+		{ //While the Tweet List is not empty			
+			if (!(head.value.dateContains(d, m)))	
+			{ 
+				//If the head doesn't contain the keyword, advance it
+				head = head.next;
+			}
+			else if (!(curr.value.dateContains(d, m))) 
+			{   //If the keyword is not found in the 'value' data of the 'current' Node
+				prev.next = curr.next; //skip around the node
+			}
+
+			prev = curr;
+			curr = curr.next;
+			if(curr == null) //If we reach the end of the list
+				break;
+		}
+		return; //If we try to filter an empty list, return			
+	}
+    
+	public void filterDate(int d, int m, int y) //Overloaded constructor
+	{
+
+		Node prev = null;
+		Node curr = head;
+	
+		while (!isEmpty())
+		{ //While the Tweet List is not empty			
+			if (!(head.value.dateContains(d, m, y)))	
+			{ 
+				//If the head doesn't contain the keyword, advance it
+				head = head.next;
+			}
+			else if (!(curr.value.dateContains(d, m, y))) 
+			{   //If the keyword is not found in the 'value' data of the 'current' Node
+				prev.next = curr.next; //skip around the node
+			}
+
+			prev = curr;
+			curr = curr.next;
+			if(curr == null) //If we reach the end of the list
+				break;
+		}
+		return; //If we try to filter an empty list, return			
+	}
+    
+    public void filterLocation(int lx, int ly, double maxDist)
 	{
 		Node prev = null;
 		Node curr = head;
@@ -127,7 +180,7 @@ public class TweetList {
 			}
 			else if (!(curr.value.locationContains(lx, ly, maxDist))) 
 			{   //If the keyword is not found in the 'value' data of the 'current' Node
-				prev = curr.next; //skip around the node
+				prev.next = curr.next; //skip around the node
 			}
 				
 			
@@ -139,7 +192,59 @@ public class TweetList {
 		return; //If we try to filter an empty list, return			
 	}
 	
+  public void filterText(String keyword) 
+  { 
+  	Node prev = null;
+  	Node curr = head;
+  
+  	while (!isEmpty())
+  	{ //While the Tweet List is not empty			
+  		if (!(head.value.textContains(keyword))) 	
+  		{ 
+  			//If the head doesn't contain the keyword, advance it
+  			head = head.next;
+  		}
+  		else if (!(curr.value.textContains(keyword))) 
+  		{   //If the keyword is not found in the 'value' data of the 'current' Node
+  			prev.next = curr.next; //skip around the node
+  		}
+  			
+  		
+  		prev = curr;
+  		curr = curr.next;
+  		if(curr == null) //If we reach the end of the list
+  			break;
+  	}
+  	return; //If we try to filter an empty list, return			
+  }
+	
 	
 	
 }
+
+//public void filterText(String keyword) 
+//{ 
+//	Node prev = null;
+//	Node curr = head;
+//
+//	while (!isEmpty())
+//	{ //While the Tweet List is not empty			
+//		if (!(head.value.textContains(keyword))) 	
+//		{ 
+//			//If the head doesn't contain the keyword, advance it
+//			head = head.next;
+//		}
+//		else if (!(curr.value.textContains(keyword))) 
+//		{   //If the keyword is not found in the 'value' data of the 'current' Node
+//			prev.next = curr.next; //skip around the node
+//		}
+//			
+//		
+//		prev = curr;
+//		curr = curr.next;
+//		if(curr == null) //If we reach the end of the list
+//			break;
+//	}
+//	return; //If we try to filter an empty list, return			
+//}
 

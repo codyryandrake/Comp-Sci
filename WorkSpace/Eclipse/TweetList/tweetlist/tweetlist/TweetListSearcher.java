@@ -21,6 +21,7 @@ public class TweetListSearcher
 	static Tweet t;
 	static String[] searchHistory = new String[100]; //create list of searched terms
 	static int index = 0;
+	static int time = 20;
 	public static void main(String[] args) throws IOException {
 		
 		String fName = "smalltweetdata.txt";
@@ -38,20 +39,30 @@ public class TweetListSearcher
 		{
 			try 
 			{
-				if(Prompt("\t\t\tWelcome to TweetSearcher-2011 Edition!\n\nWould you like to run the program?\n"))
+				if(Prompt("\n\nWould you like to run the program?\n"))
 				{
+					Animate.enable = true;
+					if(!Prompt("Keep animation on?")) //Determine Animation class preferences
+						Animate.enable = false;
+					
+					
+					Animate.loadingEffect("\t\t\tWelcome to TweetSearcher-2011 Edition!", time);
 					if (Prompt("Rebuild database?\n")) 
 					{
 						searchHistory[index] = "";
 						tList= new TweetList();
-						if(Prompt("Would you like to specify an inital query?\n")) 
+
+						if(Prompt("Specify an inital keyword query?\n"))
 						{
-							System.out.print("\t\t\tINITIAL QUERY:  ");
+							Animate.loadingEffect("Please enter an initial search term...", time);
 							searchHistory[index] = keyboard.nextLine(); //Grab User input for initial query
 						}
+						Animate.loadingEffect("----------------------------------", time);
+						Animate.loadingEffect("INITIAL QUERY:", time);
 							FileReader file = new FileReader(fName);
 							BufferedReader read = new BufferedReader(file);
-							System.out.println("\t\t\tPerforming intial query [" + searchHistory[index] + "]\n\t\t\tPlease wait...");
+							Animate.loadingEffect("Performing intial query [" + searchHistory[index] + "]"
+												+ "\nPlease wait...", time);
 
 							while ((line = read.readLine()) != null ) 
 								{
@@ -61,18 +72,16 @@ public class TweetListSearcher
 								}
 							file.close(); //This will force a Scanner reset in the case we want to rebuild the database.
 							read.close();
-							tList.print(); //Print our initial list
-							System.out.println("\t\t\t----------------------------------");
-							System.out.println("\n\t\t\tInitial database search with keyword [" + searchHistory[index] + "]\n"
-											 + "\t\t\treturned " + tList.size() + " results.\n");
-							System.out.println("\t\t\t----------------------------------");
-							if(tList.size() == 0)
+
+							Animate.loadingEffect("\nInitial database search with keyword [" + searchHistory[index] + "]\n"
+											 + "returned " + tList.size() + " results.\n", time);
+							Animate.loadingEffect("----------------------------------", time);
+							if (Prompt("\nPrint results?")) //The first list could potentially be huge
 							{
-								System.out.println("\n\t\t\tSearch returned 0 results.");
-								continue;
+								tList.print(); //Print our initial list
 							}
 							
-							queryOptions(tList); //Run further queries on our initial list until the list results 
+							queryOptions(tList, index); //Run further queries on our initial list until the list results 
 												//are empty or the user declines further refinement.
 					}
 				}
@@ -87,7 +96,7 @@ public class TweetListSearcher
 }
 	
 	public static boolean Prompt(String str) {
-		System.out.print(str);
+		Animate.loadingEffect(str, time);
 		String s = keyboard.nextLine();
 		System.out.println();
 		if (s.contains("y"))
@@ -97,56 +106,82 @@ public class TweetListSearcher
 	}
 	
 
-	public static void queryOptions(TweetList tList)
+	public static void queryOptions(TweetList tList, int index)
 	{
 		index = 1; //Move our index past the first search
-		while(Prompt("Refine query further?\n"))
+		while(Prompt("Refine query?\n"))
 		{
-			System.out.println("Please select a query refinement option:\n"
-					+ "[0] Additional keyword refinement.\n"
-					+ "[1] Location-based refinement.");
+			Animate.loadingEffect("Please select a query refinement option:\n"
+					+ "\t[0] Additional keyword refinement.\n"
+					+ "\t[1] Location-based refinement.\n"
+					+ "\t[2] Date-based refinement.", time);
 			int queryType = keyboard.nextInt();
 			keyboard.nextLine();
 			if (queryType == 0)
 			{
-				System.out.println("Please specify a search term or phrase:\n");
+				Animate.loadingEffect("Please specify a search term or phrase:\n", time);
 				searchHistory[index] = keyboard.nextLine();
-				System.out.println("\n\t\t\tUSER INPUT: " + searchHistory[index]);
+				Animate.loadingEffect("\n\t\t\tUSER QUERY: " + searchHistory[index], time);
 				tList.filterText(searchHistory[index]);
 			}
 			if (queryType == 1)
 			{			
-				System.out.println("Please specify a Latitude Coordinate:  ");
+				Animate.loadingEffect("Please specify a Latitude Coordinate:  ", time);
 				int lx = keyboard.nextInt();
 				keyboard.nextLine();
-				System.out.println("Please specify a Longitude Coordinate:  ");
+				Animate.loadingEffect("Please specify a Longitude Coordinate:  ", time);
 				int ly = keyboard.nextInt();
 				keyboard.nextLine();
-				System.out.println("Please specify a maximum search distance:  ");
+				Animate.loadingEffect("Please specify a maximum search distance:  ", time);
 				double maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
-				searchHistory[index] = ("\n\t\t\tLocation Search:"
-								   + "\n\t\t\tLAT: " + lx
-								   + "\n\t\t\tLON: " + ly
-								   + "\n\t\t\tSEARCH RADIUS: " + maxDist + "\n\t\t\t");
+				searchHistory[index] = ("\nLocation Search:"
+								   + "\nLAT: " + lx
+								   + "\nLON: " + ly
+								   + "\nSEARCH RADIUS: " + maxDist + "\n\t\t\t");
 				tList.filterLocation(lx, ly, maxDist);
 			}
-			if(tList.size() == 0)
+			if (queryType == 2)
 			{
-				System.out.println("\n\t\t\tSearch returned 0 results.");
-				return;
+				int searchMonth = -1, searchDay = -1, searchYear = -1;
+				if (Prompt("Specify by month?\n"))
+				{
+					Animate.loadingEffect("Please enter the desired month:", time);
+					searchMonth = keyboard.nextInt();
+					keyboard.nextLine();
+					if (Prompt("Also specify by day?\n"))
+					{
+						Animate.loadingEffect("Please enter the desired day:", time);
+						searchDay = keyboard.nextInt();
+						keyboard.nextLine();
+						if (Prompt("Also specify by year?\n"))
+						{
+							Animate.loadingEffect("Please enter the desired year:", time);
+							searchYear = keyboard.nextInt();
+							keyboard.nextLine();
+							tList.filterDate(searchDay, searchMonth, searchYear);
+						}
+						else
+							tList.filterDate(searchMonth, searchMonth);
+					}
+					else
+						tList.filterDate(searchMonth);
+				}
+				searchHistory[index] = ("Date Query: " + searchMonth + "/" + searchDay + "/" + searchYear);			
 			}
+
 			index++;
 			tList.print();
-			System.out.println("\t\t\t----------------------------------");
-			System.out.print("\t\t\tQuery History:\n\t\t\t");
+			Animate.loadingEffect("\n--------------------------------------------------------------------", time);
+			Animate.loadingEffect("Query History:\n", time);
 			for (int i = 0; i < index; i++)
 			{
 				System.out.print("[" + searchHistory[i] + "]==>");
 			}
-			System.out.println("\n\t\t\tTweets found: " + tList.size());
-			System.out.println("\t\t\t----------------------------------");
-			System.out.println();
+			Animate.loadingEffect("\nTweets found: " + tList.size(), time);
+			Animate.loadingEffect("--------------------------------------------------------------------", time);
+			if(tList.size() == 0) //If we ever encounter an empty list
+				return;
 		}
 		index = 0;
 		return; //If the user declines refining, exit the method
