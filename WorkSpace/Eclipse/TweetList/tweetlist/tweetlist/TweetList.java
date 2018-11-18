@@ -7,6 +7,8 @@ Sources Cited: Homework instructions, class slides
 
 package tweetlist;
 
+
+
 public class TweetList {
 
     private class Node
@@ -47,8 +49,8 @@ public class TweetList {
     
     public void prepend(Tweet t)
     {
-    	Node newTweet = new Node(t, head);
-    	head = newTweet;
+    	Node newNode = new Node(t, head);
+    	head = newNode;
     }
     
 
@@ -66,39 +68,78 @@ public class TweetList {
     // Checks if the Tweet List is empty. 
     public boolean isEmpty()
     {        
-        return head == null; //Does head point to an element in the list or just to null?       
+        return (head == null); //Does head point to an element in the list or just to null?       
+    }
+    
+    @Override
+    public String toString()
+    {
+    	String strBuilder = "";
+    	Node curr = head;
+    	while(curr != null)
+    	{
+    		strBuilder = strBuilder + curr.value;
+    		curr = curr.next;
+    	}
+    	return strBuilder;
     }
     
    
-    // Deletes (circumvents around) any Tweet lacking the given keyword from the Tweet List.
+    // Deletes (circumvents) any Tweet lacking the given keyword from the Tweet List.
 
-	public void filter(String keyword) { 
+	public void filterText(String keyword) 
+	{ 
 		Node prev = null;
 		Node curr = head;
-		
-//		if(isEmpty()) {
-//			return;
-//		}
-		
-		try
-		{
-			while (!isEmpty())
-			{ //While the Tweet List is not empty			
-					if (!(head.value.textContains(keyword))) { //If the head doesn't contain the keyword, advance it
-						head = head.next;
-					}
-					else if (!(curr.value.textContains(keyword))) {   //If the keyword is not found in the 'value' data of the 'current' Node
-						prev = curr.next;
-					}
-						
-					prev.next = curr;
-					curr = curr.next;
-			} 
-		} catch(NullPointerException e) {}
-
-		return; //If we try to filter an empty list, return
+	
+		while (!isEmpty())
+		{ //While the Tweet List is not empty			
+			if (!(head.value.textContains(keyword))) 	
+			{ 
+				//If the head doesn't contain the keyword, advance it
+				head = head.next;
+			}
+			else if (!(curr.value.textContains(keyword))) 
+			{   //If the keyword is not found in the 'value' data of the 'current' Node
+				prev.next = curr.next; //skip around the node
+			}
+				
 			
+			prev = curr;
+			curr = curr.next;
+			if(curr == null) //If we reach the end of the list
+				break;
+		}
+		return; //If we try to filter an empty list, return			
     }
+	
+	public void filterLocation(int lx, int ly, double maxDist)
+	{
+		Node prev = null;
+		Node curr = head;
+	
+		while (!isEmpty())
+		{ //While the Tweet List is not empty			
+			if (!(head.value.locationContains(lx, ly, maxDist))) 	
+			{ 
+				//If the head doesn't contain the keyword, advance it
+				head = head.next;
+			}
+			else if (!(curr.value.locationContains(lx, ly, maxDist))) 
+			{   //If the keyword is not found in the 'value' data of the 'current' Node
+				prev = curr.next; //skip around the node
+			}
+				
+			
+			prev = curr;
+			curr = curr.next;
+			if(curr == null) //If we reach the end of the list
+				break;
+		}
+		return; //If we try to filter an empty list, return			
+	}
+	
+	
 	
 }
 

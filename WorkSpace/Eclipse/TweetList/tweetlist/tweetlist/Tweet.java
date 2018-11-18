@@ -8,12 +8,14 @@ Sources Cited: Homework instructions, class slides
 
 package tweetlist;
 
+import java.awt.Point;
 import java.util.Scanner;
 
 public class Tweet {
 	private double lat, lon;
 	int year, month, day;
 	String time, text;
+	static Scanner keyboard = new Scanner(System.in);
 	
 	public Tweet(String s)
 	{
@@ -50,20 +52,20 @@ public class Tweet {
 			+ "\nText: " + text);
 	}
 	
-	public boolean tweetContains(String searchTerm, int mode)
+	public boolean textContains(String s)
 	{
-		switch(mode)
-		{
-		case 0:
-			return !(text.indexOf(searchTerm) == -1);
-		
-		case 1:
-			return !(Double.parseDouble(searchTerm) + 10 > lat || Double.parseDouble(searchTerm) - 10 < lat);
-		case default:
-			return;
-		}
-		
+		return !(text.indexOf(s) == -1);
 	}
 	
-	public boolean nearCoor(String )
+	public boolean locationContains(int lx, int ly, double maxDist)
+	{		
+		double dist = Point.distance(lat, lon, lx, ly);
+		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
+	}
+	
+	
+	
+	
+	
+
 }
