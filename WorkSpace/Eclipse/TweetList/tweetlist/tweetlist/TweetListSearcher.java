@@ -21,7 +21,7 @@ public class TweetListSearcher
 	static Tweet t;
 	static String[] searchHistory = new String[100]; //create list of searched terms
 	static int index = 0;
-	static int time = 20;
+	static int time = 10;
 	public static void main(String[] args) throws IOException {
 		
 		String fName = "smalltweetdata.txt";
@@ -42,11 +42,13 @@ public class TweetListSearcher
 				if(Prompt("\n\nWould you like to run the program?\n"))
 				{
 					Animate.enable = true;
+					Animate.loadingEffect("---------------------------------------", time);
+					Animate.loadingEffect("Welcome to TweetSearcher-2011 Edition!", time);
+					Animate.loadingEffect("---------------------------------------", time);
+					
 					if(!Prompt("Keep animation on?")) //Determine Animation class preferences
 						Animate.enable = false;
 					
-					
-					Animate.loadingEffect("\t\t\tWelcome to TweetSearcher-2011 Edition!", time);
 					if (Prompt("Rebuild database?\n")) 
 					{
 						searchHistory[index] = "";
@@ -81,7 +83,7 @@ public class TweetListSearcher
 								tList.print(); //Print our initial list
 							}
 							
-							queryOptions(tList, index); //Run further queries on our initial list until the list results 
+							queryOptions(tList); //Run further queries on our initial list until the list results 
 												//are empty or the user declines further refinement.
 					}
 				}
@@ -106,7 +108,7 @@ public class TweetListSearcher
 	}
 	
 
-	public static void queryOptions(TweetList tList, int index)
+	public static void queryOptions(TweetList tList)
 	{
 		index = 1; //Move our index past the first search
 		while(Prompt("Refine query?\n"))
@@ -171,7 +173,7 @@ public class TweetListSearcher
 			}
 
 			index++;
-			tList.print();
+			
 			Animate.loadingEffect("\n--------------------------------------------------------------------", time);
 			Animate.loadingEffect("Query History:\n", time);
 			for (int i = 0; i < index; i++)
@@ -182,6 +184,8 @@ public class TweetListSearcher
 			Animate.loadingEffect("--------------------------------------------------------------------", time);
 			if(tList.size() == 0) //If we ever encounter an empty list
 				return;
+			if(Prompt("Print list?"))
+				tList.print();
 		}
 		index = 0;
 		return; //If the user declines refining, exit the method

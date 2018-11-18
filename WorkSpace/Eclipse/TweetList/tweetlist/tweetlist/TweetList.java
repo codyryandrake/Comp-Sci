@@ -14,7 +14,7 @@ public class TweetList {
     private class Node
     {
         Tweet value;   
-        Node next;      
+        Node next = null;      
         
         // Constructor for a node.
         Node(Tweet val, Node n)
@@ -50,7 +50,7 @@ public class TweetList {
     public void prepend(Tweet t)
     {
     	Node newNode = new Node(t, head);
-    	head = newNode;
+    	head = newNode; //Reassign head to point to our newNode
     }
     
 
@@ -88,7 +88,7 @@ public class TweetList {
     // Deletes (circumvents) any Tweet lacking the given keyword from the Tweet List.
 	
 
-	public void filterDate(int d) //Overloaded constructor
+	public void filterDate(int m) //Overloaded constructor
 	{
 
 		Node prev = null;
@@ -96,12 +96,12 @@ public class TweetList {
 	
 		while (!isEmpty())
 		{ //While the Tweet List is not empty			
-			if (!(head.value.dateContains(d)))	
+			if (!(head.value.dateContains(m)))	
 			{ 
 				//If the head doesn't contain the keyword, advance it
 				head = head.next;
 			}
-			else if (!(curr.value.dateContains(d))) 
+			else if (!(curr.value.dateContains(m))) 
 			{   //If the keyword is not found in the 'value' data of the 'current' Node
 				prev.next = curr.next; //skip around the node
 			}
@@ -114,7 +114,7 @@ public class TweetList {
 		return; //If we try to filter an empty list, return			
 	}
     
-	public void filterDate(int d, int m) //Overloaded constructor
+	public void filterDate(int m, int d) //Overloaded constructor
 	{
 
 		Node prev = null;
@@ -122,12 +122,12 @@ public class TweetList {
 	
 		while (!isEmpty())
 		{ //While the Tweet List is not empty			
-			if (!(head.value.dateContains(d, m)))	
+			if (!(head.value.dateContains(m, d)))	
 			{ 
 				//If the head doesn't contain the keyword, advance it
 				head = head.next;
 			}
-			else if (!(curr.value.dateContains(d, m))) 
+			else if (!(curr.value.dateContains(m, d))) 
 			{   //If the keyword is not found in the 'value' data of the 'current' Node
 				prev.next = curr.next; //skip around the node
 			}
@@ -140,7 +140,7 @@ public class TweetList {
 		return; //If we try to filter an empty list, return			
 	}
     
-	public void filterDate(int d, int m, int y) //Overloaded constructor
+	public void filterDate(int m, int d, int y) //Overloaded constructor
 	{
 
 		Node prev = null;
@@ -148,12 +148,12 @@ public class TweetList {
 	
 		while (!isEmpty())
 		{ //While the Tweet List is not empty			
-			if (!(head.value.dateContains(d, m, y)))	
+			if (!(head.value.dateContains(m, d, y)))	
 			{ 
 				//If the head doesn't contain the keyword, advance it
 				head = head.next;
 			}
-			else if (!(curr.value.dateContains(d, m, y))) 
+			else if (!(curr.value.dateContains(m, d, y))) 
 			{   //If the keyword is not found in the 'value' data of the 'current' Node
 				prev.next = curr.next; //skip around the node
 			}
@@ -197,25 +197,19 @@ public class TweetList {
   	Node prev = null;
   	Node curr = head;
   
-  	while (!isEmpty())
-  	{ //While the Tweet List is not empty			
-  		if (!(head.value.textContains(keyword))) 	
-  		{ 
-  			//If the head doesn't contain the keyword, advance it
-  			head = head.next;
-  		}
-  		else if (!(curr.value.textContains(keyword))) 
-  		{   //If the keyword is not found in the 'value' data of the 'current' Node
-  			prev.next = curr.next; //skip around the node
-  		}
-  			
+  	if (isEmpty())
+  		return; //No need to filter an empty list
+
+  	if(!(head.value.textContains(keyword))) //If the head doesn't match
+  		head = head.next; //Advance past it
+  	while(curr.next != null)
+  	{
+  		if(!(curr.value.textContains(keyword))) //If the curr doesn't match
+  			curr = curr.next;
   		
   		prev = curr;
-  		curr = curr.next;
-  		if(curr == null) //If we reach the end of the list
-  			break;
+  		//curr = curr.next;
   	}
-  	return; //If we try to filter an empty list, return			
   }
 	
 	

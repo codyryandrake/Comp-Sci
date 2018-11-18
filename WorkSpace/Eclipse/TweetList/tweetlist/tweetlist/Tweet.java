@@ -55,9 +55,10 @@ public class Tweet {
 	
 	public boolean textContains(String s)
 	{
-		if (text.contains(s)) //If the phrase is found within
+		//if (text.contains(s)) //If the phrase is found within
+		if (text.indexOf(s) != -1)
 		{
-			System.out.println("\t\t\t\t\tTERM FOUND WITHIN");
+			//System.out.println("\t\t\t\t\tTERM FOUND WITHIN");
 			return true;
 		}
 		
