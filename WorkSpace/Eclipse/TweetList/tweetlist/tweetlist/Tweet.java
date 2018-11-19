@@ -56,7 +56,7 @@ public class Tweet {
 	public boolean textContains(String s)
 	{
 		//if (text.contains(s)) //If the phrase is found within
-		if (text.indexOf(s) != -1)
+		if (!(text.indexOf(s) == -1))
 		{
 			//System.out.println("\t\t\t\t\tTERM FOUND WITHIN");
 			return true;
@@ -73,20 +73,20 @@ public class Tweet {
 		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
 	}
 	
-	public boolean dateContains(int m)
+	public boolean dateContains(int y)
 	{
 		System.out.println(day);
-		return (m == month);
+		return (y == year);
 	}
 	
-	public boolean dateContains(int m, int d)
+	public boolean dateContains(int y, int m)
 	{
-		return (m== month && d == day);
+		return (y == year && m == month);
 	}
 	
-	public boolean dateContains(int m, int d, int y)
+	public boolean dateContains(int y, int m, int d)
 	{
-		return (m== day && d == month && y == year);
+		return (y == year && m == month && d == day);
 	}
 	
 

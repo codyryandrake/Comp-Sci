@@ -24,8 +24,8 @@ public class TweetListSearcher
 	static int time = 10;
 	public static void main(String[] args) throws IOException {
 		
-		String fName = "smalltweetdata.txt";
-		//String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+		//String fName = "smalltweetdata.txt";
+		String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 		String line = null;
 		TweetList tList; //Our list for holding all valid matching Tweets
 		
@@ -137,10 +137,10 @@ public class TweetListSearcher
 				Animate.loadingEffect("Please specify a maximum search distance:  ", time);
 				double maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
-				searchHistory[index] = ("\nLocation Search:"
+				searchHistory[index] = ("Location Search:"
 								   + "\nLAT: " + lx
 								   + "\nLON: " + ly
-								   + "\nSEARCH RADIUS: " + maxDist + "\n\t\t\t");
+								   + "\nSEARCH RADIUS: " + maxDist);
 				tList.filterLocation(lx, ly, maxDist);
 			}
 			if (queryType == 2)
@@ -178,7 +178,7 @@ public class TweetListSearcher
 			Animate.loadingEffect("Query History:\n", time);
 			for (int i = 0; i < index; i++)
 			{
-				System.out.print("[" + searchHistory[i] + "]==>");
+				System.out.print("\n[" + searchHistory[i] + "]==>");
 			}
 			Animate.loadingEffect("\nTweets found: " + tList.size(), time);
 			Animate.loadingEffect("--------------------------------------------------------------------", time);
