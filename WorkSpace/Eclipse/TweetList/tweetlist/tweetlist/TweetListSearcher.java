@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 //import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class TweetListSearcher 
 {
@@ -25,10 +26,11 @@ public class TweetListSearcher
 	static int index = 0;
 	static int queryType = 0;
 	static int time = 15;
-	static String fName = "smalltweetdata.txt";
-	//static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+	//static String fName = "smalltweetdata.txt";
+	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static String line = null;
 	static TweetList tList; //Our list for holding all valid matching Tweets
+	static Stack<TweetList> searchStack = new Stack<TweetList>();
 	
 	public static void main(String[] args) throws IOException 
 	{
@@ -41,7 +43,7 @@ public class TweetListSearcher
 		 * We return to this location whenever the user would like
 		 * to refresh the database.
 		 */
-		Animate.enable = true;
+		//Animate.enable = true;
 		Animate.loadingEffect("--------------------------------------------", time);
 		Animate.loadingEffect("Welcome to TweetSearcher! #l33tTw33t Edition", time);
 		Animate.loadingEffect("--------------------------------------------", time);
@@ -52,17 +54,6 @@ public class TweetListSearcher
 		queryOptions();
 
 	}
-	
-	public static boolean Prompt(String str) {
-		Animate.loadingEffect(str, time);
-		String s = keyboard.nextLine();
-		System.out.println();
-		if (s.contains("y"))
-			return true;
-		else
-			return false;
-	}
-	
 
 	public static void queryOptions()
 	{
@@ -88,6 +79,7 @@ public class TweetListSearcher
 				{
 					InitializeDatabase(queryType);
 					index++;
+					searchStack.push(tList);
 					continue;
 				}
 				if (queryType == 4)
@@ -99,14 +91,12 @@ public class TweetListSearcher
 				{
 					if(Prompt("Reintialize database? All search history will be lost.\n\n"))
 							if(Prompt("WARNING This action cannot be undone. Type 'y' to continue..."))
-								InitializeDatabase(queryType);				
+								InitializeDatabase(queryType);
+					searchStack.push(tList);
 					continue;
 				}
 				if (queryType == 0)
 					break; //Trigger program exit confirmation
-				
-
-	
 			}
 			if(Prompt("Are you sure you want to quit the program?"))
 			{
@@ -138,13 +128,17 @@ public class TweetListSearcher
 						searchHistory[index] = "";
 						t = new Tweet(line); //Take in the current line and organize it into a tweet.
 						tList= new TweetList();
-
+						
 						if(t.textContains(searchHistory[index]) == true) //If the tweet contains the keyword in it's text field
+						{
 							tList.prepend(t); //append the tweet to our list and loop
+							System.out.println("Please wait. Initializing file...");
+						}
 					}
 				}
 				else
-					tList.filterText(searchHistory[index]);
+					searchStack.peek().filterText(searchHistory[index]);
+//					tList.filterText(searchHistory[index]);
 				
 				break;
 			case 2:
@@ -183,7 +177,8 @@ public class TweetListSearcher
 					
 					}							
 				else
-					tList.filterDate(searchYear, searchMonth, searchDay); //append the tweet to our list and loop
+					searchStack.peek().filterText(searchHistory[index]);
+//					tList.filterDate(searchYear, searchMonth, searchDay); //append the tweet to our list and loop
 				break;
 			case 3:
 				Animate.loadingEffect("Please specify a Latitude Coordinate:  ", time);
@@ -213,7 +208,8 @@ public class TweetListSearcher
 						}
 					}																
 				else
-					tList.filterLocation(uLat, uLon, maxDist);
+					searchStack.peek().filterText(searchHistory[index]);
+//					tList.filterLocation(uLat, uLon, maxDist);
 			break;
 			}
 
@@ -239,6 +235,16 @@ public class TweetListSearcher
 			Animate.loadingEffect("LIST EMPTY! Rebooting...", qType);
 			return;
 		}
+	}
+	
+	public static boolean Prompt(String str) {
+		Animate.loadingEffect(str, time);
+		String s = keyboard.nextLine();
+		System.out.println();
+		if (s.contains("y"))
+			return true;
+		else
+			return false;
 	}
 }
 
