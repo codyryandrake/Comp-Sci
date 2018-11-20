@@ -15,7 +15,8 @@ public class Tweet {
 	private double lat, lon;
 	private Double dist = null;
 	int year, month, day;
-	String time, text;
+	int hour, minute, second;
+	String date, time, text;
 	static Scanner keyboard = new Scanner(System.in);
 	
 	public Tweet(String s)
@@ -27,12 +28,14 @@ public class Tweet {
 
 		scan.next(); //Scan in the '6' 
 		
-		String date = scan.next(); //Scan in the date string
+		date = scan.next(); //Scan in the date string
 			String[] d = date.split("-");
 			year =  Integer.parseInt(d[0]);
 			month = Integer.parseInt(d[1]);
 			day =   Integer.parseInt(d[2]);				
 		time = scan.next(); //Scan in the time string		
+			String[] t = time.split(":");
+			hour = Integer.parseInt(t[0]);
 		text = scan.nextLine();
 		
 		scan.close();
@@ -47,7 +50,7 @@ public class Tweet {
 			System.out.print(
 			  "\n\t\t\tDistance From Query: " + dist);
 		System.out.println(
-			  "\n\t\t\tDate: " + day + "/" + month + "/" + year
+			  "\n\t\t\tDate: " + date
 			+ "\n\t\t\tTime: " + time
 			+ "\n\t\t\tText: " + text);
 
@@ -66,27 +69,50 @@ public class Tweet {
 			
 	}
 	
-	
 	public boolean locationContains(int lx, int ly, double maxDist)
 	{		
 		dist = Point.distance(lat, lon, lx, ly);
 		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
 	}
 	
-	public boolean dateContains(int y)
+	public boolean timeContains(int hr, int min, int sec)
 	{
-		System.out.println(day);
-		return (y == year);
-	}
-	
-	public boolean dateContains(int y, int m)
-	{
-		return (y == year && m == month);
+		if (hr != -1) //User specified a hour
+		{
+			if (min != -1) //User specified hour, minute
+			{
+				if (sec != -1) //User specified hour, minute, second
+				{
+					return (hr == hour && min == minute && sec == second);
+				}
+				else
+					return (hr == hour && min == minute);
+			}			
+			else
+				return (hr == hour);
+				
+		}
+		return false; //No valid dates specified
 	}
 	
 	public boolean dateContains(int y, int m, int d)
 	{
-		return (y == year && m == month && d == day);
+		if (y != -1) //User specified a year
+		{
+			if (m != -1) //User specified year, month
+			{
+				if (d != -1) //User specified year, month, day
+				{
+					return (y == year && m == month && d == day);
+				}
+				else
+					return (y == year && m == month);
+			}			
+			else
+				return (y == year);
+				
+		}
+		return false; //No valid dates specified
 	}
 	
 

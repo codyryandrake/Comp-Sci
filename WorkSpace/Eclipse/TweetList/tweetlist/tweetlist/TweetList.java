@@ -67,59 +67,7 @@ public class TweetList {
     
    
     // Deletes (circumvents) any Tweet lacking the given filter from the Tweet List.
-	public void filterDate(int y) //Filters by year								  
-	{							  
 
-		Node prev = null;
-		Node curr = head;
-	
-		while (!isEmpty())
-		{ //While the Tweet List is not empty			
-			if (!(head.value.dateContains(y)))	
-			{ 
-				//If the head doesn't contain the keyword, advance it
-				head = head.next;
-			}
-			else if (!(curr.value.dateContains(y))) 
-			{   //If the keyword is not found in the 'value' data of the 'current' Node
-				prev.next = curr.next; //skip around the node
-			}
-
-			prev = curr;
-			curr = curr.next;
-			if(curr == null) //If we reach the end of the list
-				break;
-		}
-		return; //If we try to filter an empty list, return			
-	}
-    
-	public void filterDate(int y, int m) //Filters by year, month
-	{ 
-		if (isEmpty())
-			return;
-	  	while (head.value.dateContains(y, m) == false)
-	  		head = head.next;
-	  		if (head == null)
-	  			return;
-	  	
-	  	Node prev = null;
-	  	Node curr = head;
-
-	  	while(curr != null)
-	  	{	
-	  		if (curr.value.dateContains(y, m) == true)
-	  		{	
-	  			prev = curr;
-
-	  		}
-	  		else
-	  		{
-	  			prev.next = curr.next;
-	  		}
-			curr = curr.next;
-	 			
-	  	}
-	  }
     
 	public void filterDate(int y, int m, int d) //Filters by year, month, date
 	  { 
@@ -130,7 +78,7 @@ public class TweetList {
 	  		if (head == null)
 	  			return;
 	  	
-	  	Node prev = null;
+	  	Node prev = head;
 	  	Node curr = head;
 
 	  	while(curr != null)
@@ -148,7 +96,34 @@ public class TweetList {
 	 			
 	  	}
 	  }
-    
+	
+	public void filterTime(int hr, int min, int sec) //Filters by hour, minute, second
+	  { 
+		if (isEmpty())
+			return;
+	  	while (head.value.dateContains(hr, min, sec) == false)
+	  		head = head.next;
+	  		if (head == null)
+	  			return;
+	  	
+	  	Node prev = head;
+	  	Node curr = head;
+
+	  	while(curr != null)
+	  	{	
+	  		if (curr.value.dateContains(hr, min, sec) == true)
+	  		{	
+	  			prev = curr;
+
+	  		}
+	  		else
+	  		{
+	  			prev.next = curr.next;
+	  		}
+			curr = curr.next; 			
+	  	}
+	  }
+	
     public void filterLocation(int uLon, int uLat, double maxDist)
     { 
 		if (isEmpty())
@@ -156,8 +131,10 @@ public class TweetList {
 		
 	  	while (head.value.locationContains(uLon, uLat, maxDist) == false)
 	  		head = head.next;
+	  		if(head == null)
+	  			return;
 	  	
-	  	Node prev = null;
+	  	Node prev = head;
 	  	Node curr = head;
 	
 	  	while(curr != null)
@@ -171,8 +148,7 @@ public class TweetList {
 	  		{
 	  			prev.next = curr.next;
 	  		}
-			curr = curr.next;
-		 			
+			curr = curr.next;		 			
 		  }	
 	}
 	
@@ -180,12 +156,15 @@ public class TweetList {
   { 
 	if (isEmpty())
 		return;
-  	while (head.value.textContains(keyword) == false)
+	
+  	if (head.value.textContains(keyword) == false)
+  	{
   		head = head.next;
   		if (head == null)
   			return;
+  	}
   	
-  	Node prev = null;
+  	Node prev = head;
   	Node curr = head;
 
   	while(curr != null)
@@ -199,8 +178,7 @@ public class TweetList {
   		{
   			prev.next = curr.next;
   		}
-		curr = curr.next;
- 			
+		curr = curr.next;			
   	}
   }
 }
