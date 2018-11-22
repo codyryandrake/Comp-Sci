@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 //import java.util.Random;
 import java.util.Scanner;
-import java.util.Stack;
+//import java.util.Stack;
 
 public class TweetListSearcher 
 {
@@ -32,7 +32,7 @@ public class TweetListSearcher
 	{
 		Animate.enable = true;
 		Animate.loadingEffect("--------------------------------------------", time);
-		Animate.loadingEffect("\nWelcome to TweetSearcher! #l33tTw33t Edition", time);
+		Animate.loadingEffect("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.loadingEffect("\n--------------------------------------------", time);
 		
 		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
@@ -166,14 +166,14 @@ public class TweetListSearcher
 	//					searchStack.peek().filterText(searchHistory[index]);
 			break;
 		}
+		index++;
+		PrintSearchHistory();
 		if(tList.size() == 0) //If we ever encounter an empty list
 		{
-			Animate.loadingEffect("\nLIST EMPTY! Rebuilding database...", time);
+			Animate.loadingEffect("\nLIST EMPTY! Rebuilding database...\n\n", time);
 			index = 0;
 		}
-		else
-			index++;
-		PrintSearchHistory();
+	
 	}
 	/*
 	 * Initial read-in of matching Tweets to the database. 
@@ -204,7 +204,6 @@ public class TweetListSearcher
 		} catch (IOException e) {
 			System.out.println("An error occurred while reading " + fName + ".");
 		}
-		//PrintSearchHistory();
 		return;
 	}
 	
@@ -219,7 +218,7 @@ public class TweetListSearcher
 				System.out.println(); //Move the cursor down a row
 		}
 		Animate.loadingEffect("\n\nTweets found: " + tList.size(), time);
-		Animate.loadingEffect("\n--------------------------------------------------------------------", time);
+		Animate.loadingEffect("\n--------------------------------------------------------------------\n", time);
 	}
 	public static boolean Prompt(String str) 
 	{

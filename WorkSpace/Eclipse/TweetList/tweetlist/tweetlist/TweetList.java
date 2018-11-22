@@ -71,116 +71,129 @@ public class TweetList {
     
 	public void filterDate(int y, int m, int d) //Filters by year, month, date
 	  { 
-		if (isEmpty())
-			return;
-	  	while (head.value.dateContains(y, m, d) == false)
-	  		head = head.next;
-	  		if (head == null)
-	  			return;
-	  	
-	  	Node prev = head;
-	  	Node curr = head;
+		while(!isEmpty())
+    	{													//If we find the keyword in curr's text field
+    		if (head.value.dateContains(y, m, d) == false)
+    	  	{
+    	  		head = head.next;
+    	  	}
+    	  	else
+    	  		break;
+    	
+    //Pick up where head leaves off
+      	Node prev = head;
+      	Node curr = head;
 
-	  	while(curr != null)
-	  	{	
-	  		if (curr.value.dateContains(y, m, d) == true)
-	  		{	
-	  			prev = curr;
-
-	  		}
-	  		else
-	  		{
-	  			prev.next = curr.next;
-	  		}
-			curr = curr.next;
-	 			
-	  	}
+    		while(curr != null)
+    		{
+    			if (curr.value.dateContains(y, m, d) == true)
+    	  		{ 											//If we find the keyword in curr's text field	
+    	  			prev = curr; 							//Shift our prev pointer up to match curr
+    	  	  		curr = curr.next;						//Advance our curr to the next node
+    	
+    	  		}
+    	  		else 									   //If the keyword is NOT found in curr's text field
+    	  		{
+    	  			prev.next = curr.next; 				   //Point our prev node past the curr node
+    	  	  		curr = curr.next; 					   //Advance our curr to the next node
+    	  		}
+    		}
+    	} 
 	  }
 	
 	public void filterTime(int hr, int min, int sec) //Filters by hour, minute, second
 	  { 
-		if (isEmpty())
-			return;
-	  	while (head.value.dateContains(hr, min, sec) == false)
-	  		head = head.next;
-	  		if (head == null)
-	  			return;
-	  	
-	  	Node prev = head;
-	  	Node curr = head;
+		while(!isEmpty())
+    	{													//If we find the keyword in curr's text field
+    		if (head.value.dateContains(hr, min, sec) == false)
+    	  	{
+    	  		head = head.next;
+    	  	}
+    	  	else
+    	  		break;
+    	
+    //Pick up where head leaves off
+      	Node prev = head;
+      	Node curr = head;
 
-	  	while(curr != null)
-	  	{	
-	  		if (curr.value.dateContains(hr, min, sec) == true)
-	  		{	
-	  			prev = curr;
-
-	  		}
-	  		else
-	  		{
-	  			prev.next = curr.next;
-	  		}
-			curr = curr.next; 			
-	  	}
+    		while(curr != null)
+    		{
+    			if (curr.value.dateContains(hr, min, sec) == true)
+    	  		{ 											//If we find the keyword in curr's text field	
+    	  			prev = curr; 							//Shift our prev pointer up to match curr
+    	  	  		curr = curr.next;						//Advance our curr to the next node
+    	
+    	  		}
+    	  		else 									   //If the keyword is NOT found in curr's text field
+    	  		{
+    	  			prev.next = curr.next; 				   //Point our prev node past the curr node
+    	  	  		curr = curr.next; 					   //Advance our curr to the next node
+    	  		}
+    		}
+    	} 
 	  }
 	
     public void filterLocation(int uLon, int uLat, double maxDist)
-    { 
-		if (isEmpty())
-			return;
-		
-	  	while (head.value.locationContains(uLon, uLat, maxDist) == false)
-	  		head = head.next;
-	  		if(head == null)
-	  			return;
-	  	
-	  	Node prev = head;
-	  	Node curr = head;
-	
-	  	while(curr != null)
-	  	{	
-	  		if (curr.value.locationContains(uLon, uLat, maxDist) == true)
-	  		{	
-	  			prev = curr;
-	
-	  		}
-	  		else
-	  		{
-	  			prev.next = curr.next;
-	  		}
-			curr = curr.next;		 			
-		  }	
+    {  
+    	while(!isEmpty())
+    	{													//If we find the keyword in curr's text field
+    		if (head.value.locationContains(uLon, uLat, maxDist) == false)
+    	  	{
+    	  		head = head.next;
+    	  	}
+    	  	else
+    	  		break;
+    	
+    //Pick up where head leaves off
+      	Node prev = head;
+      	Node curr = head;
+
+    		while(curr != null)
+    		{
+    			if (curr.value.locationContains(uLon, uLat, maxDist) == true)
+    	  		{ 											//If we find the keyword in curr's text field	
+    	  			prev = curr; 							//Shift our prev pointer up to match curr
+    	  	  		curr = curr.next;						//Advance our curr to the next node
+    	
+    	  		}
+    	  		else 									   //If the keyword is NOT found in curr's text field
+    	  		{
+    	  			prev.next = curr.next; 				   //Point our prev node past the curr node
+    	  	  		curr = curr.next; 					   //Advance our curr to the next node
+    	  		}
+    		}
+    	} 
 	}
 	
     public void filterText(String keyword) 
   { 
-	if (isEmpty())
-		return;
+	while(!isEmpty())
+	{													//If we find the keyword in curr's text field
+	  	if (head.value.textContains(keyword) == false)
+	  	{
+	  		head = head.next;
+	  	}
+	  	else
+	  		break;
 	
-  	if (head.value.textContains(keyword) == false)
-  	{
-  		head = head.next;
-  		if (head == null)
-  			return;
-  	}
-  	
+//Pick up where head leaves off
   	Node prev = head;
   	Node curr = head;
 
-  	while(curr != null)
-  	{	
-  		if (curr.value.textContains(keyword) == true) //If we find the keyword in curr's text field
-  		{	
-  			prev = curr; //Shift our prev pointer up to match curr
-  	  		curr = curr.next; //Advance our curr to the next node
-
-  		}
-  		else //If the keyword is NOT found in curr's text field
-  		{
-  			prev.next = curr.next; //Point our prev node past the curr node
-  	  		curr = curr.next; //Advance our curr to the next node
-  		}
-
+		while(curr != null)
+		{
+	  		if (curr.value.textContains(keyword) == true) 
+	  		{ 											//If we find the keyword in curr's text field	
+	  			prev = curr; 							//Shift our prev pointer up to match curr
+	  	  		curr = curr.next;						//Advance our curr to the next node
+	
+	  		}
+	  		else 									   //If the keyword is NOT found in curr's text field
+	  		{
+	  			prev.next = curr.next; 				   //Point our prev node past the curr node
+	  	  		curr = curr.next; 					   //Advance our curr to the next node
+	  		}
+		}  		
   	} 
   }
 }
