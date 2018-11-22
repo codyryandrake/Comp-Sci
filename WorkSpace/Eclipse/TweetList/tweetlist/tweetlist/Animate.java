@@ -22,7 +22,7 @@ public class Animate {
 			System.out.print(string.charAt(i)); //Outputs the contents of any string one character
 			pause(time);  //at a time with a pause() in between
 		}
-		System.out.println(); //Includes a println() for convenience
+		//System.out.println(); //Includes a println() for convenience
 	}
 
 }

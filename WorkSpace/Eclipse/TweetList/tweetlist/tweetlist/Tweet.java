@@ -43,18 +43,18 @@ public class Tweet {
 	
 	public void print() //Print a formatted representation of the entire Tweet
 	{
-		System.out.print("\n\t\t\t-----------------------------");
+		System.out.print("\n\t-----------------------------");
 		System.out.print(
-			  "\n\t\t\t||Latitude: " + lat
-			+ "\n\t\t\t||Longitude: " + lon);
+			  "\n\t||Latitude: " + lat
+			+ "\n\t||Longitude: " + lon);
 		if(dist != null)
 			System.out.print(
-			  "\n\t\t\t||Distance From Query: " + dist);
+			  "\n\t||Distance From Query: " + dist);
 		System.out.println(
-			  "\n\t\t\t||Date: " + date
-			+ "\n\t\t\t||Time: " + time
-			+ "\n\t\t\t||Text: " + text);
-		System.out.print("\t\t\t-----------------------------\n\n");
+			  "\n\t||Date: " + date
+			+ "\n\t||Time: " + time
+			+ "\n\t||Text: " + text);
+		System.out.print("\t-----------------------------\n\n");
 
 	}
 	

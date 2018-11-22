@@ -169,17 +169,19 @@ public class TweetList {
 
   	while(curr != null)
   	{	
-  		if (curr.value.textContains(keyword) == true)
+  		if (curr.value.textContains(keyword) == true) //If we find the keyword in curr's text field
   		{	
-  			prev = curr;
+  			prev = curr; //Shift our prev pointer up to match curr
+  	  		curr = curr.next; //Advance our curr to the next node
 
   		}
-  		else
+  		else //If the keyword is NOT found in curr's text field
   		{
-  			prev.next = curr.next;
+  			prev.next = curr.next; //Point our prev node past the curr node
+  	  		curr = curr.next; //Advance our curr to the next node
   		}
-		curr = curr.next;			
-  	}
+
+  	} 
   }
 }
 
