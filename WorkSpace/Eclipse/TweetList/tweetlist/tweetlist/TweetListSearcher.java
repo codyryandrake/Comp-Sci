@@ -23,20 +23,24 @@ public class TweetListSearcher
 	static int index = 0;
 	static int queryType;
 	static int time = 15;
-	//static String fName = "smalltweetdata.txt";
-	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+	static int searchLon, searchLat;
+	static double maxDist;
+	static int searchYear = -1, searchMonth = -1, searchDay = -1,
+	searchHour = -1, searchMin = -1, searchSec = -1;
+	static String fName = "smalltweetdata.txt";
+	//static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
 	//static Stack<TweetList> searchStack = new Stack<TweetList>();
 	
 	public static void main(String[] args)
 	{
-		Animate.enable = true;
+		//Animate.enable = true;
 		Animate.loadingEffect("--------------------------------------------", time);
 		Animate.loadingEffect("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.loadingEffect("\n--------------------------------------------", time);
 		
-		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
-			Animate.enable = false;
+//		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
+//			Animate.enable = false;
 		if(Prompt("\nSpecify data file?"))
 		{
 			if(Prompt("Please enter the data file name with file type."))
@@ -53,45 +57,46 @@ public class TweetListSearcher
 		{
 			while(true) //Exiting this loop re-confirms program termination
 			{
-				if(index == 0 )
-					queryType = 1;
-				else
-				{
+//				if(index == 0 )
+//					queryType = 1;
+//				else
+//				{
 				Animate.loadingEffect(
 						"\nPlease select from the following:\n\n"
-						+ "\t[1] Search by Word or Phrase?\n\n" , time);					
+						+ "\t[1] Search by Word or Phrase?\n\n"
+						+ "\t[2] Search by Date?\n\n"
+						+ "\t[3] Search by Location?\n\n"
+						+ "\t[4] Search by Timestamp?\n\n", time);					
 				if (index > 0) //These options hidden until a list is created
 					Animate.loadingEffect(
-						  "\t[2] Search by Date?\n\n"
-						+ "\t[3] Search by Location?\n\n"
-						+ "\t[4] Print Results?\n\n"
-						+ "\t[5] Rebuild Database?\n\n"
+						  "\t[5] Print Results?\n\n"
+						+ "\t[6] Rebuild Database?\n\n"
 						+ "\t[0] Exit Program?\n\n", time);
-				queryType = keyboard.nextInt();
+				queryType = keyboard.nextInt(); //Get queryType
 				keyboard.nextLine();
-				}
+				
 
-				if (queryType == 1 || queryType == 2 || queryType == 3) //If the user has selected a search option
+				if (queryType > 0 && queryType < 5) //If the user has selected a search option
 				{
-					SearchDatabase(queryType); //First launch database initialization
+					SearchDatabase(); //First launch database initialization
 //					if (index > 0)
 //						PrintSearchHistory();
 					//searchStack.push(tList);
 					continue;
 				}
-				if (queryType == 4)
+				if (queryType == 5)
 				{
 					tList.print(); //Print the refined list
 					PrintSearchHistory(); //Append our query history below the printed tweets
 					continue;
 				}
-				if(queryType == 5)
+				if(queryType == 6)
 				{
 					if(index > 0 && Prompt("Reintialize database? All search history will be lost.\n\n"))
-							if(!Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
-								Animate.loadingEffect("Data file defaulted to " + fName + ".", time);
-					index = 0;
-					SearchDatabase(1);							
+							if(Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
+								index = 0;
+								//Animate.loadingEffect("Data file defaulted to " + fName + ".", time);					
+//					SearchDatabase(1);							
 					//searchStack.push(tList); //Add the newly filtered tList to the search stack				
 					continue;
 				}
@@ -108,9 +113,9 @@ public class TweetListSearcher
 		}
 	}
 	
-	public static void SearchDatabase(int qType)
+	public static void SearchDatabase()
 	{
-		switch(qType)
+		switch(queryType)
 		{
 			case 1:
 				Animate.loadingEffect("Please specify a search term or phrase:\n", time);
@@ -123,9 +128,6 @@ public class TweetListSearcher
 	//			searchStack.peek().filterText(searchHistory[index]);
 				break;
 			case 2:
-				int searchYear = -1, searchMonth = -1, searchDay = -1;
-				if (Prompt("Specify by year?\n"))
-				{
 					Animate.loadingEffect("Please enter the desired year:", time);
 					searchYear = keyboard.nextInt();
 					keyboard.nextLine();
@@ -141,30 +143,59 @@ public class TweetListSearcher
 							keyboard.nextLine();
 						}
 					}
-				}
-				searchHistory[index] = ("Date Query: " + searchYear + "/" + searchMonth + "/" + searchDay);					
-				tList.filterDate(searchYear, searchMonth, searchDay); //append the tweet to our list and loop
+				searchHistory[index] = ("Date Query: " + searchYear + "/" + searchMonth + "/" + searchDay);
+				if(index == 0)
+					BuildDatabase();
+				else
+					tList.filterDate(searchYear, searchMonth, searchDay); //append the tweet to our list and loop
 
 	//			searchStack.peek().filterText(searchHistory[index]);
 				break;
 			case 3:
 				Animate.loadingEffect("Please specify a Latitude Coordinate:  ", time);
-				int uLat = keyboard.nextInt();
+				int searchLat = keyboard.nextInt();
 				keyboard.nextLine();
 				Animate.loadingEffect("Please specify a Longitude Coordinate:  ", time);
-				int uLon = keyboard.nextInt();
+				int searchLon = keyboard.nextInt();
 				keyboard.nextLine();
 				Animate.loadingEffect("Please specify a maximum search distance:  ", time);
-				double maxDist = keyboard.nextDouble();
+				maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
-				searchHistory[index] = ("\nLocation Search:"
-								   + "\nLAT: " + uLat
-								   + "\nLON: " + uLon
+				searchHistory[index] = ("Location Search:"
+								   + "\nLAT: " + searchLat
+								   + "\nLON: " + searchLon
 								   + "\nSEARCH RADIUS: " + maxDist);
-				tList.filterLocation(uLat, uLon, maxDist);
+				if(index == 0)
+					BuildDatabase();
+				else
+					tList.filterLocation(searchLat, searchLon, maxDist);
 
 	//					searchStack.peek().filterText(searchHistory[index]);
 			break;
+			case 4:
+					Animate.loadingEffect("Please enter the desired hour:", time);
+					searchHour = keyboard.nextInt();
+					keyboard.nextLine();
+					if(Prompt("Also specify by minute?"))
+					{
+						Animate.loadingEffect("Please enter the desired minute:", time);
+						searchMin = keyboard.nextInt();
+						keyboard.nextLine();
+						if (Prompt("Also specify by second?\n"))
+						{
+							Animate.loadingEffect("Please enter the desired second:", time);
+							searchSec = keyboard.nextInt();
+							keyboard.nextLine();
+						}
+					}
+				searchHistory[index] = ("Timestamp Query: " + searchHour + ":" + searchMin + ":" + searchSec);
+				if(index == 0)
+					BuildDatabase();
+				else
+					tList.filterDate(searchHour, searchMin, searchSec); //append the tweet to our list and loop
+
+	//			searchStack.peek().filterText(searchHistory[index]);
+				break;
 		}
 		index++;
 		PrintSearchHistory();
@@ -193,18 +224,43 @@ public class TweetListSearcher
 			while ((line = read.readLine()) != null ) 
 			{	
 				t = new Tweet(line); //Take in the current line and organize it into a tweet.
-				if(t.textContains(searchHistory[index]) == true) //If the tweet contains the keyword in it's text field
-					tList.prepend(t); //append the tweet to our list and loop
+				switch(queryType)
+				{//Keyword/Phrase search
+				case 1:
+					if(t.textContains(searchHistory[index]) == true)
+					{
+						Animate.loadingEffect("\nKeyword match found and appended.\n", time);
+						tList.prepend(t); //append the tweet to our list and loop
+					}
+					break;
+				case 2:
+					if(t.dateContains(searchYear, searchMonth, searchDay) == true)
+					{
+						Animate.loadingEffect("\nDate match found and appended.\n", time);
+						tList.prepend(t); //append the tweet to our list and loop
+					}
+					break;		
+				case 3:
+					if(t.locationContains(searchLat, searchLon, maxDist) == true)
+					{
+						Animate.loadingEffect("\nDate match found and appended.\n", time);
+						tList.prepend(t); //append the tweet to our list and loop
+					}
+					break;
+				case 4:
+					if(t.timeContains(searchHour, searchMin, searchSec) == true)
+					{
+						Animate.loadingEffect("\nTimestamp match found and appended.\n", time);
+						tList.prepend(t); //append the tweet to our list and loop
+					}
+					break;
+				}			
 			}
 			file.close(); //This will force a Scanner reset in the case we want to rebuild the database.
 			read.close();
-		} catch (FileNotFoundException e)
-		{
-			System.out.println("The file " + fName + " could not be found.");
-		} catch (IOException e) {
-			System.out.println("An error occurred while reading " + fName + ".");
-		}
-		return;
+		} 
+		catch (FileNotFoundException e) {System.out.println("The file " + fName + " could not be found.");} 
+		catch (IOException e) {System.out.println("An error occurred while reading " + fName + ".");}
 	}
 	
 	public static void PrintSearchHistory()
