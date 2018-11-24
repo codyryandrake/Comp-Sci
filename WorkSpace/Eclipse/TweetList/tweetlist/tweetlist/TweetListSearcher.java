@@ -27,8 +27,8 @@ public class TweetListSearcher
 	static double maxDist;
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
 	searchHour = -1, searchMin = -1, searchSec = -1;
-	//static String fName = "smalltweetdata.txt";
-	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+	static String fName = "smalltweetdata.txt";
+	//static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
 	//static Stack<TweetList> searchStack = new Stack<TweetList>();
 	
@@ -128,6 +128,7 @@ public class TweetListSearcher
 	//			searchStack.peek().filterText(searchHistory[index]);
 				break;
 			case 2:
+				searchYear = -1; searchMonth = -1; searchDay = -1;
 				Animate.loadingEffect("Please enter the desired year, or enter <-1> to skip:  ", time);
 				searchYear = keyboard.nextInt();
 				keyboard.nextLine();
@@ -142,11 +143,7 @@ public class TweetListSearcher
 						searchDay = keyboard.nextInt();
 						keyboard.nextLine();
 					}
-//					else
-//						searchDay = -1;
 				}
-//				else
-//					searchMonth = -1; searchDay = -1;
 				searchHistory[index] = ("Date Search: " + searchYear + ":" + searchMonth + ":" + searchDay + ":");
 					if(index == 0)
 						BuildDatabase();
@@ -174,6 +171,7 @@ public class TweetListSearcher
 
 				break;
 			case 4:
+				searchHour = -1; searchMin = -1; searchSec = -1;
 				Animate.loadingEffect("Please enter the desired hour, or enter <-1> to skip:  ", time);
 				searchHour = keyboard.nextInt();
 				keyboard.nextLine();
@@ -188,12 +186,8 @@ public class TweetListSearcher
 						searchSec = keyboard.nextInt();
 						keyboard.nextLine();
 					}
-//					else
-//						searchSec = -1;
 				}
-//				else
-//					searchMin = -1; searchSec = -1;
-				searchHistory[index] = ("Timestamp Search: " + searchHour + ":" + searchMin + ":" + searchSec + ":");
+				searchHistory[index] = ("Timestamp Search: " + searchHour + ":" + searchMin + ":" + searchSec);
 					if(index == 0)
 						BuildDatabase();
 					else

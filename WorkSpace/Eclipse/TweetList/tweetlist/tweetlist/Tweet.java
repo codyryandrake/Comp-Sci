@@ -99,14 +99,14 @@ public class Tweet {
 					if(sec == -1) //sec was skipped
 						return true;
 					}
-				return false;
+//				return false;
 			}
 			else
 			{
 				if(min == -1) //min was skipped
 					return true;
 			}
-			return false;
+//			return false;
 		}
 		else
 		{
@@ -134,14 +134,14 @@ public class Tweet {
 					if(d == -1) //sec was skipped
 						return true;
 					}
-				return false;
+				//return false;
 			}
 			else
 			{
 				if(m == -1) //min was skipped
 					return true;
 			}
-			return false;
+			//return false;
 		}
 		else
 		{
