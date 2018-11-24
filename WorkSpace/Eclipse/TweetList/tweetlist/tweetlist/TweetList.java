@@ -105,7 +105,7 @@ public class TweetList {
 	  { 
 		while(!isEmpty())
     	{													//If we find the keyword in curr's text field
-    		if (head.value.dateContains(hr, min, sec) == false)
+    		if (head.value.timeContains(hr, min, sec) == false)
     	  	{
     	  		head = head.next;
     	  	}
@@ -118,7 +118,7 @@ public class TweetList {
 
     		while(curr != null)
     		{
-    			if (curr.value.dateContains(hr, min, sec) == true)
+    			if (curr.value.timeContains(hr, min, sec) == true)
     	  		{ 											//If we find the keyword in curr's text field	
     	  			prev = curr; 							//Shift our prev pointer up to match curr
     	  	  		curr = curr.next;						//Advance our curr to the next node

@@ -27,8 +27,8 @@ public class TweetListSearcher
 	static double maxDist;
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
 	searchHour = -1, searchMin = -1, searchSec = -1;
-	static String fName = "smalltweetdata.txt";
-	//static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+	//static String fName = "smalltweetdata.txt";
+	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
 	//static Stack<TweetList> searchStack = new Stack<TweetList>();
 	
@@ -128,28 +128,30 @@ public class TweetListSearcher
 	//			searchStack.peek().filterText(searchHistory[index]);
 				break;
 			case 2:
-					Animate.loadingEffect("Please enter the desired year:", time);
-					searchYear = keyboard.nextInt();
+				Animate.loadingEffect("Please enter the desired year, or enter <-1> to skip:  ", time);
+				searchYear = keyboard.nextInt();
+				keyboard.nextLine();
+				if(searchYear != -1) //User entered year
+				{
+					Animate.loadingEffect("Please enter the desired month, or enter <-1> to skip:  ", time);
+					searchMonth = keyboard.nextInt();
 					keyboard.nextLine();
-					if (Prompt("Also specify by month?\n"))
+					if(searchMonth != -1) //User entered month
 					{
-						Animate.loadingEffect("Please enter the desired month:", time);
-						searchMonth = keyboard.nextInt();
+						Animate.loadingEffect("Please enter the desired day, or enter <-1> to skip:  ", time);
+						searchDay = keyboard.nextInt();
 						keyboard.nextLine();
-						if (Prompt("Also specify by day?\n"))
-						{
-							Animate.loadingEffect("Please enter the desired day:", time);
-							searchDay = keyboard.nextInt();
-							keyboard.nextLine();
-						}
 					}
-				searchHistory[index] = ("Date Query: " + searchYear + "/" + searchMonth + "/" + searchDay);
-				if(index == 0)
-					BuildDatabase();
-				else
-					tList.filterDate(searchYear, searchMonth, searchDay); //append the tweet to our list and loop
-
-	//			searchStack.peek().filterText(searchHistory[index]);
+//					else
+//						searchDay = -1;
+				}
+//				else
+//					searchMonth = -1; searchDay = -1;
+				searchHistory[index] = ("Date Search: " + searchYear + ":" + searchMonth + ":" + searchDay + ":");
+					if(index == 0)
+						BuildDatabase();
+					else
+						tList.filterDate(searchYear, searchMonth, searchDay);
 				break;
 			case 3:
 				Animate.loadingEffect("Please specify a Latitude Coordinate:  ", time);
@@ -170,31 +172,32 @@ public class TweetListSearcher
 				else
 					tList.filterLocation(searchLat, searchLon, maxDist);
 
-	//					searchStack.peek().filterText(searchHistory[index]);
-			break;
+				break;
 			case 4:
-					Animate.loadingEffect("Please enter the desired hour:", time);
-					searchHour = keyboard.nextInt();
+				Animate.loadingEffect("Please enter the desired hour, or enter <-1> to skip:  ", time);
+				searchHour = keyboard.nextInt();
+				keyboard.nextLine();
+				if(searchHour != -1)
+				{
+					Animate.loadingEffect("Please enter the desired minute, or enter <-1> to skip:  ", time);
+					searchMin = keyboard.nextInt();
 					keyboard.nextLine();
-					if(Prompt("Also specify by minute?"))
+					if(searchMin != -1)
 					{
-						Animate.loadingEffect("Please enter the desired minute:", time);
-						searchMin = keyboard.nextInt();
+						Animate.loadingEffect("Please enter the desired second, or enter <-1> to skip:  ", time);
+						searchSec = keyboard.nextInt();
 						keyboard.nextLine();
-						if (Prompt("Also specify by second?\n"))
-						{
-							Animate.loadingEffect("Please enter the desired second:", time);
-							searchSec = keyboard.nextInt();
-							keyboard.nextLine();
-						}
 					}
-				searchHistory[index] = ("Timestamp Query: " + searchHour + ":" + searchMin + ":" + searchSec);
-				if(index == 0)
-					BuildDatabase();
-				else
-					tList.filterDate(searchHour, searchMin, searchSec); //append the tweet to our list and loop
-
-	//			searchStack.peek().filterText(searchHistory[index]);
+//					else
+//						searchSec = -1;
+				}
+//				else
+//					searchMin = -1; searchSec = -1;
+				searchHistory[index] = ("Timestamp Search: " + searchHour + ":" + searchMin + ":" + searchSec + ":");
+					if(index == 0)
+						BuildDatabase();
+					else
+						tList.filterTime(searchHour, searchMin, searchSec);
 				break;
 		}
 		index++;
@@ -280,8 +283,9 @@ public class TweetListSearcher
 	{
 		Animate.loadingEffect(str, time);
 		String s = keyboard.nextLine();
+//		keyboard.next();
 		System.out.println();
-		if (s.contains("y"))
+		if (s.startsWith("y"))
 			return true;
 		else
 			return false;

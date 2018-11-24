@@ -35,7 +35,9 @@ public class Tweet {
 			day =   Integer.parseInt(d[2]);				
 		time = scan.next(); //Scan in the time string		
 			String[] t = time.split(":");
-			hour = Integer.parseInt(t[0]);
+			hour =   Integer.parseInt(t[0]);
+			minute = Integer.parseInt(t[1]);
+			second = Integer.parseInt(t[2]);
 		text = scan.nextLine();
 		
 		scan.close();
@@ -52,7 +54,9 @@ public class Tweet {
 			  "\n\t||Distance From Query: " + dist);
 		System.out.println(
 			  "\n\t||Date: " + date
+			+ "year" + year + "month" + month + "day" + day
 			+ "\n\t||Time: " + time
+			+ "hour" + hour + "minute" + minute + "second" + second
 			+ "\n\t||Text: " + text);
 		System.out.print("\t-----------------------------\n\n");
 
@@ -79,42 +83,72 @@ public class Tweet {
 	
 	public boolean timeContains(int hr, int min, int sec)
 	{
-		if (hr != -1) //User specified a hour
+		if(hr == hour) //hour matches
 		{
-			if (min != -1) //User specified hour, minute
+//			System.out.println("\nHour matches.  ");
+			if(min == minute) //minute matches
 			{
-				if (sec != -1) //User specified hour, minute, second
+//				System.out.println("Minute matches.  ");
+				if(sec == second) 
 				{
-					return (hr == hour && min == minute && sec == second);
+//					System.out.println("Second matches.\n");
+					return true; //All parameters match
 				}
 				else
-					return (hr == hour && min == minute);
-			}			
+					{
+					if(sec == -1) //sec was skipped
+						return true;
+					}
+				return false;
+			}
 			else
-				return (hr == hour);
-				
+			{
+				if(min == -1) //min was skipped
+					return true;
+			}
+			return false;
 		}
-		return false; //No valid dates specified
+		else
+		{
+			if(hr == -1) //hour was skipped
+				return true;
+		}
+		return false;
 	}
 	
 	public boolean dateContains(int y, int m, int d)
 	{
-		if (y != -1) //User specified a year
+		if(y == year) //hour matches
 		{
-			if (m != -1) //User specified year, month
+//			System.out.println("\nYear matches.  ");
+			if(m == month) //minute matches
 			{
-				if (d != -1) //User specified year, month, day
+//				System.out.println("Month matches.  ");
+				if(d == day) 
 				{
-					return (y == year && m == month && d == day);
+//					System.out.println("Day matches.\n");
+					return true; //All parameters match
 				}
 				else
-					return (y == year && m == month);
-			}			
+					{
+					if(d == -1) //sec was skipped
+						return true;
+					}
+				return false;
+			}
 			else
-				return (y == year);
-				
+			{
+				if(m == -1) //min was skipped
+					return true;
+			}
+			return false;
 		}
-		return false; //No valid dates specified
+		else
+		{
+			if(y == -1) //hour was skipped
+				return true;
+		}
+		return false;
 	}
 	
 
