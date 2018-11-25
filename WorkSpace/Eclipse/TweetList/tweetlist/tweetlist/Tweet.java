@@ -38,7 +38,7 @@ public class Tweet {
 			hour =   Integer.parseInt(t[0]);
 			minute = Integer.parseInt(t[1]);
 			second = Integer.parseInt(t[2]);
-		text = scan.nextLine();
+		text = scan.nextLine().trim();
 		
 		scan.close();
 	}
@@ -47,17 +47,14 @@ public class Tweet {
 	{
 		System.out.print("\n\t-----------------------------");
 		System.out.print(
-			  "\n\t||Latitude: " + lat
-			+ "\n\t||Longitude: " + lon);
-		if(dist != null)
-			System.out.print(
-			  "\n\t||Distance From Query: " + dist);
+				"\n\t||Text: " + text
+			  + "\n\t||Location: (" + lat + "," + lon + ")");	if(dist != null)
+				  											System.out.print("\n"
+			  + "\t||     Distance From Query: " + dist);
 		System.out.println(
 			  "\n\t||Date: " + date
-			+ "year" + year + "month" + month + "day" + day
-			+ "\n\t||Time: " + time
-			+ "hour" + hour + "minute" + minute + "second" + second
-			+ "\n\t||Text: " + text);
+			+ "\n\t||Time: " + time);
+			
 		System.out.print("\t-----------------------------\n\n");
 
 	}
@@ -75,46 +72,6 @@ public class Tweet {
 			
 	}
 	
-	public boolean locationContains(int lx, int ly, double maxDist)
-	{		
-		dist = Point.distance(lat, lon, lx, ly);
-		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
-	}
-	
-	public boolean timeContains(int hr, int min, int sec)
-	{
-		if(hr == hour) //hour matches
-		{
-//			System.out.println("\nHour matches.  ");
-			if(min == minute) //minute matches
-			{
-//				System.out.println("Minute matches.  ");
-				if(sec == second) 
-				{
-//					System.out.println("Second matches.\n");
-					return true; //All parameters match
-				}
-				else
-					{
-					if(sec == -1) //sec was skipped
-						return true;
-					}
-//				return false;
-			}
-			else
-			{
-				if(min == -1) //min was skipped
-					return true;
-			}
-//			return false;
-		}
-		else
-		{
-			if(hr == -1) //hour was skipped
-				return true;
-		}
-		return false;
-	}
 	
 	public boolean dateContains(int y, int m, int d)
 	{
@@ -150,6 +107,51 @@ public class Tweet {
 		}
 		return false;
 	}
+	
+	
+	public boolean locationContains(int lx, int ly, double maxDist)
+	{		
+		dist = Point.distance(lat, lon, lx, ly);
+		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
+	}
+	
+	
+	public boolean timeContains(int hr, int min, int sec)
+	{
+		if(hr == hour) //hour matches
+		{
+//			System.out.println("\nHour matches.  ");
+			if(min == minute) //minute matches
+			{
+//				System.out.println("Minute matches.  ");
+				if(sec == second) 
+				{
+//					System.out.println("Second matches.\n");
+					return true; //All parameters match
+				}
+				else
+					{
+					if(sec == -1) //sec was skipped
+						return true;
+					}
+				return false;
+			}
+			else
+			{
+				if(min == -1) //min was skipped
+					return true;
+			}
+			return false;
+		}
+		else
+		{
+			if(hr == -1) //hour was skipped
+				return true;
+		}
+		return false;
+	}
+	
+	
 	
 
 	

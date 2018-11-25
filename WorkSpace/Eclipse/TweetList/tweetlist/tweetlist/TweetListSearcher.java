@@ -27,27 +27,27 @@ public class TweetListSearcher
 	static double maxDist;
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
 	searchHour = -1, searchMin = -1, searchSec = -1;
-	static String fName = "smalltweetdata.txt";
-	//static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+	//static String fName = "smalltweetdata.txt";
+	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
 	//static Stack<TweetList> searchStack = new Stack<TweetList>();
 	
 	public static void main(String[] args)
 	{
-		//Animate.enable = true;
+		Animate.enable = true;
 		Animate.loadingEffect("--------------------------------------------", time);
 		Animate.loadingEffect("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.loadingEffect("\n--------------------------------------------", time);
 		
 //		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
 //			Animate.enable = false;
-		if(Prompt("\nSpecify data file?"))
-		{
-			if(Prompt("Please enter the data file name with file type."))
-			fName = keyboard.nextLine();
-		}
-		else
-			Animate.loadingEffect("Data file defaulted to: " + fName + ".\n\n", time);
+//		if(Prompt("\nSpecify data file?"))
+//		{
+//			if(Prompt("Please enter the data file name with file type."))
+//			fName = keyboard.nextLine();
+//		}
+//		else
+			Animate.loadingEffect("\nData file defaulted to: " + fName + ".\n\n", time);
 		queryOptions();
 	}
 
@@ -79,9 +79,6 @@ public class TweetListSearcher
 				if (queryType > 0 && queryType < 5) //If the user has selected a search option
 				{
 					SearchDatabase(); //First launch database initialization
-//					if (index > 0)
-//						PrintSearchHistory();
-					//searchStack.push(tList);
 					continue;
 				}
 				if (queryType == 5)
@@ -118,9 +115,8 @@ public class TweetListSearcher
 		switch(queryType)
 		{
 			case 1:
-				Animate.loadingEffect("Please specify a search term or phrase:\n", time);
+				Animate.loadingEffect("Please specify a search term or phrase:", time);
 				searchHistory[index] = keyboard.nextLine();	
-				Animate.loadingEffect("\nKeyword/Phrase Query: [" + searchHistory[index] + "]", time);
 				if(index == 0)
 					BuildDatabase();
 				else
@@ -144,7 +140,7 @@ public class TweetListSearcher
 						keyboard.nextLine();
 					}
 				}
-				searchHistory[index] = ("Date Search: " + searchYear + ":" + searchMonth + ":" + searchDay + ":");
+				searchHistory[index] = (searchYear + "/" + searchMonth + "/" + searchDay);
 					if(index == 0)
 						BuildDatabase();
 					else
@@ -160,10 +156,7 @@ public class TweetListSearcher
 				Animate.loadingEffect("Please specify a maximum search distance:  ", time);
 				maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
-				searchHistory[index] = ("Location Search:"
-								   + "\nLAT: " + searchLat
-								   + "\nLON: " + searchLon
-								   + "\nSEARCH RADIUS: " + maxDist);
+				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Area: " + maxDist);
 				if(index == 0)
 					BuildDatabase();
 				else
@@ -187,7 +180,7 @@ public class TweetListSearcher
 						keyboard.nextLine();
 					}
 				}
-				searchHistory[index] = ("Timestamp Search: " + searchHour + ":" + searchMin + ":" + searchSec);
+				searchHistory[index] = (searchHour + ":" + searchMin + ":" + searchSec);
 					if(index == 0)
 						BuildDatabase();
 					else
@@ -226,28 +219,28 @@ public class TweetListSearcher
 				case 1:
 					if(t.textContains(searchHistory[index]) == true)
 					{
-						Animate.loadingEffect("\nKeyword match found and appended.\n", time);
+						//Animate.loadingEffect("\nKeyword match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;
 				case 2:
 					if(t.dateContains(searchYear, searchMonth, searchDay) == true)
 					{
-						Animate.loadingEffect("\nDate match found and appended.\n", time);
+						//Animate.loadingEffect("\nDate match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;		
 				case 3:
 					if(t.locationContains(searchLat, searchLon, maxDist) == true)
 					{
-						Animate.loadingEffect("\nDate match found and appended.\n", time);
+						//Animate.loadingEffect("\nLocation match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;
 				case 4:
 					if(t.timeContains(searchHour, searchMin, searchSec) == true)
 					{
-						Animate.loadingEffect("\nTimestamp match found and appended.\n", time);
+						//Animate.loadingEffect("\nTimestamp match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;
@@ -263,15 +256,23 @@ public class TweetListSearcher
 	public static void PrintSearchHistory()
 	{
 		Animate.loadingEffect("\n--------------------------------------------------------------------", time);
-		Animate.loadingEffect("\nQuery History:\n", time);
+		Animate.loadingEffect("\nQuery History: -1 represents a User-omitted parameter.\n\n"
+				+ "INITIAL QUERY:\n", time);
 		for (int i = 0; i < index; i++)
 		{
-			Animate.loadingEffect("==>[" + searchHistory[i] + "]", time);
-			if(i%4 == 0 && i > 0) //Every 5 Tweets
-				System.out.println(); //Move the cursor down a row
+			Animate.loadingEffect("[" + searchHistory[i] + "]", time);
+			if(i != 0) //Every 6 Tweets
+			{
+				Animate.loadingEffect("➣➣➣", time); //Move the cursor down a row
+				if(i%5 == 0)
+					System.out.println();
+			}
+			else
+				System.out.println("\n");
 		}
 		Animate.loadingEffect("\n\nTweets found: " + tList.size(), time);
 		Animate.loadingEffect("\n--------------------------------------------------------------------\n", time);
+		Prompt("\n\nContinue?");
 	}
 	public static boolean Prompt(String str) 
 	{
@@ -284,5 +285,12 @@ public class TweetListSearcher
 		else
 			return false;
 	}
+	
+	
+//	public static void promptEnterKey() 
+//	{ //Prompt method provided by Professor Case.
+//		try {System.in.read(new byte[2]);}
+//		catch (IOException e) {e.printStackTrace();}
+//	}
 }
 
