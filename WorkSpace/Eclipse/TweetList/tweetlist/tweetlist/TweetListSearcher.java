@@ -23,7 +23,7 @@ public class TweetListSearcher
 	static int time = 15;
 	static double searchLon, searchLat, maxDist;
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
-				searchHour = -1, searchMin = -1, searchSec = -1;
+			   searchHour = -1, searchMin = -1, searchSec = -1;
 	//static String fName = "smalltweetdata.txt";
 	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
