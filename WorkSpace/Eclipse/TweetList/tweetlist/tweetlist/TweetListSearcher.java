@@ -21,10 +21,9 @@ public class TweetListSearcher
 	static int index = 0;
 	static int queryType;
 	static int time = 15;
-	static int searchLon, searchLat;
-	static double maxDist;
+	static double searchLon, searchLat, maxDist;
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
-	searchHour = -1, searchMin = -1, searchSec = -1;
+				searchHour = -1, searchMin = -1, searchSec = -1;
 	//static String fName = "smalltweetdata.txt";
 	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
@@ -113,7 +112,7 @@ public class TweetListSearcher
 					tList.filterText(searchHistory[index]);
 				break;
 			case 2:
-				searchYear = -1; searchMonth = -1; searchDay = -1;
+				int searchYear = -1; searchMonth = -1; searchDay = -1;
 				Animate.loadingEffect("Please enter the desired year, or enter <-1> to skip:  ", time);
 				searchYear = keyboard.nextInt();
 				keyboard.nextLine();
@@ -137,10 +136,10 @@ public class TweetListSearcher
 				break;
 			case 3:
 				Animate.loadingEffect("Please specify a Latitude Coordinate:  ", time);
-				int searchLat = keyboard.nextInt();
+				searchLat = keyboard.nextInt();
 				keyboard.nextLine();
 				Animate.loadingEffect("Please specify a Longitude Coordinate:  ", time);
-				int searchLon = keyboard.nextInt();
+				searchLon = keyboard.nextInt();
 				keyboard.nextLine();
 				Animate.loadingEffect("Please specify a maximum search distance:  ", time);
 				maxDist = keyboard.nextDouble();

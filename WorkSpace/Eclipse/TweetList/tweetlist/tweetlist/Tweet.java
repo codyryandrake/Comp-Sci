@@ -93,9 +93,9 @@ public class Tweet
 	}
 	
 	
-	public boolean locationContains(int lx, int ly, double maxDist)
+	public boolean locationContains(double uLon, double uLat, double maxDist)
 	{//Compare the distance between all tweets and the desired coordinates		
-		dist = Point.distance(lat, lon, lx, ly); //Search-radius
+		dist = Point.distance(lat, lon, uLon, uLat); //Search-radius
 		return (dist <= maxDist); //Returns true for all tweets within a 								  
 	}							  //search-radius.
 	

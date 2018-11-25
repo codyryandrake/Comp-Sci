@@ -71,7 +71,7 @@ public class TweetList {
     public void filterText(String keyword) 
   { 
 	while(!isEmpty())
-	{													//If we find the keyword in curr's text field
+	{	//If we find the keyword in curr's text field
 	  	if (head.value.textContains(keyword) == false)
 	  	{
 	  		head = head.next;
@@ -86,25 +86,25 @@ public class TweetList {
 		while(curr != null)
 		{
 	  		if (curr.value.textContains(keyword) == true) 
-	  		{ 											//If we find the keyword in curr's text field	
-	  			prev = curr; 							//Shift our prev pointer up to match curr
-	  	  		curr = curr.next;						//Advance our curr to the next node
+	  		{ 							//If we find the keyword in curr's text field	
+	  			prev = curr; 			//Shift our prev pointer up to match curr
+	  	  		curr = curr.next;		//Advance our curr to the next node
 	
 	  		}
-	  		else 									   //If the keyword is NOT found in curr's text field
+	  		else 						//If the keyword is NOT found in curr's text field
 	  		{
-	  			prev.next = curr.next; 				   //Point our prev node past the curr node
-	  	  		curr = curr.next; 					   //Advance our curr to the next node
+	  			prev.next = curr.next; 	//Point our prev node past the curr node
+	  	  		curr = curr.next; 		//Advance our curr to the next node
 	  		}
 		}  		
   	} 
   }
     
     
-	public void filterDate(int y, int m, int d) //Filters by year, month, date
-	  { 
+	public void filterDate(int y, int m, int d) 
+	  { //Filters by year, month, date
 		while(!isEmpty())
-    	{													//If we find the keyword in curr's text field
+    	{//If we find the keyword in curr's text field
     		if (head.value.dateContains(y, m, d) == false)
     	  	{
     	  		head = head.next;
@@ -134,7 +134,7 @@ public class TweetList {
 	  }
 	
 	
-	public void filterLocation(int uLon, int uLat, double maxDist)
+	public void filterLocation(double uLon, double uLat, double maxDist)
     {  
     	while(!isEmpty())
     	{													//If we find the keyword in curr's text field
