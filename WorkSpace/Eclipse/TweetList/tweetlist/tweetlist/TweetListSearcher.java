@@ -31,9 +31,9 @@ public class TweetListSearcher
 	public static void main(String[] args)
 	{
 		Animate.enable = false; //Keep animation off for grading purposes
-		Animate.loadingEffect("--------------------------------------------", time);
-		Animate.loadingEffect("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
-		Animate.loadingEffect("\n--------------------------------------------", time);
+		Animate.TextDraw("--------------------------------------------", time);
+		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
+		Animate.TextDraw("\n--------------------------------------------", time);
 		
 //		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
 //			Animate.enable = false;
@@ -43,24 +43,24 @@ public class TweetListSearcher
 			fName = keyboard.nextLine();
 		}
 		else
-			Animate.loadingEffect("\nData file defaulted to: " + fName + ".\n\n", time);
-		queryOptions();
+			Animate.TextDraw("\nData file defaulted to: " + fName + ".\n\n", time);
+		Options();
 	}
 
-	public static void queryOptions()
+	public static void Options()
 	{
 		while(true) //Exiting this loop closes the program
 		{
 			while(true) //Exiting this loop re-confirms program termination
 			{
-				Animate.loadingEffect(
+				Animate.TextDraw(
 						"\nPlease select from the following:\n\n"
 						+ "\t[1] Search by Word or Phrase?\n\n"
 						+ "\t[2] Search by Date?\n\n"
 						+ "\t[3] Search by Location?\n\n"
 						+ "\t[4] Search by Timestamp?\n\n", time);					
 				if (index > 0) //These options hidden until a list is created
-					Animate.loadingEffect(
+					Animate.TextDraw(
 						  "\t[5] Print Results?\n\n"
 						+ "\t[6] Rebuild Database?\n\n"
 						+ "\t[0] Exit Program?\n\n", time);
@@ -91,7 +91,7 @@ public class TweetListSearcher
 			}
 			if(Prompt("Are you sure you want to quit the program?"))
 			{
-				Animate.loadingEffect("Program terminated by User. Goodbye.", time);
+				Animate.TextDraw("Program terminated by User. Goodbye.", time);
 				keyboard.close();
 				System.exit(0);	
 			}
@@ -104,7 +104,7 @@ public class TweetListSearcher
 		switch(queryType)
 		{
 			case 1:
-				Animate.loadingEffect("Please specify a search term or phrase:", time);
+				Animate.TextDraw("Please specify a search term or phrase:", time);
 				searchHistory[index] = keyboard.nextLine();	
 				if(index == 0)
 					BuildDatabase();
@@ -113,17 +113,17 @@ public class TweetListSearcher
 				break;
 			case 2:
 				int searchYear = -1; searchMonth = -1; searchDay = -1;
-				Animate.loadingEffect("Please enter the desired year, or enter <-1> to skip:  ", time);
+				Animate.TextDraw("Please enter the desired year, or enter <-1> to skip:  ", time);
 				searchYear = keyboard.nextInt();
 				keyboard.nextLine();
 				if(searchYear != -1) //User entered year
 				{
-					Animate.loadingEffect("Please enter the desired month, or enter <-1> to skip:  ", time);
+					Animate.TextDraw("Please enter the desired month, or enter <-1> to skip:  ", time);
 					searchMonth = keyboard.nextInt();
 					keyboard.nextLine();
 					if(searchMonth != -1) //User entered month
 					{
-						Animate.loadingEffect("Please enter the desired day, or enter <-1> to skip:  ", time);
+						Animate.TextDraw("Please enter the desired day, or enter <-1> to skip:  ", time);
 						searchDay = keyboard.nextInt();
 						keyboard.nextLine();
 					}
@@ -135,13 +135,13 @@ public class TweetListSearcher
 						tList.filterDate(searchYear, searchMonth, searchDay);
 				break;
 			case 3:
-				Animate.loadingEffect("Please specify a Latitude Coordinate:  ", time);
+				Animate.TextDraw("Please specify a Latitude Coordinate:  ", time);
 				searchLat = keyboard.nextInt();
 				keyboard.nextLine();
-				Animate.loadingEffect("Please specify a Longitude Coordinate:  ", time);
+				Animate.TextDraw("Please specify a Longitude Coordinate:  ", time);
 				searchLon = keyboard.nextInt();
 				keyboard.nextLine();
-				Animate.loadingEffect("Please specify a maximum search distance:  ", time);
+				Animate.TextDraw("Please specify a maximum search distance:  ", time);
 				maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
 				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Area: " + maxDist);
@@ -152,17 +152,17 @@ public class TweetListSearcher
 				break;
 			case 4:
 				searchHour = -1; searchMin = -1; searchSec = -1;
-				Animate.loadingEffect("Please enter the desired hour, or enter <-1> to skip:  ", time);
+				Animate.TextDraw("Please enter the desired hour, or enter <-1> to skip:  ", time);
 				searchHour = keyboard.nextInt();
 				keyboard.nextLine();
 				if(searchHour != -1)
 				{
-					Animate.loadingEffect("Please enter the desired minute, or enter <-1> to skip:  ", time);
+					Animate.TextDraw("Please enter the desired minute, or enter <-1> to skip:  ", time);
 					searchMin = keyboard.nextInt();
 					keyboard.nextLine();
 					if(searchMin != -1)
 					{
-						Animate.loadingEffect("Please enter the desired second, or enter <-1> to skip:  ", time);
+						Animate.TextDraw("Please enter the desired second, or enter <-1> to skip:  ", time);
 						searchSec = keyboard.nextInt();
 						keyboard.nextLine();
 					}
@@ -178,7 +178,7 @@ public class TweetListSearcher
 		PrintSearchHistory();
 		if(tList.size() == 0) 
 		{ //If we ever encounter an empty list
-			Animate.loadingEffect("\nLIST EMPTY! Rebuilding database...\n\n", time);
+			Animate.TextDraw("\nLIST EMPTY! Rebuilding database...\n\n", time);
 			index = 0;
 		}
 	
@@ -192,7 +192,7 @@ public class TweetListSearcher
 	public static void BuildDatabase()
 	{
 		try {
-			Animate.loadingEffect("\nBuilding database...", time);
+			Animate.TextDraw("\nBuilding database...", time);
 			Tweet t;
 			tList = new TweetList(); //Reset our tList
 			FileReader file = new FileReader(fName);
@@ -206,28 +206,28 @@ public class TweetListSearcher
 				case 1:
 					if(t.textContains(searchHistory[index]) == true)
 					{
-						//Animate.loadingEffect("\nKeyword match found and appended.\n", time);
+						//Animate.TextDraw("\nKeyword match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;
 				case 2:
 					if(t.dateContains(searchYear, searchMonth, searchDay) == true)
 					{
-						//Animate.loadingEffect("\nDate match found and appended.\n", time);
+						//Animate.TextDraw("\nDate match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;		
 				case 3:
 					if(t.locationContains(searchLat, searchLon, maxDist) == true)
 					{
-						//Animate.loadingEffect("\nLocation match found and appended.\n", time);
+						//Animate.TextDraw("\nLocation match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;
 				case 4:
 					if(t.timeContains(searchHour, searchMin, searchSec) == true)
 					{
-						//Animate.loadingEffect("\nTimestamp match found and appended.\n", time);
+						//Animate.TextDraw("\nTimestamp match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
 					}
 					break;
@@ -242,28 +242,28 @@ public class TweetListSearcher
 	
 	public static void PrintSearchHistory()
 	{
-		Animate.loadingEffect("\n--------------------------------------------------------------------", time);
-		Animate.loadingEffect("\nQuery History: -1 represents a User-omitted parameter.\n\n"
+		Animate.TextDraw("\n--------------------------------------------------------------------", time);
+		Animate.TextDraw("\nQuery History: -1 represents a User-omitted parameter.\n\n"
 				+ "INITIAL QUERY:\n", time);
 		for (int i = 0; i < index; i++)
 		{
-			Animate.loadingEffect("[" + searchHistory[i] + "]", time);
+			Animate.TextDraw("[" + searchHistory[i] + "]", time);
 			if(i != 0) //Every 6 Tweets
 			{
-				Animate.loadingEffect("➣➣➣", time); //Move the cursor down a row
+				Animate.TextDraw("➣➣➣", time); //Move the cursor down a row
 				if(i%5 == 0)
 					System.out.println();
 			}
 			else
 				System.out.println("\n");
 		}
-		Animate.loadingEffect("\n\nTweets found: " + tList.size(), time);
-		Animate.loadingEffect("\n--------------------------------------------------------------------", time);
+		Animate.TextDraw("\n\nTweets found: " + tList.size(), time);
+		Animate.TextDraw("\n--------------------------------------------------------------------", time);
 		Prompt("\n\nContinue?");
 	}
 	public static boolean Prompt(String str) 
 	{
-		Animate.loadingEffect(str, time);
+		Animate.TextDraw(str, time);
 		String s = keyboard.nextLine();
 		System.out.println();
 		if (s.startsWith("y"))
