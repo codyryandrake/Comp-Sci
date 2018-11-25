@@ -61,8 +61,8 @@ public class TweetList {
     
     // Checks if the Tweet List is empty. 
     public boolean isEmpty()
-    {        
-        return (head == null); //Does head point to an element in the list or just to null?       
+    { //Does head point to an element in the list or just to null?              
+        return (head == null); 
     }
     
    

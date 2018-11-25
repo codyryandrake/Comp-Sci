@@ -11,13 +11,13 @@ package tweetlist;
 import java.awt.Point;
 import java.util.Scanner;
 
-public class Tweet {
+public class Tweet 
+{
 	private double lat, lon;
 	private Double dist = null;
-	int year, month, day;
-	int hour, minute, second;
-	String date, time, text;
-	static Scanner keyboard = new Scanner(System.in);
+	private int year, month, day;
+	private int hour, minute, second;
+	private String date, time, text;
 	
 	public Tweet(String s)
 	{
@@ -38,7 +38,7 @@ public class Tweet {
 			hour =   Integer.parseInt(t[0]);
 			minute = Integer.parseInt(t[1]);
 			second = Integer.parseInt(t[2]);
-		text = scan.nextLine().trim();
+		text = scan.nextLine().trim(); //Scan in text field
 		
 		scan.close();
 	}
@@ -48,9 +48,9 @@ public class Tweet {
 		System.out.print("\n\t-----------------------------");
 		System.out.print(
 				"\n\t||Text: " + text
-			  + "\n\t||Location: (" + lat + "," + lon + ")");	if(dist != null)
+			  + "\n\t||Location: (" + lat + ", " + lon + ")");	if(dist != null)
 				  											System.out.print("\n"
-			  + "\t||     Distance From Query: " + dist);
+			  + "\t||     Distance From Query: [" + dist + "]");
 		System.out.println(
 			  "\n\t||Date: " + date
 			+ "\n\t||Time: " + time);
@@ -61,102 +61,67 @@ public class Tweet {
 	
 	public boolean textContains(String s)
 	{
-		//if (text.contains(s)) //If the phrase is found within
+		//If a tweet's text value contains the User-searched keyword/phrase
 		if (!(text.indexOf(s) == -1))
-		{
-			//System.out.println("\t\t\t\t\tTERM FOUND WITHIN");
-			return true;
-		}
-		
-		return false; //Otherwise return false
-			
+			return true; //return true	
+		return false; //Otherwise return false			
 	}
 	
 	
 	public boolean dateContains(int y, int m, int d)
-	{
-		if(y == year) //hour matches
+	{//Check if each section of 'date' matches the User's query
+		if(y == year) //year matches
 		{
-//			System.out.println("\nYear matches.  ");
-			if(m == month) //minute matches
+			if(m == month) //month matches
 			{
-//				System.out.println("Month matches.  ");
 				if(d == day) 
-				{
-//					System.out.println("Day matches.\n");
 					return true; //All parameters match
-				}
 				else
-					{
-					if(d == -1) //sec was skipped
+					if(d == -1) //day was skipped
 						return true;
-					}
-				//return false;
+				return false;
 			}
 			else
-			{
-				if(m == -1) //min was skipped
+				if(m == -1) //month was skipped
 					return true;
-			}
-			//return false;
+			return false;
 		}
 		else
-		{
-			if(y == -1) //hour was skipped
+			if(y == -1) //year was skipped
 				return true;
-		}
 		return false;
 	}
 	
 	
 	public boolean locationContains(int lx, int ly, double maxDist)
-	{		
-		dist = Point.distance(lat, lon, lx, ly);
-		return (dist <= maxDist); //Returns true for all tweets within a distance from a specified location.
-	}
+	{//Compare the distance between all tweets and the desired coordinates		
+		dist = Point.distance(lat, lon, lx, ly); //Search-radius
+		return (dist <= maxDist); //Returns true for all tweets within a 								  
+	}							  //search-radius.
 	
 	
 	public boolean timeContains(int hr, int min, int sec)
-	{
+	{//Check if each section of 'time' matches the User's query
 		if(hr == hour) //hour matches
 		{
-//			System.out.println("\nHour matches.  ");
 			if(min == minute) //minute matches
 			{
-//				System.out.println("Minute matches.  ");
 				if(sec == second) 
-				{
-//					System.out.println("Second matches.\n");
 					return true; //All parameters match
-				}
 				else
-					{
 					if(sec == -1) //sec was skipped
 						return true;
-					}
 				return false;
 			}
 			else
-			{
 				if(min == -1) //min was skipped
 					return true;
-			}
 			return false;
 		}
 		else
-		{
 			if(hr == -1) //hour was skipped
 				return true;
-		}
 		return false;
 	}
-	
-	
-	
-
-	
-	
-	
-	
 
 }

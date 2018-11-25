@@ -12,9 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-//import java.util.Random;
 import java.util.Scanner;
-//import java.util.Stack;
 
 public class TweetListSearcher 
 {
@@ -30,23 +28,22 @@ public class TweetListSearcher
 	//static String fName = "smalltweetdata.txt";
 	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
-	//static Stack<TweetList> searchStack = new Stack<TweetList>();
 	
 	public static void main(String[] args)
 	{
-		Animate.enable = true;
+		Animate.enable = false; //Keep animation off for grading purposes
 		Animate.loadingEffect("--------------------------------------------", time);
 		Animate.loadingEffect("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.loadingEffect("\n--------------------------------------------", time);
 		
 //		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
 //			Animate.enable = false;
-//		if(Prompt("\nSpecify data file?"))
-//		{
-//			if(Prompt("Please enter the data file name with file type."))
-//			fName = keyboard.nextLine();
-//		}
-//		else
+		if(Prompt("\nSpecify data file?"))
+		{
+			if(Prompt("Please enter the data file name with file type."))
+			fName = keyboard.nextLine();
+		}
+		else
 			Animate.loadingEffect("\nData file defaulted to: " + fName + ".\n\n", time);
 		queryOptions();
 	}
@@ -57,10 +54,6 @@ public class TweetListSearcher
 		{
 			while(true) //Exiting this loop re-confirms program termination
 			{
-//				if(index == 0 )
-//					queryType = 1;
-//				else
-//				{
 				Animate.loadingEffect(
 						"\nPlease select from the following:\n\n"
 						+ "\t[1] Search by Word or Phrase?\n\n"
@@ -75,30 +68,27 @@ public class TweetListSearcher
 				queryType = keyboard.nextInt(); //Get queryType
 				keyboard.nextLine();
 				
-
-				if (queryType > 0 && queryType < 5) //If the user has selected a search option
-				{
-					SearchDatabase(); //First launch database initialization
+				if (queryType > 0 && queryType < 5) 
+				{ //If the user has selected a search option
+					SearchDatabase();
 					continue;
 				}
 				if (queryType == 5)
-				{
-					tList.print(); //Print the refined list
-					PrintSearchHistory(); //Append our query history below the printed tweets
+				{ //Print the refined list
+					tList.print(); 
+					//Append our query history below the printed tweets
+					PrintSearchHistory(); 
 					continue;
 				}
 				if(queryType == 6)
 				{
 					if(index > 0 && Prompt("Reintialize database? All search history will be lost.\n\n"))
 							if(Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
-								index = 0;
-								//Animate.loadingEffect("Data file defaulted to " + fName + ".", time);					
-//					SearchDatabase(1);							
-					//searchStack.push(tList); //Add the newly filtered tList to the search stack				
+								index = 0;			
 					continue;
 				}
 				if (queryType == 0)
-					break; //Trigger program exit confirmation
+					break; //Exit inner-loop
 			}
 			if(Prompt("Are you sure you want to quit the program?"))
 			{
@@ -121,7 +111,6 @@ public class TweetListSearcher
 					BuildDatabase();
 				else
 					tList.filterText(searchHistory[index]);
-	//			searchStack.peek().filterText(searchHistory[index]);
 				break;
 			case 2:
 				searchYear = -1; searchMonth = -1; searchDay = -1;
@@ -161,7 +150,6 @@ public class TweetListSearcher
 					BuildDatabase();
 				else
 					tList.filterLocation(searchLat, searchLon, maxDist);
-
 				break;
 			case 4:
 				searchHour = -1; searchMin = -1; searchSec = -1;
@@ -187,10 +175,10 @@ public class TweetListSearcher
 						tList.filterTime(searchHour, searchMin, searchSec);
 				break;
 		}
-		index++;
+		index++; //Increment index after a search
 		PrintSearchHistory();
-		if(tList.size() == 0) //If we ever encounter an empty list
-		{
+		if(tList.size() == 0) 
+		{ //If we ever encounter an empty list
 			Animate.loadingEffect("\nLIST EMPTY! Rebuilding database...\n\n", time);
 			index = 0;
 		}
@@ -271,26 +259,17 @@ public class TweetListSearcher
 				System.out.println("\n");
 		}
 		Animate.loadingEffect("\n\nTweets found: " + tList.size(), time);
-		Animate.loadingEffect("\n--------------------------------------------------------------------\n", time);
+		Animate.loadingEffect("\n--------------------------------------------------------------------", time);
 		Prompt("\n\nContinue?");
 	}
 	public static boolean Prompt(String str) 
 	{
 		Animate.loadingEffect(str, time);
 		String s = keyboard.nextLine();
-//		keyboard.next();
 		System.out.println();
 		if (s.startsWith("y"))
 			return true;
-		else
-			return false;
+		return false;
 	}
-	
-	
-//	public static void promptEnterKey() 
-//	{ //Prompt method provided by Professor Case.
-//		try {System.in.read(new byte[2]);}
-//		catch (IOException e) {e.printStackTrace();}
-//	}
 }
 
