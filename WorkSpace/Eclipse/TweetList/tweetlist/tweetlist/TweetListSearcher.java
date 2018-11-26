@@ -25,44 +25,60 @@ public class TweetListSearcher
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
 			   searchHour = -1, searchMin = -1, searchSec = -1;
 	//static String fName = "smalltweetdata.txt";
-	static String fName = "tweetdata.txt"; //BIG DATA FILE! Takes 5+ min to read in.
+	static String fName; //BIG DATA FILE! Takes 5+ min to read in.
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
 	
 	public static void main(String[] args)
 	{
-		Animate.enable = false; //Keep animation off for grading purposes
+		Animate.enable = true; //Keep animation off for grading purposes
 		Animate.TextDraw("--------------------------------------------", time);
 		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.TextDraw("\n--------------------------------------------", time);
 		
 //		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
 //			Animate.enable = false;
-		if(Prompt("\nSpecify data file?"))
-		{
-			if(Prompt("Please enter the data file name with file type."))
-			fName = keyboard.nextLine();
-		}
-		else
-			Animate.TextDraw("\nData file defaulted to: " + fName + ".\n\n", time);
+		
+		
+		
 		Options();
 	}
-
+	
+	/*
+	 * A method for handling program options. On first run, User may specify the data file to be 
+	 * read from. User may choose to search by words, location, date, or timestamp. After an 
+	 * initial search the User may choose to print results, rebuild the database, or exit the program. 
+	 */
 	public static void Options()
 	{
 		while(true) //Exiting this loop closes the program
 		{
 			while(true) //Exiting this loop re-confirms program termination
 			{
+				if(fName == null) //True on first loop of program
+				{
+					if(Prompt("\nSpecify data file?"))
+					{
+						Animate.TextDraw("Please enter the data file name with file-type extension.\n"
+								+ "Example: tweetdata.txt   \n", time);
+						fName = keyboard.nextLine();
+					}
+					else
+					{
+						Animate.TextDraw("Default data file chosen.\n", time);
+						fName = "tweetdata.txt"; //default data file
+					}
+					Animate.TextDraw("\nData file: " + fName + ".\n\n", time);
+				}
 				Animate.TextDraw(
 						"\nPlease select from the following:\n\n"
 						+ "\t[1] Search by Word or Phrase?\n\n"
 						+ "\t[2] Search by Date?\n\n"
 						+ "\t[3] Search by Location?\n\n"
-						+ "\t[4] Search by Timestamp?\n\n", time);					
+						+ "\t[4] Search by Timestamp?\n\n"
+						+ "\t[5] Rebuild Database?\n\n", time);					
 				if (index > 0) //These options hidden until a list is created
 					Animate.TextDraw(
-						  "\t[5] Print Results?\n\n"
-						+ "\t[6] Rebuild Database?\n\n"
+						  "\t[6] Print Results?\n\n"
 						+ "\t[0] Exit Program?\n\n", time);
 				queryType = keyboard.nextInt(); //Get queryType
 				keyboard.nextLine();
@@ -71,19 +87,20 @@ public class TweetListSearcher
 				{ //If the user has selected a search option
 					SearchDatabase();
 					continue;
+				}				
+				if(queryType == 5)
+				{
+					if(Prompt("Reintialize database? All search history will be lost.\n\n"))
+							if(Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
+								fName = null; //Reset our filename preferences
+								index = 0; //Reset the search history index	
+					continue;
 				}
-				if (queryType == 5)
+				if (queryType == 6)
 				{ //Print the refined list
 					tList.print(); 
 					//Append our query history below the printed tweets
 					PrintSearchHistory(); 
-					continue;
-				}
-				if(queryType == 6)
-				{
-					if(index > 0 && Prompt("Reintialize database? All search history will be lost.\n\n"))
-							if(Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
-								index = 0;			
 					continue;
 				}
 				if (queryType == 0)
@@ -135,13 +152,13 @@ public class TweetListSearcher
 						tList.filterDate(searchYear, searchMonth, searchDay);
 				break;
 			case 3:
-				Animate.TextDraw("Please specify a Latitude Coordinate:  ", time);
-				searchLat = keyboard.nextInt();
+				Animate.TextDraw("Please specify a Latitude Coordinate {double}:  ", time);
+				searchLat = keyboard.nextDouble();
 				keyboard.nextLine();
-				Animate.TextDraw("Please specify a Longitude Coordinate:  ", time);
-				searchLon = keyboard.nextInt();
+				Animate.TextDraw("Please specify a Longitude Coordinate {double}:  ", time);
+				searchLon = keyboard.nextDouble();
 				keyboard.nextLine();
-				Animate.TextDraw("Please specify a maximum search distance:  ", time);
+				Animate.TextDraw("Please specify a maximum search distance {double}:  ", time);
 				maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
 				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Area: " + maxDist);
@@ -178,8 +195,9 @@ public class TweetListSearcher
 		PrintSearchHistory();
 		if(tList.size() == 0) 
 		{ //If we ever encounter an empty list
-			Animate.TextDraw("\nLIST EMPTY! Rebuilding database...\n\n", time);
-			index = 0;
+			Animate.TextDraw("\nLIST EMPTY! Rebooting...\n\n", time);
+			fName = null; //Reset our filename preferences
+			index = 0; //Reset our search history 
 		}
 	
 	}
@@ -205,35 +223,23 @@ public class TweetListSearcher
 				{//Keyword/Phrase search
 				case 1:
 					if(t.textContains(searchHistory[index]) == true)
-					{
-						//Animate.TextDraw("\nKeyword match found and appended.\n", time);
-						tList.prepend(t); //append the tweet to our list and loop
-					}
+						tList.prepend(t); //Append the tweet to our list and loop
 					break;
 				case 2:
 					if(t.dateContains(searchYear, searchMonth, searchDay) == true)
-					{
-						//Animate.TextDraw("\nDate match found and appended.\n", time);
-						tList.prepend(t); //append the tweet to our list and loop
-					}
+						tList.prepend(t); //Append the tweet to our list and loop
 					break;		
 				case 3:
 					if(t.locationContains(searchLat, searchLon, maxDist) == true)
-					{
-						//Animate.TextDraw("\nLocation match found and appended.\n", time);
-						tList.prepend(t); //append the tweet to our list and loop
-					}
+						tList.prepend(t); //Append the tweet to our list and loop
 					break;
 				case 4:
 					if(t.timeContains(searchHour, searchMin, searchSec) == true)
-					{
-						//Animate.TextDraw("\nTimestamp match found and appended.\n", time);
 						tList.prepend(t); //append the tweet to our list and loop
-					}
 					break;
 				}			
 			}
-			file.close(); //This will force a Scanner reset in the case we want to rebuild the database.
+			file.close(); //This will force a Scanner reset in case we want to rebuild the database.
 			read.close();
 		} 
 		catch (FileNotFoundException e) {System.out.println("The file " + fName + " could not be found.");} 
@@ -242,8 +248,8 @@ public class TweetListSearcher
 	
 	public static void PrintSearchHistory()
 	{
-		Animate.TextDraw("\n--------------------------------------------------------------------", time);
-		Animate.TextDraw("\nQuery History: -1 represents a User-omitted parameter.\n\n"
+		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
+		Animate.TextDraw("\n[" + fName + "] Query History: -1 represents a User-omitted parameter.\n\n"
 				+ "INITIAL QUERY:\n", time);
 		for (int i = 0; i < index; i++)
 		{
@@ -258,7 +264,7 @@ public class TweetListSearcher
 				System.out.println("\n");
 		}
 		Animate.TextDraw("\n\nTweets found: " + tList.size(), time);
-		Animate.TextDraw("\n--------------------------------------------------------------------", time);
+		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
 		Prompt("\n\nContinue?");
 	}
 	public static boolean Prompt(String str) 
