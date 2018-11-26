@@ -30,7 +30,7 @@ public class TweetListSearcher
 	
 	public static void main(String[] args)
 	{
-		Animate.enable = true; //Keep animation off for grading purposes
+		//Animate.enable = true; //Keep animation off for grading purposes
 		Animate.TextDraw("--------------------------------------------", time);
 		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.TextDraw("\n--------------------------------------------", time);
@@ -80,6 +80,7 @@ public class TweetListSearcher
 					Animate.TextDraw(
 						  "\t[6] Print Results?\n\n"
 						+ "\t[0] Exit Program?\n\n", time);
+				
 				queryType = keyboard.nextInt(); //Get queryType
 				keyboard.nextLine();
 				
@@ -129,7 +130,7 @@ public class TweetListSearcher
 					tList.filterText(searchHistory[index]);
 				break;
 			case 2:
-				int searchYear = -1; searchMonth = -1; searchDay = -1;
+				searchYear = -1; searchMonth = -1; searchDay = -1;
 				Animate.TextDraw("Please enter the desired year, or enter <-1> to skip:  ", time);
 				searchYear = keyboard.nextInt();
 				keyboard.nextLine();
