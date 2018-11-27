@@ -29,7 +29,7 @@ public class TweetListSearcher
 	
 	public static void main(String[] args)
 	{
-		Animate.enable = true; //Keep animation off for grading purposes
+		//Animate.enable = true; //Keep animation off for grading purposes
 		Animate.TextDraw("--------------------------------------------", time);
 		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.TextDraw("\n--------------------------------------------", time);
@@ -62,7 +62,7 @@ public class TweetListSearcher
 					else
 					{
 						Animate.TextDraw("Default data file chosen.\n", time);
-						fName = "smalltweetdata.txt"; //default data file
+						fName = "tweetdata.txt"; //default data file
 					}
 					Animate.TextDraw("\nData file: " + fName + ".\n\n", time);
 				}
