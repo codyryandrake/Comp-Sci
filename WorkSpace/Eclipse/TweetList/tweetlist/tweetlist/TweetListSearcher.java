@@ -24,13 +24,12 @@ public class TweetListSearcher
 	static double searchLon, searchLat, maxDist;
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,
 			   searchHour = -1, searchMin = -1, searchSec = -1;
-	//static String fName = "smalltweetdata.txt";
-	static String fName; //BIG DATA FILE! Takes 5+ min to read in.
+	static String fName; //Holds data file name
 	static TweetList tList = new TweetList(); //Our list for holding all valid matching Tweets
 	
 	public static void main(String[] args)
 	{
-		//Animate.enable = true; //Keep animation off for grading purposes
+		Animate.enable = true; //Keep animation off for grading purposes
 		Animate.TextDraw("--------------------------------------------", time);
 		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.TextDraw("\n--------------------------------------------", time);
@@ -38,9 +37,7 @@ public class TweetListSearcher
 //		if(!Prompt("\nKeep animation on?")) //Determine Animation class preferences
 //			Animate.enable = false;
 		
-		
-		
-		Options();
+		Options(); //Main Menu
 	}
 	
 	/*
@@ -65,7 +62,7 @@ public class TweetListSearcher
 					else
 					{
 						Animate.TextDraw("Default data file chosen.\n", time);
-						fName = "tweetdata.txt"; //default data file
+						fName = "smalltweetdata.txt"; //default data file
 					}
 					Animate.TextDraw("\nData file: " + fName + ".\n\n", time);
 				}
@@ -162,7 +159,7 @@ public class TweetListSearcher
 				Animate.TextDraw("Please specify a maximum search distance {double}:  ", time);
 				maxDist = keyboard.nextDouble();
 				keyboard.nextLine();
-				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Area: " + maxDist);
+				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Radius: " + maxDist);
 				if(index == 0)
 					BuildDatabase();
 				else
@@ -192,8 +189,10 @@ public class TweetListSearcher
 						tList.filterTime(searchHour, searchMin, searchSec);
 				break;
 		}
+		
 		index++; //Increment index after a search
-		PrintSearchHistory();
+		PrintSearchHistory(); 
+		
 		if(tList.size() == 0) 
 		{ //If we ever encounter an empty list
 			Animate.TextDraw("\nLIST EMPTY! Rebooting...\n\n", time);
@@ -206,7 +205,7 @@ public class TweetListSearcher
 	 * Initial read-in of matching Tweets to the database. 
 	 * The initial read-in can take 5+ min for large files.
 	 * We return to this location whenever the user would like
-	 * to refresh the database.
+	 * to rebuild the database.
 	 */	
 	public static void BuildDatabase()
 	{
@@ -247,6 +246,8 @@ public class TweetListSearcher
 		catch (IOException e) {System.out.println("An error occurred while reading " + fName + ".");}
 	}
 	
+	
+	//Show our current search history, data file being read-in, and tweet count
 	public static void PrintSearchHistory()
 	{
 		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
@@ -255,18 +256,17 @@ public class TweetListSearcher
 		for (int i = 0; i < index; i++)
 		{
 			Animate.TextDraw("[" + searchHistory[i] + "]", time);
-			if(i != 0) //Every 6 Tweets
-			{
-				Animate.TextDraw("➣➣➣", time); //Move the cursor down a row
-				if(i%5 == 0)
-					System.out.println();
-			}
-			else
-				System.out.println("\n");
+			if(i == 0) 
+				Animate.TextDraw("\n", time); //Print initial query on its own line
+			else //Excluding the initial query
+				Animate.TextDraw("➣➣➣", time); 
+				if(i%4 == 0) //Every 5 tweets
+					System.out.println(); //Move the cursor down a row
+				
 		}
 		Animate.TextDraw("\n\nTweets found: " + tList.size(), time);
 		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
-		Prompt("\n\nContinue?");
+		Prompt("\n\nPress <enter> to continue...");
 	}
 	public static boolean Prompt(String str) 
 	{

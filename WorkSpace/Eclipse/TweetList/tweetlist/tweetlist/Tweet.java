@@ -50,7 +50,7 @@ public class Tweet
 				"\n\t||Text: " + text
 			  + "\n\t||Location: (" + lat + ", " + lon + ")");	if(dist != null)
 				  											System.out.print("\n"
-			  + "\t||     Distance From Query: [" + dist + "]");
+			  + "\t||Distance From Query: \t[" + dist + "]");
 		System.out.println(
 			  "\n\t||Date: " + date
 			+ "\n\t||Time: " + time);
@@ -79,17 +79,17 @@ public class Tweet
 				else
 					if(d == -1) //day was skipped
 						return true;
-				return false;
+				return false; //day mismatch
 			}
 			else
 				if(m == -1) //month was skipped
 					return true;
-			return false;
+			return false; //month mismatch
 		}
 		else
 			if(y == -1) //year was skipped
 				return true;
-		return false;
+		return false; //year mismatch
 	}
 	
 	
@@ -111,17 +111,17 @@ public class Tweet
 				else
 					if(sec == -1) //sec was skipped
 						return true;
-				return false;
+				return false; //sec mismatch
 			}
 			else
 				if(min == -1) //min was skipped
 					return true;
-			return false;
+			return false; //min mismatch
 		}
 		else
 			if(hr == -1) //hour was skipped
 				return true;
-		return false;
+		return false; //hour mismatch
 	}
 
 }

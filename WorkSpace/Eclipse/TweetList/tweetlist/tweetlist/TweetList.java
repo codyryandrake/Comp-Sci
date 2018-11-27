@@ -73,9 +73,7 @@ public class TweetList {
 	while(!isEmpty())
 	{	//If we find the keyword in curr's text field
 	  	if (head.value.textContains(keyword) == false)
-	  	{
 	  		head = head.next;
-	  	}
 	  	else
 	  		break;
 	
@@ -106,9 +104,7 @@ public class TweetList {
 		while(!isEmpty())
     	{//If we find the keyword in curr's text field
     		if (head.value.dateContains(y, m, d) == false)
-    	  	{
     	  		head = head.next;
-    	  	}
     	  	else
     	  		break;
     	
@@ -139,9 +135,7 @@ public class TweetList {
     	while(!isEmpty())
     	{													//If we find the keyword in curr's text field
     		if (head.value.locationContains(uLon, uLat, maxDist) == false)
-    	  	{
     	  		head = head.next;
-    	  	}
     	  	else
     	  		break;
     	
@@ -172,9 +166,7 @@ public class TweetList {
 		while(!isEmpty())
     	{													//If we find the keyword in curr's text field
     		if (head.value.timeContains(hr, min, sec) == false)
-    	  	{
     	  		head = head.next;
-    	  	}
     	  	else
     	  		break;
     	
