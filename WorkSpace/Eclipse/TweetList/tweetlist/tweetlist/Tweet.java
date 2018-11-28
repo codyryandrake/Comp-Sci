@@ -1,6 +1,6 @@
 /*
 Name: Cody Ryan
-Date: 11.15.18
+Date: 11.28.18
 Description: This class specifies the properties of a Tweet object.
 Sources Cited: Homework instructions, class slides
 */
@@ -22,29 +22,29 @@ public class Tweet
 	public Tweet(String s)
 	{
 		Scanner scan = new Scanner(s);
-		lat = scan.nextDouble(); //Scan in Latitude
+		lat = scan.nextDouble(); 							//Scan in Latitude
 
-		lon = scan.nextDouble(); //Scan in Longitude
+		lon = scan.nextDouble();							//Scan in Longitude
 
-		scan.next(); //Scan in the '6' 
+		scan.next();										//Scan in the '6' 
 		
-		date = scan.next(); //Scan in the date string
+		date = scan.next();									//Scan in the date string
 			String[] d = date.split("-");
 			year =  Integer.parseInt(d[0]);
 			month = Integer.parseInt(d[1]);
 			day =   Integer.parseInt(d[2]);				
-		time = scan.next(); //Scan in the time string		
+		time = scan.next();									//Scan in the time string		
 			String[] t = time.split(":");
 			hour =   Integer.parseInt(t[0]);
 			minute = Integer.parseInt(t[1]);
 			second = Integer.parseInt(t[2]);
-		text = scan.nextLine().trim(); //Scan in text field
+		text = scan.nextLine().trim();						//Scan in text field
 		
 		scan.close();
 	}
 	
-	public void print() //Print a formatted representation of the entire Tweet
-	{
+	public void print()										//Print a formatted representation 
+	{														//of the entire Tweet
 		System.out.print("\n\t-----------------------------");
 		System.out.print(
 				"\n\t||Text: " + text
@@ -60,11 +60,11 @@ public class Tweet
 	}
 	
 	public boolean textContains(String s)
-	{
-		//If a tweet's text value contains the User-searched keyword/phrase
+	{														//If a tweet's text value 											
+															//contains the User-searched keyword/phrase
 		if (!(text.indexOf(s) == -1))
-			return true; //return true	
-		return false; //Otherwise return false			
+			return true;									//return true	
+		return false;										//Otherwise return false			
 	}
 	
 	
@@ -73,16 +73,16 @@ public class Tweet
 		if((y == year || y == -1) && 
 		   (m == month || m == -1) && 
 		   (d == day || d == -1)) 
-			return true; //All parameters match		
-		return false; //date mismatch
+			return true;									//All parameters match		
+		return false;										//date mismatch
 	}
 	
 	
 	public boolean locationContains(double uLon, double uLat, double maxDist)
 	{//Compare the distance between all tweets and the desired coordinates		
-		dist = Point.distance(lat, lon, uLon, uLat); //Search-radius
-		return (dist <= maxDist); //Returns true for all tweets within a 								  
-	}							  //search-radius.
+		dist = Point.distance(lat, lon, uLon, uLat);		//Search-radius
+		return (dist <= maxDist);							//Returns true for all tweets  								  
+	}														//within a search-radius.
 	
 	
 	public boolean timeContains(int hr, int min, int sec)
@@ -90,8 +90,8 @@ public class Tweet
 		if((hr == hour || hr == -1) && 
 		   (min == minute || min == -1) && 
 		   (sec == second || sec == -1)) 
-			return true; //All parameters match		
-		return false; //time mismatch
+			return true;									//All parameters match		
+		return false;										//time mismatch
 	}
 
 }

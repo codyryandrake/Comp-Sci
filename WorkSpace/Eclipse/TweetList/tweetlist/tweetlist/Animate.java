@@ -1,3 +1,11 @@
+/*
+Name: Cody Ryan
+Date: 11.28.18
+Description: This class allows for printing animated strings to the console. 
+				By animating prints to the console, the program may be perceived
+				as more interactive and responsive. 
+Sources Cited: Homework instructions, class slides
+*/
 package tweetlist;
 
 public class Animate {
