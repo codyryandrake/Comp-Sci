@@ -70,26 +70,11 @@ public class Tweet
 	
 	public boolean dateContains(int y, int m, int d)
 	{//Check if each section of 'date' matches the User's query
-		if(y == year) //year matches
-		{
-			if(m == month) //month matches
-			{
-				if(d == day) 
-					return true; //All parameters match
-				else
-					if(d == -1) //day was skipped
-						return true;
-				return false; //day mismatch
-			}
-			else
-				if(m == -1) //month was skipped
-					return true;
-			return false; //month mismatch
-		}
-		else
-			if(y == -1) //year was skipped
-				return true;
-		return false; //year mismatch
+		if((y == year || y == -1) && 
+		   (m == month || m == -1) && 
+		   (d == day || d == -1)) 
+			return true; //All parameters match		
+		return false; //date mismatch
 	}
 	
 	
@@ -102,26 +87,11 @@ public class Tweet
 	
 	public boolean timeContains(int hr, int min, int sec)
 	{//Check if each section of 'time' matches the User's query
-		if(hr == hour) //hour matches
-		{
-			if(min == minute) //minute matches
-			{
-				if(sec == second) 
-					return true; //All parameters match
-				else
-					if(sec == -1) //sec was skipped
-						return true;
-				return false; //sec mismatch
-			}
-			else
-				if(min == -1) //min was skipped
-					return true;
-			return false; //min mismatch
-		}
-		else
-			if(hr == -1) //hour was skipped
-				return true;
-		return false; //hour mismatch
+		if((hr == hour || hr == -1) && 
+		   (min == minute || min == -1) && 
+		   (sec == second || sec == -1)) 
+			return true; //All parameters match		
+		return false; //time mismatch
 	}
 
 }

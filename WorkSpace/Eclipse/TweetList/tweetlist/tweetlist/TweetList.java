@@ -75,10 +75,7 @@ public class TweetList {
 	while(!isEmpty())
 	{	//If we find the keyword in head's text field
 	  	if (head.value.textContains(keyword) == true)
-	  	{
-	  		curr = head.next; 
 	  		break;
-	  	}
 	  	else
 			head = head.next;
 	}	
@@ -102,10 +99,7 @@ public class TweetList {
 	while(!isEmpty())
 	{	//If we find the keyword in head's text field
 	  	if (head.value.dateContains(y, m, d) == true)
-	  	{
-	  		curr = head.next; 
 	  		break;
-	  	}
 	  	else
 			head = head.next;
 	}	
@@ -129,10 +123,7 @@ public class TweetList {
 	while(!isEmpty())
 	{	//If we find the keyword in head's text field
 	  	if (head.value.locationContains(uLon, uLat, maxDist) == true)
-	  	{
-	  		curr = head.next; 
 	  		break;
-	  	}
 	  	else
 			head = head.next;
 	}	
@@ -153,26 +144,23 @@ public class TweetList {
 	{ 
       	Node prev = head;
       	Node curr = head;
-	while(!isEmpty())
-	{																	//If we find the keyword in head's text field
-	  	if (head.value.timeContains(hr, min, sec) == true)
-	  	{
-	  		curr = head.next; 
-	  		break;
-	  	}
-	  	else
-			head = head.next;
-	}	
-																		//Pick up where head leaves off
-	while(curr != null)
-	{
-  		if (curr.value.timeContains(hr, min, sec) == true) 				//If we find the keyword in curr's text field	
-  			prev = curr; 												//Shift our prev pointer up to match curr  				
-  		else 															//If the keyword is NOT found in curr's text field
-  			prev.next = curr.next; 		
-  																		//Point our prev node past the curr node
-  		curr = curr.next;												//Advance our curr to the next node
-	}  		
+		while(!isEmpty())
+		{																	//If we find the keyword in head's text field
+		  	if (head.value.timeContains(hr, min, sec) == true) 
+		  		break;
+		  	else
+				head = head.next;
+		}	
+																			//Pick up where head leaves off
+		while(curr != null)
+		{
+	  		if (curr.value.timeContains(hr, min, sec) == true) 				//If we find the keyword in curr's text field	
+	  			prev = curr; 												//Shift our prev pointer up to match curr  				
+	  		else 															//If the keyword is NOT found in curr's text field
+	  			prev.next = curr.next; 		
+	  																		//Point our prev node past the curr node
+	  		curr = curr.next;												//Advance our curr to the next node
+		}  		
   	 
   }
 	
