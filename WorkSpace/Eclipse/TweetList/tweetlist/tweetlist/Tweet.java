@@ -59,10 +59,10 @@ public class Tweet
 
 	}
 	
-	public boolean textContains(String s)
+	public boolean textContains(String str)
 	{														//If a tweet's text value 											
 															//contains the User-searched keyword/phrase
-		if (!(text.indexOf(s) == -1))
+		if ((text.indexOf(str) != -1))
 			return true;									//return true	
 		return false;										//Otherwise return false			
 	}

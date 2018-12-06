@@ -78,7 +78,6 @@ public class TweetListSearcher
 				if (index > 0)										//These options hidden until a list is created
 					Animate.TextDraw(
 						  "\t[6] Print Results?\n\n"
-						  + "[7] Rebuild Original Seearch Database?"
 						+ "\t[0] Exit Program?\n\n", time);
 				
 				queryType = keyboard.nextInt();						//Get queryType
@@ -130,27 +129,24 @@ public class TweetListSearcher
 					filteredList.filterText(searchHistory[index]);	//Print out formatted search term
 				break;
 			case 2:
-				searchYear = -1; searchMonth = -1; searchDay = -1;
+				searchYear = -1; searchMonth = -1; searchDay = -1;	//Default parameter values
 				Animate.TextDraw("Please enter the desired year, or enter <-1> to skip:  ", time);
 				searchYear = keyboard.nextInt();
 				keyboard.nextLine();
-				if(searchYear != -1)								//User entered year
-				{
-					Animate.TextDraw("Please enter the desired month, or enter <-1> to skip:  ", time);
-					searchMonth = keyboard.nextInt();
-					keyboard.nextLine();
-					if(searchMonth != -1)							//User entered month
-					{
-						Animate.TextDraw("Please enter the desired day, or enter <-1> to skip:  ", time);
-						searchDay = keyboard.nextInt();
-						keyboard.nextLine();
-					}
-				}
+				
+				Animate.TextDraw("Please enter the desired month, or enter <-1> to skip:  ", time);
+				searchMonth = keyboard.nextInt();
+				keyboard.nextLine();
+				
+				Animate.TextDraw("Please enter the desired day, or enter <-1> to skip:  ", time);
+				searchDay = keyboard.nextInt();
+				keyboard.nextLine();
+				
 				searchHistory[index] = (searchYear + "/" + searchMonth + "/" + searchDay);
-					if(index == 0)
-						BuildDatabase();
-					else
-						filteredList.filterDate(searchYear, searchMonth, searchDay);
+				if(index == 0)
+					BuildDatabase();
+				else
+					filteredList.filterDate(searchYear, searchMonth, searchDay);
 				break;
 			case 3:
 				Animate.TextDraw("Please specify a Latitude Coordinate {double}:  ", time);
@@ -169,27 +165,24 @@ public class TweetListSearcher
 					filteredList.filterLocation(searchLat, searchLon, maxDist);
 				break;
 			case 4:
-				searchHour = -1; searchMin = -1; searchSec = -1;
+				searchHour = -1; searchMin = -1; searchSec = -1;	//Default parameter values
 				Animate.TextDraw("Please enter the desired hour, or enter <-1> to skip:  ", time);
 				searchHour = keyboard.nextInt();
 				keyboard.nextLine();
-				if(searchHour != -1)								//User entered hour
-				{
-					Animate.TextDraw("Please enter the desired minute, or enter <-1> to skip:  ", time);
-					searchMin = keyboard.nextInt();
-					keyboard.nextLine();
-					if(searchMin != -1)								//User entered minute
-					{
-						Animate.TextDraw("Please enter the desired second, or enter <-1> to skip:  ", time);
-						searchSec = keyboard.nextInt();
-						keyboard.nextLine();
-					}
-				}
+				
+				Animate.TextDraw("Please enter the desired minute, or enter <-1> to skip:  ", time);
+				searchMin = keyboard.nextInt();
+				keyboard.nextLine();
+				
+				Animate.TextDraw("Please enter the desired second, or enter <-1> to skip:  ", time);
+				searchSec = keyboard.nextInt();
+				keyboard.nextLine();
+				
 				searchHistory[index] = (searchHour + ":" + searchMin + ":" + searchSec);
-					if(index == 0)
-						BuildDatabase();
-					else
-						filteredList.filterTime(searchHour, searchMin, searchSec);
+				if(index == 0)
+					BuildDatabase();
+				else
+					filteredList.filterTime(searchHour, searchMin, searchSec);
 				break;
 		}
 		
@@ -215,7 +208,7 @@ public class TweetListSearcher
 		try {
 			Animate.TextDraw("\nBuilding database...", time);
 			Tweet t;
-			filteredList = new TweetList(); //Reset our filteredList
+			filteredList = new TweetList(); 						//Reset our filteredList
 			FileReader file = new FileReader(fileName);
 			BufferedReader read  = new BufferedReader(file);
 			String line;
@@ -255,20 +248,16 @@ public class TweetListSearcher
 	public static void PrintSearchHistory()
 	{
 		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
-		Animate.TextDraw("\n[" + fileName + "] Query History: -1 represents a User-omitted parameter.\n\n"
-				+ "INITIAL QUERY:\n", time);
-		for (int i = 0; i < index; i++)
+		Animate.TextDraw("\n" + filteredList.size() + " Tweets found in [" + fileName + "]"
+				+ "\nINITIAL QUERY: [" + searchHistory[0] + "]" //Print initial query on its own line
+				+ "\nQuery History: -1 represents a User-omitted parameter.\n\n", time);
+		for (int i = 1; i < index; i++)
 		{
-			Animate.TextDraw("[" + searchHistory[i] + "]", time);
-			if(i == 0) 
-				Animate.TextDraw("\n", time);						//Print initial query on its own line
-			else													//Excluding the initial query
-				Animate.TextDraw("➣➣➣", time); 
-				if(i%4 == 0)										//Every 4 tweets
-					System.out.println();							//Move the cursor down a row
-				
+			Animate.TextDraw("[" + searchHistory[i] + "]", time);												
+			Animate.TextDraw("➣➣➣", time); 
+			if(i%3 == 0)										//Every 3 tweets
+				System.out.println();							//Move the cursor down a row				
 		}
-		Animate.TextDraw("\n\nTweets found: " + filteredList.size(), time);
 		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
 		Prompt("\n\nPress <enter> to continue...");
 	}
