@@ -22,11 +22,13 @@ public class TweetListSearcher
 																	//search (rebuilding the database)
 	static int queryType;											//Determines what action the program will perform
 	static int time = 15;											//Animation.TextDraw speed
-	static double searchLon, searchLat, maxDist;					//User search coordinate vars
+	static double searchLon, searchLat, searchRadius;					//User search coordinate vars
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,	//User search date and timestamp vars
 			   searchHour = -1, searchMin = -1, searchSec = -1;
 	static String fileName;											//Holds data file name
-	static TweetList filteredList = new TweetList();				//Our list for holding filtered tweets
+	
+	static TweetList fullList = new TweetList();										//Our full tweet list for quick rebuilding
+	static TweetList filteredList;									//Our list for holding filtered tweets
 	
 	public static void main(String[] args)
 	{
@@ -90,9 +92,9 @@ public class TweetListSearcher
 				}				
 				if(queryType == 5)
 				{
-					if(Prompt("Reintialize database? All search history will be lost.\n\n"))
+					if(Prompt("Reintialize database? All search history will be lost. Type 'y' to continue.\n\n"))
 							if(Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
-								fileName = null;					//Reset our filename preferences
+								//fileName = null;					//Reset our filename preferences
 								index = 0;							//Reset the search history index	
 					continue;
 				}
@@ -123,7 +125,7 @@ public class TweetListSearcher
 			case 1:
 				Animate.TextDraw("Please specify a search term or phrase:", time);
 				searchHistory[index] = keyboard.nextLine();	
-				if(index == 0)										//If the index is 0, the first query 
+				if(fullList.isEmpty())								//If the fullList is empty, the first query 
 					BuildDatabase();								//(of any type) will initialize the database
 				else
 					filteredList.filterText(searchHistory[index]);	//Print out formatted search term
@@ -143,7 +145,7 @@ public class TweetListSearcher
 				keyboard.nextLine();
 				
 				searchHistory[index] = (searchYear + "/" + searchMonth + "/" + searchDay);
-				if(index == 0)
+				if(fullList.isEmpty())
 					BuildDatabase();
 				else
 					filteredList.filterDate(searchYear, searchMonth, searchDay);
@@ -156,13 +158,13 @@ public class TweetListSearcher
 				searchLon = keyboard.nextDouble();
 				keyboard.nextLine();
 				Animate.TextDraw("Please specify a maximum search distance {double}:  ", time);
-				maxDist = keyboard.nextDouble();
+				searchRadius = keyboard.nextDouble();
 				keyboard.nextLine();
-				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Radius: " + maxDist);
-				if(index == 0)
+				searchHistory[index] = ("(" + searchLat + ", " + searchLon + ") Radius: " + searchRadius);
+				if(fullList.isEmpty())
 					BuildDatabase();
 				else
-					filteredList.filterLocation(searchLat, searchLon, maxDist);
+					filteredList.filterLocation(searchLat, searchLon, searchRadius);
 				break;
 			case 4:
 				searchHour = -1; searchMin = -1; searchSec = -1;	//Default parameter values
@@ -179,7 +181,7 @@ public class TweetListSearcher
 				keyboard.nextLine();
 				
 				searchHistory[index] = (searchHour + ":" + searchMin + ":" + searchSec);
-				if(index == 0)
+				if(fullList.isEmpty())
 					BuildDatabase();
 				else
 					filteredList.filterTime(searchHour, searchMin, searchSec);
@@ -205,42 +207,47 @@ public class TweetListSearcher
 	 */	
 	public static void BuildDatabase()
 	{
-		try {
-			Animate.TextDraw("\nBuilding database...", time);
-			Tweet t;
-			filteredList = new TweetList(); 						//Reset our filteredList
-			FileReader file = new FileReader(fileName);
-			BufferedReader read  = new BufferedReader(file);
-			String line;
-			while ((line = read.readLine()) != null ) 
-			{	
-				t = new Tweet(line);								//Take in the current line as a tweet.
-				switch(queryType)
-				{								
-				case 1:												//Keyword/Phrase search
-					if(t.textContains(searchHistory[index]) == true)//If the keyword is found
-						filteredList.prepend(t); 					//Append the tweet to our list and loop
-					break;
-				case 2:												//Date search
-					if(t.dateContains(searchYear, searchMonth, searchDay) == true)
-						filteredList.prepend(t); 
-					break;		
-				case 3:												//Location search
-					if(t.locationContains(searchLat, searchLon, maxDist) == true)
-						filteredList.prepend(t); 
-					break;
-				case 4:												//Timestamp search
-					if(t.timeContains(searchHour, searchMin, searchSec) == true)
-						filteredList.prepend(t); 
-					break;
-				}			
-			}
-			file.close(); 											//This will force a Scanner reset in case 
-																	//we want to rebuild the database.
-			read.close();
-		} 
-		catch (FileNotFoundException e) {System.out.println("The file " + fileName + " could not be found.");} 
-		catch (IOException e) {System.out.println("An error occurred while reading " + fileName + ".");}
+		if (fullList.isEmpty()) 
+		{
+			try {
+				Animate.TextDraw("\nBuilding database...", time);
+				Tweet t;
+				filteredList = new TweetList();							//Reset our filteredList
+				FileReader file = new FileReader(fileName);
+				BufferedReader read = new BufferedReader(file);
+				String line;
+				while ((line = read.readLine()) != null) {
+					t = new Tweet(line);								//Take in the current line as a tweet.
+					fullList.prepend(t);								//Prepend ALL tweets to the full list
+					switch (queryType) {
+					case 1:												//Keyword/Phrase search
+						if (t.textContains(searchHistory[index]) == true)//If the keyword is found
+							filteredList.prepend(t);					//Append the tweet to our list and loop
+						break;
+					case 2:												//Date search
+						if (t.dateContains(searchYear, searchMonth, searchDay) == true)
+							filteredList.prepend(t);
+						break;
+					case 3:												//Location search
+						if (t.locationContains(searchLat, searchLon, searchRadius) == true)
+							filteredList.prepend(t);
+						break;
+					case 4:												//Timestamp search
+						if (t.timeContains(searchHour, searchMin, searchSec) == true)
+							filteredList.prepend(t);
+						break;
+					}
+				}
+				file.close();											//This will force a Scanner reset in case 
+																		//we want to rebuild the database.
+				read.close();
+			} 
+			catch (FileNotFoundException e) {System.out.println("The file " + fileName + " could not be found.");} 
+			catch (IOException e) {System.out.println("An error occurred while reading " + fileName + ".");} 
+		}
+		else
+			filteredList = fullList;								//Just point the filtered list to our
+																	//complete tweet list
 	}
 	
 	
@@ -248,7 +255,7 @@ public class TweetListSearcher
 	public static void PrintSearchHistory()
 	{
 		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
-		Animate.TextDraw("\n" + filteredList.size() + " Tweets found in [" + fileName + "]"
+		Animate.TextDraw("\n" + filteredList.size() + " Tweet(s) found in " + fileName + "."
 				+ "\nINITIAL QUERY: [" + searchHistory[0] + "]" //Print initial query on its own line
 				+ "\nQuery History: -1 represents a User-omitted parameter.\n\n", time);
 		for (int i = 1; i < index; i++)
@@ -261,12 +268,14 @@ public class TweetListSearcher
 		Animate.TextDraw("\n---------------------------------------------------------------------------", time);
 		Prompt("\n\nPress <enter> to continue...");
 	}
+	
+	//A simple method for prompting the user
 	public static boolean Prompt(String str) 
 	{
 		Animate.TextDraw(str, time);
 		String s = keyboard.nextLine();
 		System.out.println();
-		if (s.startsWith("y"))
+		if (s.toLowerCase().startsWith("y"))
 			return true;
 		return false;
 	}
