@@ -22,17 +22,17 @@ public class TweetListSearcher
 																	//search (rebuilding the database)
 	static int queryType;											//Determines what action the program will perform
 	static int time = 15;											//Animation.TextDraw speed
-	static double searchLon, searchLat, searchRadius;					//User search coordinate vars
+	static double searchLon, searchLat, searchRadius;				//User search coordinate vars
 	static int searchYear = -1, searchMonth = -1, searchDay = -1,	//User search date and timestamp vars
 			   searchHour = -1, searchMin = -1, searchSec = -1;
 	static String fileName;											//Holds data file name
 	
-	static TweetList fullList = new TweetList();										//Our full tweet list for quick rebuilding
+	static TweetList fullList;										//Our full tweet list for quick rebuilding
 	static TweetList filteredList;									//Our list for holding filtered tweets
 	
 	public static void main(String[] args)
 	{
-		//Animate.enable = true;									//Keep animation off for grading purposes
+		Animate.enable = true;									//Keep animation off for grading purposes
 		Animate.TextDraw("--------------------------------------------", time);
 		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.TextDraw("\n--------------------------------------------", time);
@@ -45,7 +45,7 @@ public class TweetListSearcher
 	}
 	
 	/*
-	 * A method for handling program options. On first run, User may specify the data file to be 
+	 * A method for handling program options. On first run, or database rebuild, User may specify the data file to be 
 	 * read from. User may choose to search by words, location, date, or timestamp. After an 
 	 * initial search the User may choose to print results, rebuild the database, or exit the program. 
 	 */
@@ -56,31 +56,27 @@ public class TweetListSearcher
 			while(true)												//Exiting this loop re-confirms 
 			{														//program termination
 				if(fileName == null)								//True on first loop of program
-				{
-					if(Prompt("\nSpecify data file?"))
-					{
-						Animate.TextDraw("Please enter the data file name with file-type extension.\n"
-								+ "Example: tweetdata.txt   \n", time);
-						fileName = keyboard.nextLine();
-					}
-					else
-					{
-						Animate.TextDraw("Default data file chosen.\n", time);
-						fileName = "tweetdata.txt";					//default data file
-					}
-					Animate.TextDraw("\nData file: " + fileName + ".\n\n", time);
-				}
+				{													//and database reset
+					fullList = new TweetList();						//Clear our original list
+					//A new file is being read																	
+					Animate.TextDraw("\n\nPlease enter the data file name with file-type extension.\n"
+							+ "Example: tweetdata.txt   \n", time);
+					fileName = keyboard.nextLine();
+					//Animate.TextDraw("\nData file: " + fileName + ".\n\n", time);
+				}				
+
 				Animate.TextDraw(
 						"\nPlease select from the following:\n\n"
 						+ "\t[1] Search by Word or Phrase?\n\n"
 						+ "\t[2] Search by Date?\n\n"
 						+ "\t[3] Search by Location?\n\n"
 						+ "\t[4] Search by Timestamp?\n\n"
-						+ "\t[5] Rebuild Database?\n\n", time);					
-				if (index > 0)										//These options hidden until a list is created
-					Animate.TextDraw(
-						  "\t[6] Print Results?\n\n"
+						+ "\t[5] Reboot System?\n\n"
 						+ "\t[0] Exit Program?\n\n", time);
+				if (index > 0)										//Hide print option until a search has been made
+					Animate.TextDraw(
+						  "\t[6] Print Results?\n\n", time);
+						
 				
 				queryType = keyboard.nextInt();						//Get queryType
 				keyboard.nextLine();
@@ -92,10 +88,13 @@ public class TweetListSearcher
 				}				
 				if(queryType == 5)
 				{
-					if(Prompt("Reintialize database? All search history will be lost. Type 'y' to continue.\n\n"))
-							if(Prompt("WARNING This action cannot be undone. Type 'y' again to continue..."))
-								//fileName = null;					//Reset our filename preferences
+					if(Prompt("Reboot system? All search history will be lost. Type 'y' to continue.\n\n"))
+							if(Prompt("WARNING This action cannot be undone. Type 'y' again to confirm database reset..."))
+							{
+								fileName = null;					//Reset our file name variable to 
+																	//confirm file name on next loop
 								index = 0;							//Reset the search history index	
+							}
 					continue;
 				}
 				if (queryType == 6)
@@ -193,9 +192,10 @@ public class TweetListSearcher
 		//If we ever encounter an empty list
 		if(filteredList.size() == 0) 
 		{															
-			Animate.TextDraw("\nLIST EMPTY! Rebooting...\n\n", time);
-			fileName = null;										//Reset our filename preferences
+			Animate.TextDraw("\nLIST EMPTY! Rebuilding complete database...\n\n", time);
+			//fileName = null;										//Reset our filename preferences
 			index = 0;												//Reset our search history 
+			filteredList = fullList.clone();						//Clone our complete list 
 		}
 	
 	}
@@ -246,8 +246,7 @@ public class TweetListSearcher
 			catch (IOException e) {System.out.println("An error occurred while reading " + fileName + ".");} 
 		}
 		else
-			filteredList = fullList;								//Just point the filtered list to our
-																	//complete tweet list
+			filteredList = fullList.clone();							//Clone our complete list
 	}
 	
 	

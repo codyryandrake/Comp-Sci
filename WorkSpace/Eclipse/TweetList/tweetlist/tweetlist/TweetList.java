@@ -47,6 +47,20 @@ public class TweetList {
     	head = n;															//Reassign head to point to our new Node
     }
     
+    //This method iterates through a TweetList
+    //and prepends all tweet nodes to a new list
+    public TweetList clone()
+    {
+    	Node curr = head;
+    	TweetList newList = new TweetList();
+    	while(curr != null)
+    	{
+    		newList.prepend(curr.value);
+    		curr = curr.next;
+    	}
+    	return newList;
+    }
+    
     // This method returns the number of nodes in the Linked List.
     public int size()    
     {
