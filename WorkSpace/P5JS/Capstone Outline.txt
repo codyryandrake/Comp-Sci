@@ -10,6 +10,7 @@ Tools and References:
 -Fadecandy Pixel Driver
 -Client Workstation (RPi or Dedicated PC)
 -Sensor Matrix System 
+-Github 
 
 
 TOP LAYER:
@@ -19,10 +20,12 @@ TOP LAYER:
 	-Create array of generative animations and let user pick
 	|| 
 -Sculpture Sensor Input w/Feedback
-	-Detect user presence and with PIR or IR sensors and Capacitive Touch
+	-Detect user presence with PIR or IR sensors and Capacitive Touch
 	-Detect environmental sound quality
 -Allow for user placement of force systems on canvas or sculpture (attraction, repulsion, etc.)
 
+	MIDDLE LAYER (HARDWARE)
+	-Receive sensor readings from User and pass them to Processing application. 
 	MIDDLE LAYER (SOFTWARE)
 	-Processing Canvas Rendered and Pushed to HTML Page
 		|| Processing Canvas Rendered and Pushed to FadeCandy. Fadecandy then pushes data to WS2812b LEDs to render. 
