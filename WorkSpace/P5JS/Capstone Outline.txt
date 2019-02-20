@@ -6,7 +6,13 @@ Tools and References:
 -HTML/CSS
 -Daniel Shirfmann (sp?) 
 -The Nature of Code
+TEXTURE GENERATOR
 -https://github.com/mxgmn/WaveFunctionCollapse
+COMPUTER VISION/LED MAPPER
+-https://github.com/dfashbaugh/NeoPixelControlTools/blob/master
+/LEDVideoMapper/testWebcamOpenCV.py
+	OPEN CV
+	-https://github.com/abidrahmank/OpenCV2-Python-Tutorials/blob/master/source/py_tutorials/py_tutorials.rst
 -Fadecandy Pixel Driver
 -Client Workstation (RPi or Dedicated PC)
 -Sensor Matrix System 
@@ -25,8 +31,10 @@ TOP LAYER:
 -Allow for user placement of force systems on canvas or sculpture (attraction, repulsion, etc.)
 
 	MIDDLE LAYER (HARDWARE)
-	-Receive sensor readings from User and pass them to Processing application. 
+	-Micro controller receives sensor readings from User and passes them to Processing application.
+	-Fadecandy receives output from Processing application and pushes data to WS2812b LEDs.  
+
 	MIDDLE LAYER (SOFTWARE)
 	-Processing Canvas Rendered and Pushed to HTML Page
-		|| Processing Canvas Rendered and Pushed to FadeCandy. Fadecandy then pushes data to WS2812b LEDs to render. 
+		|| Processing Canvas Rendered and Pushed to FadeCandy. 
 	-
