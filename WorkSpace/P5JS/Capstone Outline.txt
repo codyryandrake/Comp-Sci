@@ -1,0 +1,29 @@
+To create a user-oriented, publically available tool for generating uniquely infinite animation assets for the user to retain for reuse or manipulation. Generated assets may also be applied to sculptural light art animation, pre-rendered or in real-time. 
+
+
+Tools and References:
+-Processing Family (P5, Processing)
+-HTML/CSS
+-Daniel Shirfmann (sp?) 
+-The Nature of Code
+-https://github.com/mxgmn/WaveFunctionCollapse
+-Fadecandy Pixel Driver
+-Client Workstation (RPi or Dedicated PC)
+-Sensor Matrix System 
+
+
+TOP LAYER:
+-Web App w/Input Options 
+	-Input sample pixels into generative model
+	-Draw/Click on the screen to generate desired tempo
+	-Create array of generative animations and let user pick
+	|| 
+-Sculpture Sensor Input w/Feedback
+	-Detect user presence and with PIR or IR sensors and Capacitive Touch
+	-Detect environmental sound quality
+-Allow for user placement of force systems on canvas or sculpture (attraction, repulsion, etc.)
+
+	MIDDLE LAYER (SOFTWARE)
+	-Processing Canvas Rendered and Pushed to HTML Page
+		|| Processing Canvas Rendered and Pushed to FadeCandy. Fadecandy then pushes data to WS2812b LEDs to render. 
+	-
