@@ -32,7 +32,7 @@ public class TweetListSearcher
 	
 	public static void main(String[] args)
 	{
-		Animate.enable = true;									//Keep animation off for grading purposes
+		//Animate.enable = true;									//Keep animation off for grading purposes
 		Animate.TextDraw("--------------------------------------------", time);
 		Animate.TextDraw("\nWelcome to TweetSearcher! #L33tTw33t Edition", time);
 		Animate.TextDraw("\n--------------------------------------------", time);
@@ -66,16 +66,18 @@ public class TweetListSearcher
 				}				
 
 				Animate.TextDraw(
-						"\nPlease select from the following:\n\n"
-						+ "\t[1] Search by Word or Phrase?\n\n"
-						+ "\t[2] Search by Date?\n\n"
-						+ "\t[3] Search by Location?\n\n"
-						+ "\t[4] Search by Timestamp?\n\n"
-						+ "\t[5] Reboot System?\n\n"
-						+ "\t[0] Exit Program?\n\n", time);
-				if (index > 0)										//Hide print option until a search has been made
-					Animate.TextDraw(
-						  "\t[6] Print Results?\n\n", time);
+						"\nPlease select from the following:\n"
+						+ "\t[1] Search by Word or Phrase?\n"
+						+ "\t[2] Search by Date?\n"
+						+ "\t[3] Search by Location?\n"
+						+ "\t[4] Search by Timestamp?\n"
+						+ "\t[5] Reboot System?\n", time);
+				if (index > 0) {										//Hide print option until a search has been made
+				Animate.TextDraw(
+						  "\t[6] Print Results?\n", time); }
+				Animate.TextDraw(
+						  "\t[0] Exit Program?\n", time); 
+
 						
 				
 				queryType = keyboard.nextInt();						//Get queryType
@@ -99,6 +101,8 @@ public class TweetListSearcher
 				}
 				if (queryType == 6)
 				{													//Print the refined list
+					if (index == 0)
+						continue;
 					filteredList.print(); 
 																	//Append our query history below the printed tweets
 					PrintSearchHistory(); 

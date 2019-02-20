@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <title> P5 System </title>
+    <p> Press BACKSPACE or DELETE key to generate new crystals. </p>
+    <p> Press RIGHT ARROW key to increment palette. </p> <p> Press LEFT ARROW key to decrement palette. </p>
+    <p> Press SHIFT key to pick a random palette. </p>
+    <script src="p5.js"></script>
+    <script src="p5.svg.js"></script>
+    <script src="sketch.js"></script>
+    <script src="helpers.js"></script>
+    <script src="Layers.js"></script>
+    <script src="Crystal.js"></script>
+  </head>
+  <body>
+    <style>
+      body {
+        margin 0;
+        padding 0;
+      }
+
+      button {
+        float:top;
+      }
+    </style>
+    <button onClick="saveSVG()"> save SVG </button>
+    <button onClick="randomizeSides()">randomize sides</button>
+  </body>
+</html>
