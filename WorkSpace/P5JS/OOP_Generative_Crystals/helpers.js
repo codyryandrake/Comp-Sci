@@ -28,10 +28,12 @@ function randomSelect2 () {
 function getRandomFromPalette () {
 	//Return a random palette and color upon request
 	// return PALETTE[floor(random(0, NUM_PALETTES))][floor(random(0, NUM_COLORS))]
-	return PALETTE[palettePlusPlus][floor(random(0, NUM_COLORS))]
+	//palettePlusPlus
+	return PALETTE[floor(random(0, NUM_PALETTES))][floor(random(0, NUM_COLORS))]
 }
 
 function myTriangle (center, radius, direction) {
+	push()
 	if(direction) {
 		beginShape()
 			vertex(center + radius * cos(0), radius * sin(0))
@@ -41,11 +43,12 @@ function myTriangle (center, radius, direction) {
 	}
 	else {
 		beginShape()
-			vertex(center + radius * -cos(0), radius * sin(0))
-			vertex(center + radius * -cos(120), radius * sin(120))
-			vertex(center + radius * -cos(240), radius * sin(240))
+			vertex(center + radius * cos(100), radius * sin(100))
+			vertex(center + radius * cos(220), radius * sin(220))
+			vertex(center + radius * cos(340), radius * sin(340))
 		endShape(CLOSE)
 	}
+	pop()
 }
 
 const layerConstructors = [
@@ -82,7 +85,7 @@ const layerConstructors = [
 	{
 		name: 'Ring of Shapes',
 		init: () => new RingOfShapes(),
-		weight: 0.3
+		weight: 0
 	},
 	// {
 	// 	name: 'Test Lines',
