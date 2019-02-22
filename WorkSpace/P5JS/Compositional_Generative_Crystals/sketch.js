@@ -96,24 +96,23 @@ function draw() {
 		background(0)
 		flag = false
 	}
-	fill(0, 27)
-	rect(width/2, height/2, totalX, totalY)
+
 	
-	for(let x = 0; x < COLS; x++) {
-		for(let y = 0; y < ROWS; y++) {
-			const posX = START + (x * GRIDBOX)
-			const posY = START + (y * GRIDBOX)
-			const crystal = makeCrystal({x: posX, y: posY})
+	// for(let x = 0; x < COLS; x++) {
+	// 	for(let y = 0; y < ROWS; y++) {
+	// 		const posX = START + (x * GRIDBOX)
+	// 		const posY = START + (y * GRIDBOX)
+			const crystal = makeCrystal({x: mouseX, y: mouseY})
 			console.log(crystal)
 			ALL_CRYSTALS.push(crystal)
-		}
-	}
+	// 	}
+	// }
 
 	ALL_CRYSTALS.forEach(crystal => {
 		drawCrystal(crystal)
 	})
 
-	if(ALL_CRYSTALS.length > 10) {	
+	if(ALL_CRYSTALS.length > 5) {	
 		ALL_CRYSTALS.length = 0
 		flag = true		
 	}
