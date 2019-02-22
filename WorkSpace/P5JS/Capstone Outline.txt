@@ -17,6 +17,9 @@ COMPUTER VISION/LED MAPPER
 -Client Workstation (RPi or Dedicated PC)
 -Sensor Matrix System 
 -Github 
+-Adafruit
+-Fadecandy neopixel controller w/dithering
+-Scanlime (Fadecandy Github Docs and Implementation)
 
 
 TOP LAYER:
