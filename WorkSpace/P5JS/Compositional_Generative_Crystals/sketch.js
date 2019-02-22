@@ -58,7 +58,7 @@ const PALETTE = [
 // const SELECT_PALETTE = random(1)
 const NUM_PALETTES = PALETTE.length
 const NUM_COLORS = PALETTE[0].length
-const ALL_CRYSTALS = []
+let ALL_CRYSTALS = []
 
 const PADDING = CRYSTAL_SIZE * 0.1
 const MARGIN = CRYSTAL_SIZE/2
@@ -66,22 +66,25 @@ const GRIDBOX = CRYSTAL_SIZE + PADDING
 const COLS = 4
 const ROWS = 4
 const START = MARGIN * 2
+const totalX = START + GRIDBOX * COLS
+const totalY = START + GRIDBOX * ROWS
 let palettePlusPlus = 0
+let flag = false
 
 function setup() {
 
-	const totalX = START + GRIDBOX * COLS
-	const totalY = START + GRIDBOX * ROWS
+
 	createCanvas(totalX, totalY, SVG)
 
 
 console.log("Palettes: ", NUM_PALETTES)
 console.log("Colors per Palette: ", NUM_COLORS)
 
-	noLoop()
-	//frameRate(5)
+	//noLoop()
+	frameRate(10)
 	angleMode(DEGREES)
 	rectMode(CENTER)
+	background(0) 
 
 	
 	
@@ -89,7 +92,12 @@ console.log("Colors per Palette: ", NUM_COLORS)
 }
 
 function draw() {
-	
+	if(flag) {
+		background(0)
+		flag = false
+	}
+	fill(0, 27)
+	rect(width/2, height/2, totalX, totalY)
 	
 	for(let x = 0; x < COLS; x++) {
 		for(let y = 0; y < ROWS; y++) {
@@ -105,6 +113,10 @@ function draw() {
 		drawCrystal(crystal)
 	})
 
+	if(ALL_CRYSTALS.length > 10) {	
+		ALL_CRYSTALS.length = 0
+		flag = true		
+	}
 }
 
 function mousePressed() {
@@ -112,7 +124,7 @@ function mousePressed() {
 	// save("mySVG.svg");      // give file name
  //  	print ("saved svg");
  //  	noLoop();
- 	background(0)								// we just want to export once
+ 									// we just want to export once
 	redraw()
 }
 
