@@ -1,7 +1,7 @@
 
 
-const CRYSTAL_SIZE = 350
-const SIDES = 17
+const CRYSTAL_SIZE = 200
+const SIDES = 6
 const PALETTE = [
 	[
 	'#6b5b95', //Palette 0
@@ -89,57 +89,50 @@ console.log("Colors per Palette: ", NUM_COLORS)
 }
 
 function draw() {
-	// background(getRandomFromPalette())
+	
 	
 	for(let x = 0; x < COLS; x++) {
 		for(let y = 0; y < ROWS; y++) {
-			const posX = START + x * GRIDBOX
-			const posY = START + y * GRIDBOX
-			const crystal = makeCrystal(posX, posY)
+			const posX = START + (x * GRIDBOX)
+			const posY = START + (y * GRIDBOX)
+			const crystal = makeCrystal({x: posX, y: posY})
 			console.log(crystal)
-			// ALL_CRYSTALS.push(crystal)
+			ALL_CRYSTALS.push(crystal)
 		}
 	}
 
-	// ALL_CRYSTALS.forEach(crystal => {
-	// 	crystal.render()
-	// })
+	ALL_CRYSTALS.forEach(crystal => {
+		drawCrystal(crystal)
+	})
 
-	// console.log(circles({test: 'hello world'}))
-	// console.log(simpleLines({test: 'hello world'}))
-	// console.log(squareDots({test: 'hello world'}))
-	// console.log(centeredShape({test: 'hello world'}))
-	// console.log(outlineShape({test: 'hello world'}))
-	// console.log(ringOfShapes({test: 'hello world'}))
-	// console.log(steppedHexagons({test: 'hello world'}))
-	// console.log(testLines({test: 'hello world'}))
 }
 
-// function mousePressed() {
-// 	console.log("Mouse Pressed")
-// 	// save("mySVG.svg");      // give file name
-//  //  	print ("saved svg");
-//  //  	noLoop();								// we just want to export once
-// 	//redraw()
-// }
+function mousePressed() {
+	console.log("Mouse Pressed")
+	// save("mySVG.svg");      // give file name
+ //  	print ("saved svg");
+ //  	noLoop();
+ 	background(0)								// we just want to export once
+	redraw()
+}
 
-// function keyPressed() {
-//   if (keyCode === BACKSPACE) {
-//     redraw()
-//   } else if (keyCode === RIGHT_ARROW) {
-//     palettePlusPlus = (palettePlusPlus + 1) % NUM_PALETTES
-//     redraw()
-//     console.log("Current Palette: ", palettePlusPlus)
-//   } else if (keyCode === LEFT_ARROW) {
-//   	if(palettePlusPlus <= 0) 
-//   		palettePlusPlus = NUM_PALETTES
-//     palettePlusPlus = (palettePlusPlus - 1) % NUM_PALETTES
-//     redraw()
-//     console.log("Current Palette: ", palettePlusPlus)
-//   } else if (keyCode = SHIFT) {
-//   	palettePlusPlus = floor(random(0, NUM_PALETTES))
-//   	redraw()
-//   	console.log("Current Palette: ", palettePlusPlus)
-//   }
-//   else{}
-// }
+function keyPressed() {
+  if (keyCode === BACKSPACE) {
+    redraw()
+  } else if (keyCode === RIGHT_ARROW) {
+    palettePlusPlus = (palettePlusPlus + 1) % NUM_PALETTES
+    redraw()
+    console.log("Current Palette: ", palettePlusPlus)
+  } else if (keyCode === LEFT_ARROW) {
+  	if(palettePlusPlus <= 0) 
+  		palettePlusPlus = NUM_PALETTES
+    palettePlusPlus = (palettePlusPlus - 1) % NUM_PALETTES
+    redraw()
+    console.log("Current Palette: ", palettePlusPlus)
+  } else if (keyCode = SHIFT) {
+  	palettePlusPlus = floor(random(0, NUM_PALETTES))
+  	redraw()
+  	console.log("Current Palette: ", palettePlusPlus)
+  }
+  else{}
+}

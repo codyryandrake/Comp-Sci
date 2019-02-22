@@ -50,7 +50,7 @@ const layerConstructors = [
 		init: (props) => outlineShape({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
@@ -58,7 +58,7 @@ const layerConstructors = [
 		init: (props) => centeredShape({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
@@ -66,7 +66,7 @@ const layerConstructors = [
 		init: (props) => steppedHexagons({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
@@ -74,7 +74,7 @@ const layerConstructors = [
 		init: (props) => circles({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
@@ -82,23 +82,23 @@ const layerConstructors = [
 		init: (props) => simpleLines({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
 		name: 'Square Dots',
-		init: (porps) => squareDots({
+		init: (props) => squareDots({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
-		name: 'Ring of Shapes',
+		name: 'Ring Of Shapes',
 		init: (props) => ringOfShapes({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 0.3
 	},
 	{
@@ -106,33 +106,34 @@ const layerConstructors = [
 		init: (props) => testLines({
 			...props,
 			...setState(state),
-		})
+		}),
 		weight: 1
 	},
 ]
 
 const makeCrystal = (pos) => {
-	const layers = layerConstructors.map(lCon => {
+	const layers = layerConstructors.map(lcon => {
 		let picker = random(1)
-		const draw = picker > lCon.weight
-		if(picker > lCon.weight)
-			return lCon.init({
+		const draw = picker > lcon.weight
+		return lcon.init({
 				pos,
-				draw
+				draw //true or false bool
 		})
 	})
 
-	console.log(layers)
+	//console.log(layers)
 	return layers
 }
 
 const drawCrystal = (crystal) => {
 	crystal.forEach(layer => {
-
-	})
-	push()
-		translate(crystal.pos.x, crystal.pos.y)
+	if (layer.state.draw) {
+		push()
+		translate(layer.state.pos.x, layer.state.pos.y)
 		layer.render()
-	pop()
+		pop()
+		}
+	})
+
 	//this.layers = []
 }

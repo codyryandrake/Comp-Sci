@@ -1,9 +1,9 @@
-//static vals
+// static vals
 const state = {
-	sides: 6, 
+	sides: SIDES, 
 	stepsOut: 8,
 	thinStroke: 1,
-	thickStroke: 3,
+	thickStroke: 3
 }
 
 //mods on static vals
@@ -14,23 +14,25 @@ const setState = (state) => {
 	state.weight = randomSelect2() ? state.thinStroke : state.thickStroke
 	state.layerColor = getRandomFromPalette()
 	state.fillColor = getRandomFromPalette()
+
+	return state
 }
 
 
+//The circles() function acts on the state of the layer
 const circles = (state) => {
 	state.shapeSize = random(0,(CRYSTAL_SIZE/2) * 0.93)
 	state.position = (CRYSTAL_SIZE/2) - (state.shapeSize/2)
 	console.log(state.sides)
 
 	return ({
-		name: 'circles',
+		name: 'Circles',
 		state,
 		render: () => {
 			stroke(state.layerColor)
 			strokeWeight(state.weight)
 			noFill()
 			push()
-				//translate(width/2, height/2)
 				for(let i = 0; i <= state.numShapes; i++) {
 					ellipse(state.position, 0, state.shapeSize, state.shapeSize)
 					rotate(state.angle)
@@ -44,14 +46,14 @@ const circles = (state) => {
 
 const simpleLines = (state) => {
 	state.numSteps = randomSelect2() ? state.stepsOut : floor(state.stepsOut * 1.25) //8 or 10
-	state.step = (CRYSTAL_SIZE/2) / state.numSteps //step = radius of crystal
+	state.singleStep = (CRYSTAL_SIZE/2) / state.numSteps //step = radius of crystal
 	//Pick a start point (floored) between 0 and the # of steps
 	state.start = floor(random(0, state.numSteps)) 
 	//Pick an end point (floored) between our start point and one more than the # of steps		
 	state.stop = floor(random(state.start, state.numSteps+1)) 
 
 	return ({
-		name: 'simpleLines',
+		name: 'Simple Lines',
 		state,
 		render: () => {
 			noFill()
@@ -61,7 +63,7 @@ const simpleLines = (state) => {
 				//translate(width/2, height/2) //Move origin (0,0) to center of screen
 				for(let i = 0; i < state.numShapes; i++) { //For every shape
 					//Create a line from start to stop along only the x-axis
-					line(state.start * state.step, 0, state.stop * state.step, 0)
+					line(state.start * state.singleStep, 0, state.stop * state.singleStep, 0)
 					//Rotate each line an additional fraction of the circle
 					//These calls to rotate() stack and thus each line is 
 					//transformed further around the circle
@@ -74,11 +76,11 @@ const simpleLines = (state) => {
 }
 
 const squareDots = (state) => {
-	state.shapeSize = randomSelect2() ? 3 : 5
+	state.shapeSize = randomSelect2() ? 2 : 5
 	state.centerOffset = state.singleStep
 
 	return ({
-		name: 'squareDots',
+		name: 'Square Dots',
 		state,
 		render: () => {
 			// noFill()
@@ -103,7 +105,7 @@ const centeredShape = (state) => {
 	state.shapeSize = floor(random(state.stepsOut / 2, state.stepsOut-2)) * state.singleStep
 
 	return ({
-		name: 'centeredShape',
+		name: 'Centered Shape',
 		state,
 		render: () => {
 			fill(state.layerColor)
@@ -127,7 +129,7 @@ const outlineShape = (state) => {
 	state.hexagonTrue = randomSelect2()
 
 	return ({
-		name: 'outlineShape',
+		name: 'Outline Shape',
 		state,
 		render: () => {
 			noFill()
@@ -149,7 +151,7 @@ const ringOfShapes = (state) => {
 	state.steps = floor(random(1, state.stepsOut))
 	state.center = state.steps * state.singleStep
 	state.randomShape = random(1)
-	state.direction = randomSelect2()
+	state.direction = randomSelect2() ? true: false
 	state.fillColor = randomSelect2() ? state.layerColor : color(0, 1)
 
 	if(state.steps < state.stepsOut / 2) 
@@ -160,7 +162,7 @@ const ringOfShapes = (state) => {
 		state.radius = floor(random(1, state.stepsOut / 2 + 1)) * state.singleStep
 
 	return ({
-		name: 'ringOfShapes',
+		name: 'Ring Of Shapes',
 		state,
 		render: () => {
 			stroke(state.layerColor)
@@ -190,7 +192,7 @@ const steppedHexagons = (state) => {
 	state.singleStep = ((CRYSTAL_SIZE/2) - state.centerOffset) / state.numSteps
 
 	return ({
-		name: 'steppedHexagon',
+		name: 'Stepped Hexagon',
 		state,
 		render: () => {
 			stroke(state.layerColor)
@@ -210,7 +212,7 @@ const steppedHexagons = (state) => {
 
 const testLines = (state) => {
 	return ({
-		name: 'testLines',
+		name: 'Test Lines',
 		state,
 		render: () => {
 		stroke(state.layerColor)
