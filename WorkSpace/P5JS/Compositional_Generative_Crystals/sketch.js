@@ -1,7 +1,7 @@
 
 
 const CRYSTAL_SIZE = 200
-const SIDES = 6
+const SIDES = 16
 const PALETTE = [
 	[
 	'#6b5b95', //Palette 0
@@ -58,18 +58,20 @@ const PALETTE = [
 // const SELECT_PALETTE = random(1)
 const NUM_PALETTES = PALETTE.length
 const NUM_COLORS = PALETTE[0].length
-let ALL_CRYSTALS = []
+const ALL_CRYSTALS = []
 
 const PADDING = CRYSTAL_SIZE * 0.1
 const MARGIN = CRYSTAL_SIZE/2
 const GRIDBOX = CRYSTAL_SIZE + PADDING
-const COLS = 4
-const ROWS = 4
+const COLS = 1
+const ROWS = 1
 const START = MARGIN * 2
 const totalX = START + GRIDBOX * COLS
 const totalY = START + GRIDBOX * ROWS
 let palettePlusPlus = 0
 let flag = false
+let index = 0
+let frameCount; 
 
 function setup() {
 
@@ -92,7 +94,13 @@ console.log("Colors per Palette: ", NUM_COLORS)
 }
 
 function draw() {
+	push()
+	translate(width/2, height/2)
+	fill(255)
+	text(frameRate())
+	pop()
 	if(flag) {
+		// background(PALETTE[9][floor(random(0,2))])
 		background(0)
 		flag = false
 	}
@@ -105,12 +113,18 @@ function draw() {
 			const crystal = makeCrystal({x: mouseX, y: mouseY})
 			console.log(crystal)
 			ALL_CRYSTALS.push(crystal)
+			// ALL_CRYSTALS.splice(index, ALL_CRYSTALS.length, crystal)
+			// index = (index + 1) % (COLS*ROWS)
 	// 	}
 	// }
 
 	ALL_CRYSTALS.forEach(crystal => {
+		fill(0, 127) //2.22 EDIT
+		rect(0, 0, width*2, height*2)// EDIT
 		drawCrystal(crystal)
+		crystal.slice()
 	})
+
 
 	if(ALL_CRYSTALS.length > 5) {	
 		ALL_CRYSTALS.length = 0
