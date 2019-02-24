@@ -24,7 +24,7 @@ const randomSelect2 = () => {
 const getRandomFromPalette = () => {
 	//Return a random palette and color upon request
 	// return PALETTE[floor(random(0, NUM_PALETTES))][floor(random(0, NUM_COLORS))]
-	return PALETTE[floor(random(0, NUM_PALETTES))][floor(random(0, NUM_COLORS))]
+	return PALETTE[palettePlusPlus][floor(random(0, NUM_COLORS))]
 }
 
 const myTriangle = (center, radius, direction) => {
@@ -138,3 +138,4 @@ const drawCrystal = (crystal) => {
 
 	this.layers = []
 }
+
