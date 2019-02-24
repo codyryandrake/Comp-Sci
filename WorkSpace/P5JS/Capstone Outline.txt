@@ -1,25 +1,47 @@
-To create a user-oriented, publically available tool for generating uniquely infinite animation assets for the user to retain for reuse or manipulation. Generated assets may also be applied to sculptural light art animation, pre-rendered or in real-time. 
+To create a user-oriented, publically available tool for generating uniquely infinite animation assets for the user to retain for reuse or manipulation. Generated assets may also be applied to sculptural light art animation, pre-rendered or in real-time. The use of Open CV computer vision in defining a c
 
 
 Tools and References:
--Processing Family (P5, Processing)
--HTML/CSS
--Daniel Shirfmann (sp?) 
--The Nature of Code
-TEXTURE GENERATOR
--https://github.com/mxgmn/WaveFunctionCollapse
+	RENDERING SOFTWARE:
+	-HTML/CSS Compatible Browser
+	-Processing Family (P5, Processing)
+		-Daniel Shirfmann (sp?) 
+			-The Nature of Code
+			-Coding Train (youtube tutorials and lessons)
+	-Texture Generator https://github.com/mxgmn/WaveFunctionCollapse
+
+	MATRIX MAPPING SOFTWARE:
+	-Computer Vision w/ Open CV-based Matrix Creator:
+		-https://github.com/dfashbaugh/NeoPixelControlTools/blob/master
+		/LEDVideoMapper/testWebcamOpenCV.py
+		-https://github.com/abidrahmank/OpenCV2-Python-Tutorials/blob/master/source/py_tutorials/py_tutorials.rst
+
+
+	HARDWARE:
+	-Client Workstation (RPi or Dedicated PC)
+	-Fadecandy Neopixel Controller
+	Arduino w/Sensor Triggers on Embedded Sculpture
+
+	SENSOR HARDWARE:
+
+	ADDITIONAL MATERIALS:
+
+
+
+
+
 COMPUTER VISION/LED MAPPER
--https://github.com/dfashbaugh/NeoPixelControlTools/blob/master
-/LEDVideoMapper/testWebcamOpenCV.py
+
 	OPEN CV
-	-https://github.com/abidrahmank/OpenCV2-Python-Tutorials/blob/master/source/py_tutorials/py_tutorials.rst
+	
 -Fadecandy Pixel Driver
--Client Workstation (RPi or Dedicated PC)
+
 -Sensor Matrix System 
 -Github 
 -Adafruit
 -Fadecandy neopixel controller w/dithering
 -Scanlime (Fadecandy Github Docs and Implementation)
+
 
 
 TOP LAYER:
@@ -41,3 +63,5 @@ TOP LAYER:
 	-Processing Canvas Rendered and Pushed to HTML Page
 		|| Processing Canvas Rendered and Pushed to FadeCandy. 
 	-
+
+-To design a multi-part system that allows for rapid setup and animation design of custom LED arrays. The custom mapping can be previewed in a browser window through HTML/CSS and 

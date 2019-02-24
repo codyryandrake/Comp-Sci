@@ -26,14 +26,15 @@ function draw() {
 
 
 
-	background(240, 2)
+	background(50, 10)
 
 
 	translate(width/2, height/2)
 	// stroke(random(160, 200), random(0, 10), 60)
-	stroke('teal')
+	stroke('gold')
 	strokeWeight(2)
-	noFill()
+	// noFill()
+	fill(20, 10)
 	beginShape();
 	let noiseMax = slider.value()
 	//adjusting angle 'a' changes oscillation frequency
@@ -43,8 +44,8 @@ function draw() {
 		//Increment angle while keeping radius constant
 
 		let xoff = map(cos(a+phase), -1, 1, 0, noiseMax)
-		let yoff = map(sin(a+phase), -1, 1, 0, noiseMax)
-		let r = map(noise(xoff, yoff, zoff), 0, 1, width/2, noiseMax)
+		let yoff = map(sin(a), -1, 1, 0, noiseMax)
+		let r = map(noise(xoff, yoff, zoff), 0, 1, width/4, noiseMax)
 		let x = r * cos(a)
 		let y = r * sin(a)
 		vertex(x,y)
@@ -55,6 +56,6 @@ function draw() {
 
 	
 	phase += 0.01
-	zoff += .006
+	zoff += .01
 	
 }
