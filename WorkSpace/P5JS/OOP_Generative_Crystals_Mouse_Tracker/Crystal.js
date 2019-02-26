@@ -12,8 +12,8 @@ class Crystal {
 	}
 
 	render() {
-		fill(0, 127)
-		rect(width/2, height/2, 500, 500) //Trailing fade effect
+		// fill(0, 127)
+		// rect(width/2, height/2, 500, 500) //Trailing fade effect
 		push()
 			translate(this.x, this.y)
 			console.log(this.layers)
