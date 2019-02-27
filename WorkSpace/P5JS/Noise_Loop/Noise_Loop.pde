@@ -7,11 +7,11 @@ int totalFrames = 240;
 int counter = 0;
 boolean record = false;
 
-Particle[] particles = new Particle[100];
+Particle[] particles = new Particle[1000];
 
 
 void setup() {
-  size(600, 600);
+  size(800, 400);
   
   for (int i = 0; i < particles.length; i++) {
     particles[i] = new Particle();

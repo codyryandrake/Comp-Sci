@@ -9,8 +9,8 @@ class NoiseLoop {
    this.diameter = diameter; 
    this.min = min;
    this.max = max;
-    cx = random(diameter)+mouseX;
-    cy = random(diameter)+mouseY;
+    cx = random(1000);
+    cy = random(1000);
   }
   
   float value(float a) {
