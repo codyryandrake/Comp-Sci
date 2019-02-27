@@ -54,7 +54,7 @@ function draw() {
 		//Increment angle while keeping radius constant
 		let xoff = map(cos(a+phase), -1, 1, 0, -noiseMax)
 		let yoff = map(sin(a+phase), -1, 1, 0, noiseMax)
-		let r = map(noise(xoff, yoff, zoff), 0, 1, width/4, noiseMax)
+		let r = map(noise(xoff, yoff, zoff), 0, 1, width/8, noiseMax)
 		let x = r * cos(a)
 		let y = r * sin(a)
 		let z = r * tan(a)
