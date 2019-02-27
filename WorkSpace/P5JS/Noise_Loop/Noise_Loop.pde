@@ -7,13 +7,15 @@ int totalFrames = 240;
 int counter = 0;
 boolean record = false;
 
-NoiseLoop xNoise;
-NoiseLoop yNoise;
+Particle[] particles = new Particle[100];
+
 
 void setup() {
   size(600, 600);
-  xNoise = new NoiseLoop(5, 0, width);
-  yNoise = new NoiseLoop(5, 0, height);
+  
+  for (int i = 0; i < particles.length; i++) {
+    particles[i] = new Particle();
+  }
   
   
 }
@@ -36,14 +38,13 @@ void draw() {
 }
 
 void render(float percent) {
-  background(0, 10);
+  background(255);
+  push();
+  translate(width/2, height/2);
   float a = percent * TWO_PI;
-  stroke(255);
-  //beginShape();
-  float x = xNoise.value(a);
-  float y = yNoise.value(a);
-  circle(x, y, 100);
-  //vertex(x, y);
-  //endShape(CLOSE);
+  for (Particle p : particles) {
+    p.render(a);
+  }
+  pop();
   
 }
