@@ -25,15 +25,26 @@ function draw() {
 
 
 
-
-	background(200, 10)
+	let rB = 50;
+	let gB = 10;
+	let bB = 200;
+	let alphaB = 2;
+	background(rB, gB, bB, alphaB)
 
 
 	translate(width/2, height/2)
 	// stroke(random(160, 200), random(0, 10), 60)
-	stroke('pink')
+	let rS = 200;
+	let gS = 150;
+	let bS = 20;
+	let alphaS = 20;
+	stroke(rS, gS, bS, alphaS)
 	strokeWeight(2)
-	fill(0, 70)
+	let r = 200;
+	let g = 10;
+	let b = 50;
+	let alpha = 6;
+	fill(r, g, b, alpha)
 	beginShape();
 	let noiseMax = 1
 	//adjusting angle 'a' changes oscillation frequency
@@ -46,14 +57,20 @@ function draw() {
 		let r = map(noise(xoff, yoff, zoff), 0, 1, width/4, noiseMax)
 		let x = r * cos(a)
 		let y = r * sin(a)
-		vertex(x,y)
+		let z = r * tan(a)
+		//Play around with rendering different shapes below
+		//vertex(x,y)
+		// vertex(y,z)
+		alpha = 10
+		circle(x,y, r)
+		// circle(x, y, x)
 
 	}
 	endShape(CLOSE)
 
 
 	
-	phase += 0.01
+	phase += 0.0007
 	zoff += .006
 	
 }
