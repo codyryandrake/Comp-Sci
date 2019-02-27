@@ -7,7 +7,7 @@ int totalFrames = 240;
 int counter = 0;
 boolean record = false;
 
-Particle[] particles = new Particle[1000];
+Particle[] particles = new Particle[100];
 
 
 void setup() {

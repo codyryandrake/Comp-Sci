@@ -30,8 +30,8 @@ class Particle {
     float x = xNoise.value(a);
     float y = yNoise.value(a);
     float d = dNoise.value(a);
-    float s = sNoise.value(a);
-    scale(s);
+    //float s = sNoise.value(a);
+    //scale(s);
     circle(x, y, d);
   }
   
