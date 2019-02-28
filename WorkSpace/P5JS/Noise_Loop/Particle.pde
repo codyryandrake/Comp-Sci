@@ -20,19 +20,20 @@ class Particle {
   }
   
   void render(float a) {
-    //stroke(255);
-    noStroke();
+
     float r = rNoise.value(a);
     float g = gNoise.value(a);
     float b = bNoise.value(a);
     float alpha = alphaNoise.value(a);
+    stroke(r, g, b, alpha);
+    //noStroke();
     fill(r, g, b, alpha);
     float x = xNoise.value(a);
     float y = yNoise.value(a);
     float d = dNoise.value(a);
     //float s = sNoise.value(a);
     //scale(s);
-    circle(x, y, d);
+    rect(x, y, d, d/2);
   }
   
 }

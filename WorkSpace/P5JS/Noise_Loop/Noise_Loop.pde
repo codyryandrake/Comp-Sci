@@ -5,7 +5,7 @@
 
 int totalFrames = 240;
 int counter = 0;
-boolean record = false;
+boolean record = true;
 
 Particle[] particles = new Particle[100];
 
@@ -38,7 +38,7 @@ void draw() {
 }
 
 void render(float percent) {
-  background(255);
+  background(0);
   push();
   translate(width/2, height/2);
   float a = percent * TWO_PI;

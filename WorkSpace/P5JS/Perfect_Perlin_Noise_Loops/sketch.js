@@ -28,7 +28,7 @@ function draw() {
 	let rB = 50;
 	let gB = 10;
 	let bB = 200;
-	let alphaB = 2;
+	let alphaB = 1;
 	background(rB, gB, bB, alphaB)
 
 
@@ -37,7 +37,7 @@ function draw() {
 	let rS = 200;
 	let gS = 150;
 	let bS = 20;
-	let alphaS = 20;
+	let alphaS = 2;
 	stroke(rS, gS, bS, alphaS)
 	strokeWeight(2)
 	let r = 200;
@@ -52,17 +52,17 @@ function draw() {
 		// let r = 100 //radius
 		// let r = random(50,100) //radius
 		//Increment angle while keeping radius constant
-		let xoff = map(cos(a+phase), -1, 1, 0, -noiseMax)
-		let yoff = map(sin(a+phase), -1, 1, 0, noiseMax)
+		let xoff = map(cos(a), -1, 1, 0, noiseMax)
+		let yoff = map(sin(a), -1, 1, 0, noiseMax)
 		let r = map(noise(xoff, yoff, zoff), 0, 1, width/8, noiseMax)
 		let x = r * cos(a)
 		let y = r * sin(a)
 		let z = r * tan(a)
 		//Play around with rendering different shapes below
-		//vertex(x,y)
+		vertex(x,y)
 		// vertex(y,z)
-		alpha = 10
-		circle(x,y, r)
+		alpha = 1
+		//circle(x,y, r)
 		// circle(x, y, x)
 
 	}
