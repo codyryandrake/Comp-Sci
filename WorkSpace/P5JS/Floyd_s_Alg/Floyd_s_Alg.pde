@@ -10,6 +10,7 @@ int[][] D = new int[5][5];
 void setup() {
   size(500, 500);
   noLoop();
+  rectMode(CORNER);
 }
 
 void draw() {
@@ -24,8 +25,6 @@ public void floyd(int n, final int[][] W, int[][] D){
   for(k = 0; k < n; k++ ) {
     for(i = 0; i < n; i++) {
       for(j = 0; j < n; j++) {
-        fill(0);
-        rect(i,j, 1, 1);
         if(D[i][k] == I || D[k][j] == I) {
           D[i][j] = D[i][j];
         }
@@ -56,10 +55,21 @@ private void printArr(int n, int[][] arr) {
 }
 
 void displayArr(int n, int[][] arr) {
-  for(int i = 0; i < width; i+= width/n) {
-    for(int j = 0; j < height; j+= height/n) {
-        fill(0);
-        rect(i,j, 5, 5);
+  clear();
+  for(int i = 0; i < n; i++) {
+    for(int j = 0; j < n; j++) {
+      
+        push();
+        translate(i*50, j*50);
+        //if(arr[i][j] == I) {
+        //  fill(0,0);
+        //}
+        //else {
+        fill(arr[i][j]*arr[i][j]*arr[i][j]);
+        //}
+        rect(i*50,j*50, 50, 50);
+        //text(arr[i][j],i,95);
+        pop();
     }
   }
 }
