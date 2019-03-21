@@ -1,0 +1,105 @@
+// This is a fork of Sparks, 
+//  - modified to slow down the sparks
+//  - gave them a longer lifetime 
+//  - allowed them to loop from one ned to the other
+
+sparkHue = 0; //Variable for gradually shifting through hue value
+sparkSaturation = .9; //Variable for setting saturation
+numSparks = 1 + (pixelCount); //How many sparks we will generate
+decay = 0.99; //The decay rate to be applied to each spark
+maxSpeed = 0.07 //The maximum travel speed of a spark
+newThreshhold = 0.01 //
+
+export var light;
+export var lightAverage;
+export var lightPercent;
+export var lightMin;
+export var lightMax;
+export var lightAverageDelta;
+export var sparkHue;
+
+lightPercent = 00;
+lightSum = 0;
+lightAverage = 0;
+
+numLoops = 0;
+timer = 0;
+calibratedMax = false;
+calibratedMin = false;
+lightMax = 0.0;
+lightMin = 0.0;
+maxBtn = touchRead(A0);
+minBtn = touchRead(A1);
+
+
+sparks = array(numSparks);
+sparkX = array(numSparks);
+pixels = array(pixelCount);
+
+export function beforeRender(delta) {
+
+
+  lightSum = lightSum + light //Store a sum of the last 800ms of light readings.
+  timer += delta
+  
+  if(timer > 10) //Every 400ms
+  { 
+    lightAveragePrev = lightAverage //Record the previous average
+    lightAverage = lightSum/numLoops //Average the lightSum across the total readings taken
+      if(!calibratedMax || maxBtn){
+        lightMax = lightAverage/2; 
+        calibratedMax = true;
+      }
+      if(!calibratedMin || minBtn){
+        lightMin = lightMax * .1; //Minimum light reading is 1% of maximum 
+        calibratedMin = true;
+      }
+    lightAverageDelta = lightAverage - lightAveragePrev //Determine the difference between curr and prev readings
+    lightSum = 0 //At the end of our condition, reset variables
+    timer = 0
+    numLoops = 0
+  }
+  //Reverse output values for light to create an inverse map
+  lightPercent = clamp(InputMap(lightAverage, lightMin, lightMax, 1.0, 0.00), 0.00, 1.0); 
+  //Comment out this line to set a fixed delta
+  delta = lightPercent;
+  sparkHue += (random(.002) *triangle(wave(.32)))%1.0 //Comment out this line to set a fixed color hue
+  
+  for (i = 0; i < pixelCount; i++)
+    pixels[i] = pixels[i]*.99;
+  
+  for (i = 0; i < numSparks; i++) { //Increment through the sparks
+    if (sparks[i] >= -newThreshhold && sparks[i] <= newThreshhold) { 
+      sparks[i] = (maxSpeed/2) - random(maxSpeed); //Update maxSpeed randomly
+      sparkX[i] = random(pixelCount); //Assign SparkX randomly to a pixel
+    }
+    
+    sparks[i] *= decay; //Update the current sparks value to be 99% of itself
+    sparkX[i] += sparks[i] *delta; //Boost the SparkX sparks' value by the product of the current spark and delta 
+    
+    if (sparkX[i] >= pixelCount) { //If the SparkX sparks' value ever exceeds 277
+      sparkX[i] = 0; //Reset it to 0
+    }
+    
+    if (sparkX[i] < 0) { //If the SparkX sparks' value ever drops below 0
+      sparkX[i] = pixelCount - 1; //Update the spark's value to 276
+    }
+    
+    pixels[floor(sparkX[i])] += sparks[i]*lightPercent;
+  }
+  
+  
+numLoops++
+}
+
+export function render(index) {
+  v = pixels[index];
+  hsv(sparkHue, sparkSaturation, v*v*v*v)
+  
+}
+
+
+function InputMap(input, in_min, in_max, out_min, out_max) 
+{
+return (input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
