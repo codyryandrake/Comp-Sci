@@ -33,8 +33,12 @@ function Particle() {
 
 	}
 
-	this.show = function() {
-		stroke(this.h, 255, 255, 255);
+	this.show = function(sliderVal) {
+		if(sH.value() == 0) {
+			stroke(this.h, sS.value(), sB.value(), sA.value());
+		} else {
+			stroke(sH.value(), sS.value(), sB.value(), sA.value());
+		}
 		this.h += this.hueSpeed;
 		if (this.h > 255) {
 			this.h = -this.h
