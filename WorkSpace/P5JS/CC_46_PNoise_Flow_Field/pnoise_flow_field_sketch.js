@@ -1,4 +1,4 @@
-var scl = 10;
+var scl = 30;
 var cols, rows;
 
 
@@ -9,31 +9,37 @@ var particles = [];
 var flowField = [];
 
 //gui params
-// var backgroundHue = 0;
-// var backgroundSat = 255;
-// var backgroundBal = 20;
-
-var bgColor = '#751c8e' 
-var backgroundAlpha = 20;
-var sColor = '#ffc0a2';
-var dotSize = 3;
-var strokeAlpha = 100;
+var backgroundColor = '#000080' 
+var backgroundAlpha = 223;
+var strokeColor = '#ff0000';
+// var colorChangeSpeed = 0.01;
+var dotSize = 24.31;
+var strokeAlpha = 37;
 
 
-var angleVal = -5;
+var angleVal = 4;
+var angleMult = -1.2;
 var pathMagnitude = 1;
 var zoom = 1.0;
 var inc = .1;
 var incAdjust = .1;
 var zoff = .01;
 var zoffAdjust = .01; 
-var rainbowTrails = false;
+
 
 //'magic' slider range vals
 //////////////////////////////////////////////////
+var sclMin = 5;
+var sclMax = 20;
+var sclStep = 1;
+
 
 var backgroundAlphaMin = 0;
 var backgroundAlphaMax = 255;
+
+// var colorChangeSpeedMin = 0.01;
+// var colorChangeSpeedMax = 1;
+// var colorChangeSpeedStep = .01;
 
 var dotSizetMin = 0.01;
 var dotSizeMax = 30;
@@ -42,49 +48,60 @@ var dotSizeStep = 0.01;
 var strokeAlphaMin = 0;
 var strokeAlphaMax = 255;
 
-var pathMagnitudeMin = .001;
-var pathMagnitudeMax = 5;
-var pathMagnitudeStep = .01;
+var pathMagnitudeMin = -2;
+var pathMagnitudeMax = 2;
+var pathMagnitudeStep = .001;
 
+var angleValMin = -3;
+var angleValMax = 3;
+var angleValStep = .1;
+
+var angleMultMin = -10;
+var angleMultMax = 10;
+var angleMultStep = .1;
 
 var zoomMin = 1.0;
-var zoomMax = 4.0;
-var zoomStep = .01;
+var zoomMax = 10;
+var zoomStep = 1;
 
-var zoffAdjustMin = -1;
-var zoffAdjustMax = 1;
+var zoffAdjustMin = -10;
+var zoffAdjustMax = 10;
 var zoffAdjustStep = .001;
 
-var incAdjustMin = -1;
-var incAdjustMax = 1;
+var incAdjustMin = -10;
+var incAdjustMax = 10;
 var incAdjustStep = .001;
 
 //////////////////////////////////////////////////
 
 //gui
 var visible = true;
+var rainbowTrails = false;
+var showFlowField = false;
 var gui, gui2;
 
 function setup() {
-	var angleValMin = -TWO_PI*4;
-	var angleValMax = TWO_PI*4;
+
 	// createCanvas(400, 400);
-	angleMode(DEGREES)
-	createCanvas(window.innerWidth, window.innerHeight);
+	angleMode(DEGREES);
+	createCanvas(windowWidth, windowHeight);
 
 	gui = createGui('HSB+ GUI');
 	gui.addGlobals(
-		'bgColor',
-		'sColor',
+		'backgroundColor',
+		'strokeColor',
+		// 'colorChangeSpeed',
 		'backgroundAlpha',
 		'dotSize',
 		'strokeAlpha',
 		'angleVal',
+		'angleMult',
 		'pathMagnitude',
 		'zoom',
 		'zoffAdjust',
 		'incAdjust',
-		'rainbowTrails');
+		'rainbowTrails',
+		'showFlowField');
 	
 	cols = floor(width/scl);
 	rows = floor(height/scl);
@@ -92,17 +109,27 @@ function setup() {
 
 	flowField = new Array(cols * rows);
 
-	for(var i = 0; i < 2000; i++) {
+	for(var i = 0; i < 2500; i++) {
 		particles[i] = new Particle();
 	}
 
 }
 
 function draw() {
+	// if(keyIsPressed) {
+	// 	if(keyCode = '`') {
+	// 		// saveFrames('out', 'png', 1, 25, data => {
+	// 		// 	print(data);
+	// 		// });
+	// 		save('myCanvas.jpg');
+	// 		noLoop();
+	// 	}
+	// }
+
+
 	colorMode(RGB);
-	var cb = color(bgColor);
-	var c = color(sColor);
-	colorMode(RGB);
+	var cb = color(backgroundColor);
+	var c = color(strokeColor);
 	background(red(cb), green(cb), blue(cb), backgroundAlpha);
 	stroke(red(c), green(c), blue(c), strokeAlpha);
 	strokeWeight(dotSize);
@@ -116,12 +143,28 @@ function draw() {
 		var xoff = 0;
 		for(var x = 0; x < cols; x++) {
 			var index = (x + y * cols);
-			var angle = noise(xoff, yoff, zoff) * angleVal;
+			var angle = ((noise(xoff, yoff, zoff) * angleVal)) * angleMult;
 			var v = p5.Vector.fromAngle(angle);
 			v.setMag(pathMagnitude);
+			// if(mouseIsPressed) {
+			// 	// var vec = createVector(mouseX-width/2, mouseY-height/2);
+			// 	var vec = p5.Vector.lerp(v, createVector(sin(mouseY), cos(mouseX)), 5);
+			// 	v.add(vec);
+			// }
 			flowField[index] = v;
 			xoff += inc;
+			
 
+			if(showFlowField) {
+				push();
+					translate(x * scl, y * scl);
+					rotate(v.heading());
+					strokeWeight(1);
+					line(0, 0, scl, 0);
+				pop();
+			}
+			
+			
 		}
 		yoff += inc;
 		
@@ -137,7 +180,11 @@ function draw() {
 	})
 	
 	fr.html(floor(frameRate()));
+
+
 }
+
+
 
 
 
