@@ -34,10 +34,11 @@ function Particle() {
 	}
 
 	this.show = function(sliderVal) {
-		if(sH.value() == 0) {
-			stroke(this.h, sS.value(), sB.value(), sA.value());
+		if(sColor == 0) {
+			stroke(this.h, 255, 255, 100);
 		} else {
-			stroke(sH.value(), sS.value(), sB.value(), sA.value());
+			var c = color(sColor)
+			stroke(red(c), green(c), blue(c), strokeAlpha);
 		}
 		this.h += this.hueSpeed;
 		if (this.h > 255) {
