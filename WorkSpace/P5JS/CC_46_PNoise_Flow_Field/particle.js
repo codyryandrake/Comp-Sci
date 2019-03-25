@@ -33,18 +33,21 @@ function Particle() {
 
 	}
 
-	this.show = function(sliderVal) {
-		if(sColor == 0) {
-			stroke(this.h, 255, 255, 100);
+	this.show = function() {
+		var c = color(sColor);
+		if(rainbowTrails) {
+			colorMode(HSB);
+			stroke(this.h, 255, 255, strokeAlpha);
+			// noStroke();
 		} else {
-			var c = color(sColor)
+			colorMode(RGB);
 			stroke(red(c), green(c), blue(c), strokeAlpha);
 		}
 		this.h += this.hueSpeed;
 		if (this.h > 255) {
 			this.h = -this.h
 		}
-		strokeWeight(1);
+		strokeWeight(dotSize);
 		line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
 		// point(this.pos.x, this.pos.y);
 		this.updatePrev();
