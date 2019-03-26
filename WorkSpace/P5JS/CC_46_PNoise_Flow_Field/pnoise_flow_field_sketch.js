@@ -1,4 +1,4 @@
-var scl = 30;
+var scl = 40;
 var cols, rows;
 
 
@@ -9,21 +9,21 @@ var particles = [];
 var flowField = [];
 
 //gui params
-var backgroundColor = '#000080' 
-var backgroundAlpha = 223;
-var strokeColor = '#ff0000';
+var backgroundColor = '#ff8000' 
+var backgroundAlpha = 13;
+var strokeColor = '#8000ff';
 // var colorChangeSpeed = 0.01;
-var dotSize = 24.31;
-var strokeAlpha = 37;
+var dotSize = 4.5;
+var strokeAlpha = 186;
 
 
 var angleVal = 4;
-var angleMult = -1.2;
-var pathMagnitude = 1;
+var angleMult = -63;
+var pathMagnitude = -1.68;
 var zoom = 1.0;
 var inc = .1;
 var incAdjust = .1;
-var zoff = .01;
+var zoff = .001;
 var zoffAdjust = .01; 
 
 
@@ -56,20 +56,20 @@ var angleValMin = -3;
 var angleValMax = 3;
 var angleValStep = .1;
 
-var angleMultMin = -10;
-var angleMultMax = 10;
+var angleMultMin = -100;
+var angleMultMax = 100;
 var angleMultStep = .1;
 
 var zoomMin = 1.0;
 var zoomMax = 10;
 var zoomStep = 1;
 
-var zoffAdjustMin = -10;
-var zoffAdjustMax = 10;
+var zoffAdjustMin = -1;
+var zoffAdjustMax = 1;
 var zoffAdjustStep = .001;
 
-var incAdjustMin = -10;
-var incAdjustMax = 10;
+var incAdjustMin = -1;
+var incAdjustMax = 1;
 var incAdjustStep = .001;
 
 //////////////////////////////////////////////////
@@ -109,7 +109,7 @@ function setup() {
 
 	flowField = new Array(cols * rows);
 
-	for(var i = 0; i < 2500; i++) {
+	for(var i = 0; i < 6000; i++) {
 		particles[i] = new Particle();
 	}
 
@@ -143,7 +143,7 @@ function draw() {
 		var xoff = 0;
 		for(var x = 0; x < cols; x++) {
 			var index = (x + y * cols);
-			var angle = ((noise(xoff, yoff, zoff) * angleVal)) * angleMult;
+			var angle = ((noise(xoff, yoff, zoff) * angleVal)) + angleMult;
 			var v = p5.Vector.fromAngle(angle);
 			v.setMag(pathMagnitude);
 			// if(mouseIsPressed) {
