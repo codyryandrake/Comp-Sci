@@ -90,7 +90,8 @@ function setup() {
 
 	// createCanvas(400, 400);
 	angleMode(DEGREES);
-	createCanvas(window.innerWidth, window.innerHeight);
+	createCanvas(1600, 1600, SVG);
+	// createCanvas(window.innerWidth, window.innerHeight);
 	scl = floor((width + height) /70);
 
 	gui = createGui('HSB+ GUI');
@@ -118,7 +119,7 @@ function setup() {
 
 	flowField = new Array(cols * rows);
 
-	for(var i = 0; i < 2000; i++) {
+	for(var i = 0; i < 200; i++) {
 		particles[i] = new Particle();
 	}
 
@@ -127,15 +128,14 @@ function setup() {
 function draw() {
 	if(keyIsPressed && flag) {
 		flag = false;
-		if(keyCode === 'p') {
+		if(keyCode == 'p') {
 			// saveFrames('out', 'png', 1, 25, data => {
 			// 	print(data);
 			// });
 			save('myCanvas.jpg');
-			print('Press ENTER to resume the sketch...')
 		}
 	}
-	if(keyCode === 'l') {flag = true;}
+	if(keyCode == 'l') {flag = true;}
 
 
 	colorMode(RGB);
