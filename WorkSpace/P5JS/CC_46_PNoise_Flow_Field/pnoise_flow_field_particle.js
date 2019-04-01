@@ -2,15 +2,15 @@ function Particle() {
 	this.pos = createVector(random(width), random(height));
 	this.vel = createVector(0,0);
 	this.acc = createVector(0,0);
-	this.maxSpeed = random(.1, 2);
+	this.maxSpeed = random(2, 3);
 	this.hueSpeed = 0;
 	this.h = 0;
+	this.force = createVector(0,0);
 
 	this.prevPos = this.pos.copy();
 
 	this.updatePrev = function() {
-		this.prevPos.x = this.pos.x;
-		this.prevPos.y = this.pos.y;
+		this.prevPos = this.pos.copy();
 	}
 
 	this.update = function() {
@@ -18,19 +18,23 @@ function Particle() {
 		this.vel.limit(this.maxSpeed);
 		this.pos.add(this.vel);
 		this.acc.mult(0);
+		
 	}
 
 	this.follow = function(vectors) {
 		var x = floor(this.pos.x / scl);
 		var y = floor(this.pos.y / scl);
 		var index = x + y * cols;
-		var force = vectors[index];
-		this.applyForce(force);
+		this.force = vectors[index];
+		this.applyForce(this.force);
 	}
 
 	this.applyForce = function(force) {
 		this.acc.add(force);
-
+		this.updatePrev();
+		// push();
+		// rotate(this.vel.heading());
+		// pop();
 	}
 
 	this.show = function() {
@@ -50,34 +54,38 @@ function Particle() {
 
 		if(!showFlowField) {
 			line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+			//triangle( this.pos.x, this.pos.y-dotSize, this.pos.x-dotSize, this.pos.y, this.pos.x+dotSize, this.pos.y);
+			// point(this.pos.x, this.pos.y);
+			//rect(this.pos.x, this.pos.y, dotSize, dotSize);
+
 		}
-		// point(this.pos.x, this.pos.y);
-		this.updatePrev();
+		
+		
 	}
 
 	this.edges = function() {
 		if (this.pos.x > width) {
 			this.pos.x = 0;
 			this.updatePrev();
-			this.maxSpeed = random(.1, 2);
+			// this.maxSpeed = random(.1, 2);
 			this.hueSpeed = map(this.vel.x, 0, width, .1, 10);
 		}
 		if (this.pos.x < 0) {
 			this.pos.x = width;
 			this.updatePrev();
-			this.maxSpeed = random(.1, 2);
+			// this.maxSpeed = random(.1, 2);
 			this.hueSpeed = map(this.vel.x, 0, width, .1, 10);
 		}
 		if (this.pos.y > height) {
 			this.pos.y = 0;
 			this.updatePrev();
-			this.maxSpeed = random(.1, 2);
+			// this.maxSpeed = random(.1, 2);
 			this.hueSpeed = map(this.vel.x, 0, width, .1, 10);
 		}
 		if (this.pos.y < 0) {
 			this.pos.y = height;
 			this.updatePrev();
-			this.maxSpeed = random(.1, 2);
+			// this.maxSpeed = random(.1, 2);
 			this.hueSpeed = map(this.vel.x, 0, width, .1, 10);
 		}
 	}
