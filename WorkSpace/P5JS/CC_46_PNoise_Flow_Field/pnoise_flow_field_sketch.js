@@ -62,8 +62,8 @@ var angleValMin = -3;
 var angleValMax = 3;
 var angleValStep = .01;
 
-var angleMultMin = -20;
-var angleMultMax = 20;
+var angleMultMin = -2000;
+var angleMultMax = 2000;
 var angleMultStep = .1;
 
 var zoomMin = 1.0;
@@ -125,17 +125,17 @@ function setup() {
 }
 
 function draw() {
-	if(keyIsPressed && flag) {
-		flag = false;
-		if(keyCode === 'p') {
-			// saveFrames('out', 'png', 1, 25, data => {
-			// 	print(data);
-			// });
-			save('myCanvas.jpg');
-			print('Press ENTER to resume the sketch...')
-		}
-	}
-	if(keyCode === 'l') {flag = true;}
+	// if(keyIsPressed && flag) {
+	// 	flag = false;
+	// 	if(keyCode == 'p') {
+	// 		// saveFrames('out', 'png', 1, 25, data => {
+	// 		// 	print(data);
+	// 		// });
+	// 		save('myCanvas.jpg');
+	// 		print('Press l to reload save options...')
+	// 	}
+	// }
+	// if(keyCode == 'l') {flag = true;}
 
 
 	colorMode(RGB);
@@ -154,8 +154,8 @@ function draw() {
 		var xoff = 0;
 		for(var x = 0; x < cols+2; x++) {
 			var index = (x + y * cols);
-			var angle = ((noise(xoff, yoff, zoff) * angleMult * angleVal));
-			var v = p5.Vector.fromAngle(angle);
+			var angle = ((noise(xoff, yoff, zoff) * angleVal));
+			var v = p5.Vector.fromAngle(angle).mult(angleMult);
 			v.setMag(pathMagnitude);
 			// if(mouseIsPressed) {
 			// 	// var vec = createVector(mouseX-width/2, mouseY-height/2);
