@@ -29,6 +29,13 @@ function Particle() {
 		this.applyForce(this.force);
 	}
 
+	this.seek = function(target) {
+		this.force = target.sub(this.pos);
+		this.force.setMag(.5)
+		this.force.limit(this.maxSpeed);
+		this.applyForce(this.force);
+	}
+
 	this.applyForce = function(force) {
 		this.acc.add(force);
 		this.updatePrev();

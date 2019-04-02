@@ -185,7 +185,9 @@ function draw() {
 
 
 	particles.forEach(particle => {
-		particle.follow(flowField);
+		mouse = createVector(mouseX, mouseY);
+		//particle.follow(flowField);
+		particle.seek(mouse)
 		particle.edges();
 		particle.show();
 		particle.update();
