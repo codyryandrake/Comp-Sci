@@ -3,6 +3,6 @@ fun insertAtEnd([], n) = n::nil
 
 fun rotate([]) = []
 	| rotate(h) = h
-	| rotate(h::t) = t::insertAtEnd(t::t, h::t);
+	| rotate(lst) = insertAtEnd(lst, hd(lst));
 
 fun rotate([5, 7, 3, 2]);

@@ -59,7 +59,7 @@ function Particle() {
 
 		this.h = (this.h + this.hueSpeed) % 255;
 
-		if(!showFlowField) {
+		if(true) {
 			line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
 			//triangle( this.pos.x, this.pos.y-dotSize, this.pos.x-dotSize, this.pos.y, this.pos.x+dotSize, this.pos.y);
 			// point(this.pos.x, this.pos.y);

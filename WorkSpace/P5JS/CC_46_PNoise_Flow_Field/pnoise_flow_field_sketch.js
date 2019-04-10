@@ -9,7 +9,7 @@ var particles = [];
 var flowField = [];
 
 //gui params
-var backgroundColor = '#ff8000' 
+var backgroundColor = '#400040'
 var backgroundAlpha = 13;
 var fillColor = '#8000ff';
 var strokeColor = '#8000ff';
@@ -19,7 +19,7 @@ var strokeAlpha = 186;
 var fillAlpha = 186;
 
 
-var angleVal = 1.4;
+var angleVal = 0.0;
 var angleMult = 1.0;
 var pathMagnitude = 1.00;
 var zoom = 1.0;
@@ -82,7 +82,7 @@ var incAdjustStep = .001;
 
 //gui
 var visible = true;
-var rainbowTrails = false;
+var rainbowTrails = true;
 var showFlowField = false;
 var gui, gui2;
 
@@ -91,7 +91,7 @@ function setup() {
 	// createCanvas(400, 400);
 	angleMode(DEGREES);
 	createCanvas(window.innerWidth, window.innerHeight);
-	scl = floor((width + height) /70);
+	scl = floor((width + height) /40);
 
 	gui = createGui('HSB+ GUI');
 	gui.addGlobals(
@@ -118,7 +118,7 @@ function setup() {
 
 	flowField = new Array(cols * rows);
 
-	for(var i = 0; i < 2000; i++) {
+	for(var i = 0; i < flowField.length; i++) {
 		particles[i] = new Particle();
 	}
 
@@ -155,7 +155,7 @@ function draw() {
 		for(var x = 0; x < cols+2; x++) {
 			var index = (x + y * cols);
 			var angle = ((noise(xoff, yoff, zoff) * angleVal));
-			var v = p5.Vector.fromAngle(angle).mult(angleMult);
+			var v = p5.Vector.fromAngle(TWO_PI*(angle)).mult(angleMult);
 			v.setMag(pathMagnitude);
 			// if(mouseIsPressed) {
 			// 	// var vec = createVector(mouseX-width/2, mouseY-height/2);
@@ -169,8 +169,8 @@ function draw() {
 			if(showFlowField) {
 				push();
 					translate(x * scl, y * scl);
-					rotate(v.heading()*10);
-					stroke(255);
+					rotate(v.heading());
+					// stroke(255);
 					strokeWeight(3);
 					line(0, 0, scl, 0);
 				pop();
@@ -185,9 +185,9 @@ function draw() {
 
 
 	particles.forEach(particle => {
-		mouse = createVector(mouseX, mouseY);
-		//particle.follow(flowField);
-		particle.seek(mouse)
+		// mouse = createVector(mouseX, mouseY);
+		// particle.seek(mouse)
+		particle.follow(flowField);
 		particle.edges();
 		particle.show();
 		particle.update();
