@@ -1,6 +1,6 @@
 fun repFun (f, 0) = (fn x => x)
 	| repFun(f, 1) = (fn x => f(x))
-	| repFun(f, n) = fn x => n*(f(x))*(n-1);
+	| repFun(f, n) = fn x =>  => f(x) => f(repFun(f, n-1)(x);
 
 val square = fn (x) => x * x;
 

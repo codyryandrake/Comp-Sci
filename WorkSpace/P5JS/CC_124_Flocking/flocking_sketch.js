@@ -58,7 +58,7 @@ function setup() {
 	createCanvas(640, 360);
 	colorMode(RGB);
 
-	for(var i = 0; i < 100; i++) {
+	for(var i = 0; i < 150; i++) {
 		flock.push(new Boid());
 	}
 

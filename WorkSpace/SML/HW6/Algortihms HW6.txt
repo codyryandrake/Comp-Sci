@@ -1,0 +1,62 @@
+package Schedule;
+// The method scheduleIt is a greedy algorithm for scheduling jobs.
+
+import java.util.Scanner;
+
+public class ScheduleGreedy {
+
+	public static void main(String[] args) {
+//		Scanner keyboard = new Scanner(System.in);
+//		System.out.println("How many jobs would you like to schedule?");
+//		int size = keyboard.nextInt();
+//		int[] jobs = new int[size];
+//		for(int i = 0; i < size; i++) {
+//			System.out.println("Please enter the time for job " + (i+1) + ".");
+//			jobs[i] = keyboard.nextInt();
+//		}
+//		keyboard.close();
+		int[] jobs = {4, 6, 1, 9, 12, 13};
+		System.out.print("[");
+		printArray(scheduleIt(jobs));
+		System.out.println("]");
+	}
+
+	public static int[] scheduleIt(int[] jobs)
+	//Create an array to hold job schedule order
+	{	int[] jobSchedule = new int[jobs.length];
+	//count will store position of schedule array new item should be stored in
+		int count = 0;
+	//min will hold position in old array that min item is in
+		int min = 0;
+		boolean flag = false;
+	//while the new array is still being filled
+		while(!(count >= jobs.length)) {
+	//for every item in the old array
+			for(int i = 0; i < jobs.length; i++) {
+				if(jobs[i] != -1 && flag) {
+					min = i;
+					flag = false;
+				}
+	//if a particular item's position is less than the current min
+				else if(jobs[i] < jobs[min] && jobs[i] != -1) {
+	//Make that item's position the min
+					min = i;
+				}
+			}
+			jobSchedule[count] = min;
+			jobs[min] = -1;
+			min = 0;
+			flag = true;
+			count++;
+		}
+	
+		
+		return jobSchedule;
+	}
+	
+	private static void printArray(int[] arr) {
+		for(int i = 0; i < arr.length-1; i++)
+			System.out.print((arr[i]+1) + ", ");
+		System.out.print(arr[arr.length-1]+1);
+	}
+}
