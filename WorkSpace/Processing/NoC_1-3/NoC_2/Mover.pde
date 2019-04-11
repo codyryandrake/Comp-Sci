@@ -2,9 +2,6 @@ class Mover {
   PVector location;
   PVector velocity;
   PVector acceleration;
-  float angle;
-  float aVel = 0.0;
-  float aAcc = 0.01;
   float mass;
   float g;
   Mover() {
@@ -20,9 +17,6 @@ class Mover {
     //mouse.sub(location);
     //mouse.setMag(0.0001);
     //acceleration = mouse;
-    aAcc = acceleration.x/10.0;
-    angle += aVel;
-    aVel += aAcc;
     
     velocity.add(acceleration);
     location.add(velocity);
@@ -72,14 +66,9 @@ class Mover {
   }
   
   void display() {
-    push();
-    translate(location.x, location.y);
-    rotate(angle);
     stroke(0);
     strokeWeight(2);
-    fill(0,10);
-    rectMode(CENTER);
-    rect(0, 0, mass*20, mass*20);
-    pop();
+    fill(127);
+    ellipse(location.x, location.y, mass*20, mass*20);
   }
 }

@@ -25,7 +25,7 @@ void setup() {
 }
 
 void draw() {
-  background(255, 100);
+  background(51);
   
   //For every 'b' Ball object in the array of balls
   //for(Mover m : movers) {
@@ -65,28 +65,16 @@ void draw() {
     //  float gravityCo = 1;
     //  direction.mult((gravityCo * loc1.mass * loc2.mass))
     //}
-    
-    //for(Mover m: movers) {
-    //  for(Mover n: movers) {
-    //      if(m!=n) {
-    //        PVector f = n.attract(m);
-    //        n.applyForce(f);
-    //        n.update();
-    //        n.display();
-    //      }
-    //  }
-    //} 
-    
     for(Mover m: movers) {
-      PVector f = a.attract(m);
+      PVector f = m.attract(m);
       m.applyForce(f);
       m.update();
       m.display();
-    }
+    } 
     
-    a.drag();
-    a.hover(mouseX, mouseY);
-    a.display();
+    //a.drag();
+    //a.hover(mouseX, mouseY);
+    //a.display();
     
   //}
   
