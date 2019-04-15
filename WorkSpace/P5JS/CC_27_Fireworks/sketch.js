@@ -12,7 +12,7 @@ function setup() {
 }
 
 function draw() {
-  background(0, 0, 0, .1);
+  background(0, 0, 0, .06);
   if(random(1) < .05)
     fireworks.push(new Firework());
 

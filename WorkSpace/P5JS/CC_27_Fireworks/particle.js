@@ -22,7 +22,7 @@ function Particle(x,y, velocity, lifespan) {
   this.show = function() {
     //If a particle is created with lifespan and that lifespan still has value
     stroke(this.color,100,100, this.lifespan || 1);
-    strokeWeight(lifespan + random(-1, 7) || 5);
+    strokeWeight(this.lifespan != null ? this.lifespan + random(7) : random(5, 10));
     point(this.pos.x, this.pos.y);
   }
 
