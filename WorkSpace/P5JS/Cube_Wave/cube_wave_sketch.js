@@ -1,6 +1,6 @@
 let angle = 0;
-let w = 24; //x width increment
-let q = 24; //z width increment
+let w = 12; //x width increment
+let q = 12; //z width increment
 let ma = 0; //measured angle for ortho
 let maxD = 0; //
 
