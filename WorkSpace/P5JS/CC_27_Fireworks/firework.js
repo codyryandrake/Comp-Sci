@@ -3,7 +3,7 @@ function Firework() {
   this.firework = new Particle(
                                 mouseIsPressed ? mouseX :  random(width),
                                 height,
-                                createVector(0, random(-5,-10))
+                                createVector(0, random(-5,-20))
                               );
   this.exploded = false;
   this.done = false;
@@ -21,7 +21,7 @@ function Firework() {
       this.particles[i].applyForce(gravity);
       this.particles[i].update();
       if(this.particles[i].lifespan <= 0) this.particles.splice(i, 1);
-      else this.particles[i].lifespan -= .02;
+      else this.particles[i].lifespan -= random(.02);
     }
 
     if(this.exploded && this.particles.length == 0)
@@ -29,9 +29,9 @@ function Firework() {
   }
 
   this.explode = function() {
-    for(let i = 0; i < 500; i++) {
+    for(let i = 0; i < 300; i++) {
       var p = new Particle(this.firework.pos.x, this.firework.pos.y, p5.Vector.random2D(), 1);
-      p.vel.mult(random(1,10));
+      p.vel.mult(random(1,50));
       //Color the particles based off the initial firework color, with a bit of randomness
       p.color = this.firework.color + random(-30, 30);
       this.particles.push(p);

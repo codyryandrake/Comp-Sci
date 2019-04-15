@@ -2,7 +2,7 @@ var fireworks = [];
 var gravity;
 
 function setup() {
-  createCanvas(400, 300);
+  createCanvas(window.innerWidth, window.innerHeight);
   // colorMode(HSB, 360, 100, 100, 1)
   colorMode(HSB);
   gravity = createVector(0, .2);
@@ -12,8 +12,8 @@ function setup() {
 }
 
 function draw() {
-  background(0, 0, 0, .3);
-  if(random(1) < .1)
+  background(0, 0, 0, .1);
+  if(random(1) < .05)
     fireworks.push(new Firework());
 
   for(var i = fireworks.length - 1; i >= 0; i--) {
@@ -22,6 +22,5 @@ function draw() {
     if(fireworks[i].done)
       fireworks.splice(i, 1);
   }
-  console.log(fireworks.length);
 
 }
