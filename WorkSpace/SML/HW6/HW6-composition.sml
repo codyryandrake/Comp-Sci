@@ -1,5 +1,5 @@
 (*)Problem 1(*)
-fun gcd(x, y) = 
+fun gcd(0, y) = 
 	if (x = 0) then y
 	else if (y = 0) then x
 	else if (x > y) then gcd(y, x)
