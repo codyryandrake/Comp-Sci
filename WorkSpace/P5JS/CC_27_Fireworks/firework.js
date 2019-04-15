@@ -1,10 +1,6 @@
 function Firework() {
 
-  this.firework = new Particle(
-                                mouseIsPressed ? mouseX :  random(width),
-                                height,
-                                createVector(0, random(-5,-20))
-                              );
+  this.firework = new Particle(random(width), height, createVector(0, random(-5,-20)));
   this.exploded = false;
   this.done = false;
   this.particles = [];
@@ -21,7 +17,7 @@ function Firework() {
       this.particles[i].applyForce(gravity);
       this.particles[i].update();
       if(this.particles[i].lifespan <= 0) this.particles.splice(i, 1);
-      else this.particles[i].lifespan -= random(.03);
+      else this.particles[i].lifespan -= random(particleDecay);
     }
 
     if(this.exploded && this.particles.length == 0)
