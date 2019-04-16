@@ -18,6 +18,11 @@ var particleSizeMin = 0;
 var particleSizeMax = 20;
 var particleSizeStep = .1;
 
+var explosionSize = 30;
+var explosionSizeMin = 1;
+var explosionSizeMax = 100;
+var explosionSizeStep = 1;
+
 var particleDecay = .06;
 var particleDecayMin = 0.01;
 var particleDecayMax = .08;
@@ -34,8 +39,9 @@ function setup() {
   gui.addGlobals(
     'backgroundC',
     'backgroundA',
-    'particleSize',
     'rocketSize',
+    'particleSize',
+    'explosionSize',
     'particleDecay'
   )
   stroke(255);

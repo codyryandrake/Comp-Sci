@@ -27,7 +27,7 @@ function Firework() {
   this.explode = function() {
     for(let i = 0; i < 300; i++) {
       var p = new Particle(this.firework.pos.x, this.firework.pos.y, p5.Vector.random2D(), 1);
-      p.vel.mult(random(1,50));
+      p.vel.mult(random(explosionSize));
 
       this.particles.push(p);
     }
