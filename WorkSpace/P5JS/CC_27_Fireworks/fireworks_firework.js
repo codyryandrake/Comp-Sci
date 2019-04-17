@@ -1,6 +1,7 @@
 function Firework() {
 
   this.firework = new Particle(random(width), height, createVector(0, random(-5,-20)));
+  this.color = mouseIsPressed ? map(mouseY, 0, height, 0, 360) : random(360);
   this.exploded = false;
   this.done = false;
   this.particles = [];
@@ -16,8 +17,12 @@ function Firework() {
     for(var i = this.particles.length-1; i >= 0 ; i--) {
       this.particles[i].applyForce(gravity);
       this.particles[i].update();
-      if(this.particles[i].lifespan <= 0) this.particles.splice(i, 1);
-      else this.particles[i].lifespan -= random(particleDecay);
+      if(this.particles[i].lifespan <= 0) {
+        this.particles.splice(i, 1);
+      }
+      else {
+        this.particles[i].lifespan -= random(particleDecay);
+      }
     }
 
     if(this.exploded && this.particles.length == 0)
@@ -25,25 +30,33 @@ function Firework() {
   }
 
   this.explode = function() {
-    for(let i = 0; i < 300; i++) {
-      var p = new Particle(this.firework.pos.x, this.firework.pos.y, p5.Vector.random2D(), 1);
+    var numParticles = random(50, 300);
+    for(let i = 0; i < numParticles; i++) {
+      var p = new Particle(this.firework.pos.x, this.firework.pos.y, p5.Vector.random2D());
+      p.lifespan = 1;
+      p.size = random(particleSize);
       p.vel.mult(random(explosionSize));
-
       this.particles.push(p);
     }
     this.exploded = true;
   }
 
   this.show = function() {
-    if(!this.exploded)
-      this.firework.show();
+    if(!this.exploded) {
+      stroke(this.color, 100, 100, 1);
+      strokeWeight(rocketSize * this.firework.vel.mag()/2);
+      point(this.firework.pos.x, this.firework.pos.y);
+    }
     else
       for(var i = 0; i < this.particles.length; i++) {
         //Add an additional fall amount to particles after they explode
-        this.particles[i].vel.mult(random(.7, 1));
+        this.particles[i].vel.mult(particleVelocity);
         //Color the particles based off the initial firework color, with a bit of randomness
         this.particles[i].color = this.firework.color + random(-30, 30);
-        this.particles[i].show();
+        stroke(this.color + random(-20, 20), 100, 100, this.particles[i].lifespan);
+        strokeWeight(this.particles[i].size*this.particles[i].lifespan);
+        point(this.particles[i].pos.x, this.particles[i].pos.y);
       }
   }
+
 }
