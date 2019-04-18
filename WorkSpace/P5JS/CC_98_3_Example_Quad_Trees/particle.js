@@ -8,7 +8,7 @@ class Particle {
     this.x = x;
     this.y = y;
     this.highlight = false;
-    this.r = 8;
+    this.r = floor(random(1,8));
   }
 
   move() {
@@ -20,7 +20,7 @@ class Particle {
     noStroke();
     if (this.highlight) fill(255);
     else fill(100);
-    ellipse(this.x, this.y, this.r, this.r);
+    ellipse(this.x, this.y, this.r*2, this.r*2);
   }
 
   checkCollision(others) {
@@ -31,7 +31,7 @@ class Particle {
       }
       if (this != other) {
         let d = dist(this.x, this.y, other.x, other.y);
-        if (d < other.r / 2 + this.r / 2) {
+        if (d <= (other.r + this.r)) {
           this.highlight = true;
         }
       }

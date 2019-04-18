@@ -52,7 +52,7 @@ function draw() {
   }
 
   for (let p of particles) {
-    let range = new Circle(p.x, p.y, p.r * 2);
+    let range = new Circle(p.x, p.y, p.r*2);
     if (withQuadTree.checked()) {
       let points = qtree.query(range);
       p.checkCollision(points);
