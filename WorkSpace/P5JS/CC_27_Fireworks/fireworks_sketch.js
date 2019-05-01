@@ -37,6 +37,11 @@ var gravityAmountMin = 0;
 var gravityAmountMax = .8;
 var gravityAmountStep = .01;
 
+var windAmount = 0;
+var windAmountMin = -.1;
+var windAmountMax = .1;
+var windAmountStep = .001;
+
 var particleVelocity = 0.85;
 var particleVelocityMin = 0;
 var particleVelocityMax = 2;
@@ -59,6 +64,7 @@ function setup() {
     'explosionSize',
     'particleDecay',
     'gravityAmount',
+    'windAmount',
     'particleVelocity'
   )
   // stroke(255);
@@ -67,6 +73,7 @@ function setup() {
 
 function draw() {
   gravity = createVector(0, gravityAmount);
+  wind = createVector(windAmount, 0);
   background(hue(backgroundC), saturation(backgroundC), brightness(backgroundC), backgroundA);
   if(random(1) < rocketSpawnChance) {
     fireworks.push(new Firework());

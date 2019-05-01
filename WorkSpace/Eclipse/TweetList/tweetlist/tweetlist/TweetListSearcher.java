@@ -76,7 +76,9 @@ public class TweetListSearcher
 				Animate.TextDraw(
 						  "\t[6] Print Results?\n", time); }
 				Animate.TextDraw(
-						  "\t[0] Exit Program?\n", time); 
+						"\t[7] Enable Animation?\n"
+						+ "\t[8] Disable Animation?\n"
+						+ "\t[0] Exit Program?\n", time); 
 
 						
 				
@@ -108,6 +110,10 @@ public class TweetListSearcher
 					PrintSearchHistory(); 
 					continue;
 				}
+				if (queryType == 7)
+					Animate.enable = true;
+				if(queryType == 8)
+					Animate.enable = false;
 				if (queryType == 0)
 					break;											//Exit inner-loop
 			}

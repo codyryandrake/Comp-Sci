@@ -9,13 +9,16 @@ function Firework() {
   this.update = function() {
     if(!this.exploded) {
       this.firework.applyForce(gravity);
+      // this.firework.applyForce(wind*.1);
       this.firework.update();
       if(this.firework.vel.y >= 0)
         this.explode();
     }
 
     for(var i = this.particles.length-1; i >= 0 ; i--) {
+
       this.particles[i].applyForce(gravity);
+      this.particles[i].applyForce(wind);
       this.particles[i].update();
       if(this.particles[i].lifespan <= 0) {
         this.particles.splice(i, 1);
