@@ -1,10 +1,22 @@
+var video;
+var vScale = 16;
+
+var particle;
 
 function setup() {
   createCanvas(320, 240);
-  background(51);
-  createCapture(VIDEO);
+  pixelDensity(1);
+  
+  video = createCapture(VIDEO);
+  video.size(width/vScale, height/vScale);
+  particle = new Particle(width/2, height/2);
 }
 
-function draw() {
 
+function draw() {
+	background(51);
+	video.loadPixels();
+	particle.applyForce(createVector(random(-1,1), random(-1,1)));
+	particle.update();
+	particle.show();
 }
