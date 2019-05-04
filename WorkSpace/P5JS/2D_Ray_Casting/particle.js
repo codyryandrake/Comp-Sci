@@ -1,15 +1,15 @@
 class Particle {
-  constructor(x,y, color) {
-    this.pos = createVector(random(x, y));
+  constructor() {
+    this.pos = p5.Vector.random2D();
     this.rays = [];
-    this.color = color;
+    this.color = random(360);
     for (let a = 0; a < 360; a +=.5) {
       this.rays.push(new Ray(this.pos, radians(a)));
     }
   }
 
-  update(x, y) {
-    this.pos.set(x, y);
+  applyForce(force) {
+    this.pos.set(force);
   }
 
   look(boundaries) {
@@ -25,17 +25,23 @@ class Particle {
           if(d < record) {
             record = d;
             closest = pt;
-            rayBrightness = map(d, 0, width, 200, 255);
+            rayBrightness = map(d, 0, record, 0, 10);
           }
         }
       }
       if(closest) {
         push();
         colorMode(HSB, 360, 255, 255, 100);
-        stroke(rayColor, rayBrightness, 255, 10);
+        stroke(rayColor, 255, 255, rayBrightness);
+        //strokeWeight(random(3,5));
         line(this.pos.x, this.pos.y, closest.x, closest.y)
         //rayColor = (rayColor + .01) %50;
         pop();
+      }
+      //When particle crosses a boundary
+      if(record < 1) {
+        this.color = random(360);
+        //this.pos.set(closest)
       }
     }
   }
@@ -43,8 +49,8 @@ class Particle {
   show() {
     // fill(255);
     // ellipse(this.pos.x, this.pos.y, 4, 4);
-    for (let ray of this.rays) {
-      ray.show();
-    }
+    //for (let ray of this.rays) {
+      //ray.show();
+    //}
   }
 }

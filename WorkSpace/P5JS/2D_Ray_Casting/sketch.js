@@ -4,32 +4,43 @@
 
 let boundaries = [];
 let particles = [];
-let xoff = 0;
-let yoff = 10000;
+let xoff;
+let yoff;
 
-let xoff2 = 1000;
-let yoff2 = 100000;
+let noiseVector;
+let mouseVector;
 
 function setup() {
-  createCanvas(400, 400);
-  for (let i = 0; i < 5; i++) {
-    let x1 = random(width);
+  createCanvas(800, 800);
+  background(0);
+  xoff = random(1000);
+  yoff = random(1000);
+  xoff2 = random(2000);
+  yoff2 = random(2000);
+  for (let i = 0; i < 7; i++) {
+    let x1 = random(width*2);
     let y1 = random(height);
-    let x2 = random(width);
+    let x2 = random(width*2);
     let y2 = random(height);
-    boundaries.push(new Boundary(x1, y1, x2, y2));
+    boundaries.push(new Boundary(x1, y1, x2, y2, 255));
   }
-  boundaries.push(new Boundary(0, 0, width, 0));
-  boundaries.push(new Boundary(0, height, width, height));
-  boundaries.push(new Boundary(0, 0, 0, height));
-  boundaries.push(new Boundary(width, 0, width, height));
+  boundaries.push(new Boundary(0, 0, width, 0, 0));
+  boundaries.push(new Boundary(0, height, width, height, 0));
+  boundaries.push(new Boundary(0, 0, 0, height, 0));
+  boundaries.push(new Boundary(width, 0, width, height, 0));
   for (let i = 0; i < 2; i++) {
-    particles.push(new Particle(random(width), random(height), random(360)));
+    particles.push(new Particle());
   }
 }
 
 function draw() {
-  background(0, 20, 55, 10);
+  if(key == 's') {
+    save('2DRay.png');
+    //nullify key value to prevent multiple downloads on subsequent loops
+    key = null;
+  }
+
+  background(0, 50);
   for (let boundary of boundaries) {
     boundary.show();
   }
@@ -38,34 +49,16 @@ function draw() {
 
 
   for(let i = 0; i < particles.length; i++) {
-    particles[i].update(noise(xoff+i)*width, noise(yoff+i)*height);
-    if(mouseIsPressed)
-      particles[0].update(mouseX, mouseY);
-    particles[i].show();
+    noiseVector = createVector((noise(xoff+i*1000)*width), (noise(yoff+i*1000)*height))
+    particles[i].applyForce(noiseVector);
+    if(mouseIsPressed) {
+      mouseVector = createVector(mouseX, mouseY);
+      particles[0].applyForce(mouseVector);
+    }
     particles[i].look(boundaries)
+    particles[i].show();
   }
-  // particles[0].update(noise(xoff)*width, noise(yoff)*height);
-  // particles[0].show();
-  // particles[0].look(boundaries)
-  xoff += 0.01;
-  yoff += 0.01;
-  //
-  // particles[1].update(noise(xoff2)*width, noise(yoff2)*height);
-  // particles[1].show();
-  // particles[1].look(boundaries)
-  // xoff2 += 0.01;
-  // yoff2 += 0.01;
 
-
+  xoff += random(0.01);
+  yoff += random(0.01);
 }
-
-  // ray.show();
-  // ray.lookAt(mouseX, mouseY);
-  //
-  //
-  // let pt = ray.cast(boundary);
-  // // console.log(pt);
-  // if(pt) {
-  //   fill(255);
-  //   ellipse(pt.x, pt.y, 8, 8);
-  // }
