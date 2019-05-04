@@ -18,9 +18,9 @@ function setup() {
   xoff2 = random(2000);
   yoff2 = random(2000);
   for (let i = 0; i < 7; i++) {
-    let x1 = random(width*2);
+    let x1 = random(width);
     let y1 = random(height);
-    let x2 = random(width*2);
+    let x2 = random(width);
     let y2 = random(height);
     boundaries.push(new Boundary(x1, y1, x2, y2, 255));
   }

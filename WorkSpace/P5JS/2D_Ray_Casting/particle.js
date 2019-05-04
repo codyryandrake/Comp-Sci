@@ -25,7 +25,7 @@ class Particle {
           if(d < record) {
             record = d;
             closest = pt;
-            rayBrightness = map(d, 0, record, 0, 10);
+            rayBrightness = map(d, 0, record, 0, 5);
           }
         }
       }
