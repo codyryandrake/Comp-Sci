@@ -11,7 +11,7 @@ let noiseVector;
 let mouseVector;
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(1600, 600);
   background(0);
   xoff = random(1000);
   yoff = random(1000);
@@ -22,12 +22,12 @@ function setup() {
     let y1 = random(height);
     let x2 = random(width);
     let y2 = random(height);
-    boundaries.push(new Boundary(x1, y1, x2, y2, 255));
+    boundaries.push(new Boundary(x1, y1, x2, y2, 100));
   }
-  boundaries.push(new Boundary(0, 0, width, 0, 0));
-  boundaries.push(new Boundary(0, height, width, height, 0));
-  boundaries.push(new Boundary(0, 0, 0, height, 0));
-  boundaries.push(new Boundary(width, 0, width, height, 0));
+  boundaries.push(new Boundary(0, 0, width, 0, 255));
+  boundaries.push(new Boundary(0, height, width, height, 255));
+  boundaries.push(new Boundary(0, 0, 0, height, 255));
+  boundaries.push(new Boundary(width, 0, width, height, 255));
   for (let i = 0; i < 2; i++) {
     particles.push(new Particle());
   }
@@ -40,7 +40,7 @@ function draw() {
     key = null;
   }
 
-  background(0, 50);
+  background(0, 5);
   for (let boundary of boundaries) {
     boundary.show();
   }
