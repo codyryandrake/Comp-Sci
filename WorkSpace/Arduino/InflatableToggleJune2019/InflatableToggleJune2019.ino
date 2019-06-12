@@ -1,16 +1,23 @@
 //Cody Ryan + Rachel Buse Inflatable Project June 2019
-//This code is designed to automatically implement a inflation/deflation 
-//mechanic, with 5 minutes of inflation followed by 5 minutes of deflation,
-//before resetting to an OFF state.
-//When a patron activates the process by stepping on a floor pad, the system state
-//will turn ON and process will begin.  
+//This code is designed to automatically implement an inflation/deflation 
+//mechanic, with X minutes of inflation followed by X minutes of deflation,
+//before resetting to an OFF state and triggering a momentary delay.
+
+//System Process:
+//When a patron activates the system by stepping on a floor pad, the system 
+//will turn on INFLATION fans.
+//After the desired inflationTime the system will turn INFLATION fans off
+//and DEFLATION fans on. 
+//After the total inflationTime + deflationTime has passed, the system will
+//turn ALL fans off, the system will RESET, and DELAY for systemDelayTime 
+//before repeating the process.   
 
 //Time-Management Vars
 unsigned long padTriggerTimeStamp; //Global var for holding starting time of pad trigger
 unsigned long currentTimeStamp; //Global var for holding current time stamp
 const unsigned long inflationTime = 10 * 1000; //Operations will run for this amount of time (in millis) ~10 seconds
 const unsigned long deflationTime = 10 * 1000; //Operations will run for this amount of time (in millis) ~10 seconds
-
+const unsigned long systemDelayTime = 10 * 1000; //The system will halt for this amount of time after completion
 
 //Pin Control Vars
 const byte led1 = 2; //Built-in debug LED
@@ -55,19 +62,20 @@ void loop() {
     padTriggerTimeStamp = millis(); //Record the starting time of the system
     systemRunningFlag = true; //Set the system flag to true since the system is now running
   }
-  else if(systemRunningFlag) //If the system is currently running
+  if(systemRunningFlag) //If the system is currently running
   {
-    currentTimeStamp = millis(); //Keep track of elapsed time since the system started
+    currentTimeStamp = millis(); //Update current time at the beginning of every loop
     
     if(currentTimeStamp - padTriggerTimeStamp > inflationTime) //After desired ON time has passed
     {
       digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
       digitalWrite(dPin2, HIGH); //Turn the deflation pin(relay) ON
     }
-    if(currentTimeStamp - padTriggerTimeStamp >= inflationTime + deflationTime) //If all desired time has passed
+    if(currentTimeStamp - padTriggerTimeStamp >= inflationTime + deflationTime) //After all desired time has passed
     {
       digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
       digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
+      delay(systemDelayTime); //Insert a delay before turning the system off to prevent an instant reset
       systemRunningFlag = false; //Set the system flag to false since the system is now off
     }
   }
