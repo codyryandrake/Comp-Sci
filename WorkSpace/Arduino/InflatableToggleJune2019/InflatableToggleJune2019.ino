@@ -22,8 +22,8 @@ const byte dPin7 = 13; //D7
 const byte dPin8 = 15; //D8
 
 //Bool Control Flags
-bool padFlag = false;
-bool systemRunningFlag = false;
+bool padFlag = false; //Identifies if the floor pad is being stood on or not
+bool systemRunningFlag = false; //Identifies if the system is currently running
 
 
 void setup() {
@@ -41,6 +41,7 @@ void setup() {
   pinMode(dPin7, OUTPUT);
   pinMode(dPin8, INPUT); //The final pin is used for floor pad input
 
+//  padTriggerTimeStamp = millis(); //Start keeping track of elapsed time
 }
 
 void loop() {
@@ -48,17 +49,15 @@ void loop() {
   padFlag = digitalRead(dPin8); //At the start of each loop, check the status of the floor pad
   if(padFlag && !systemRunningFlag) //If the pad is active and the system is currently off
   {
-    currentTimeStamp = millis(); //Time-stamp when the system started
     digitalWrite(dPin1, HIGH); //Turn the inflation pin(relay) ON
     digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
+    padTriggerTimeStamp = millis(); //Record the starting time of the system
     systemRunningFlag = true; //Set the system flag to true since the system is now running
   }
-  else if (!padFlag && !systemRunningFlag) //If no one is standing on the floor pad and the system is OFF
+  else if(systemRunningFlag) //If the system is currently running
   {
-    padTriggerTimeStamp = millis();
-  }
-  else 
-  {
+    currentTimeStamp = millis(); //Keep track of elapsed time since the system started
+    
     if(
       currentTimeStamp - padTriggerTimeStamp >= desiredRunTime/2 &&
       currentTimeStamp - padTriggerTimeStamp < desiredRunTime) //After half of the desired time has passed
