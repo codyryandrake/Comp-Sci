@@ -1,4 +1,5 @@
-//Cody Ryan + Rachel Buse Inflatable Project June 2019
+//Rachel Buse Inflatable Project June 2019 w/Code by CODYRYANDESIGN.com
+
 //This code is designed to automatically implement an inflation/deflation 
 //mechanic, with X minutes of inflation followed by X minutes of deflation,
 //before resetting to an OFF state and triggering a momentary delay.
@@ -67,27 +68,33 @@ void loop() {
       Deflate();
     if(currentTimeStamp - padTriggerTimeStamp >= inflationTime + deflationTime) //After ALL desired time has passed
       Shutdown();
+    else if(!padFlag) //If the patron leaves the floor pad area early, initiate shutdown procedures
+      Shutdown();
   }
 }
 
+//Handle turning on INFLATION pins and turning off DEFLATION pins
 void Inflate()
 {
   digitalWrite(dPin1, HIGH); //Turn the inflation pin(relay) ON
   digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
 }
 
+//Handle turning on DEFLATION pins and turning off INFLATION pins
 void Deflate()
 {
   digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
   digitalWrite(dPin2, HIGH); //Turn the deflation pin(relay) ON
 }
 
+//Handle system startup procedures
 void Startup()
 {
   padTriggerTimeStamp = millis(); //Record the starting time of the system
   systemRunningFlag = true; //Set the system flag to true since the system is now running  
 }
 
+//Handle system shutdown procedures
 void Shutdown()
 {
   digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
