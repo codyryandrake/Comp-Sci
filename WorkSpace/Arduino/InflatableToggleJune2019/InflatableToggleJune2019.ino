@@ -41,7 +41,6 @@ void setup() {
   pinMode(dPin7, OUTPUT);
   pinMode(dPin8, INPUT); //The final pin is used for floor pad input
 
-//  padTriggerTimeStamp = millis(); //Start keeping track of elapsed time
 }
 
 void loop() {
