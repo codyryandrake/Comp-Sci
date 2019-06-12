@@ -57,27 +57,41 @@ void loop() {
   padFlag = digitalRead(dPin8); //At the start of each loop, check the status of the floor pad
   if(padFlag && !systemRunningFlag) //If the pad is active and the system is currently off
   {
-    digitalWrite(dPin1, HIGH); //Turn the inflation pin(relay) ON
-    digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
-    padTriggerTimeStamp = millis(); //Record the starting time of the system
-    systemRunningFlag = true; //Set the system flag to true since the system is now running
+    Startup();
+    Inflate();
   }
   if(systemRunningFlag) //If the system is currently running
   {
     currentTimeStamp = millis(); //Update current time at the beginning of every loop
-    
-    if(currentTimeStamp - padTriggerTimeStamp > inflationTime) //After desired ON time has passed
-    {
-      digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
-      digitalWrite(dPin2, HIGH); //Turn the deflation pin(relay) ON
-    }
-    if(currentTimeStamp - padTriggerTimeStamp >= inflationTime + deflationTime) //After all desired time has passed
-    {
-      digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
-      digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
-      delay(systemDelayTime); //Insert a delay before turning the system off to prevent an instant reset
-      systemRunningFlag = false; //Set the system flag to false since the system is now off
-    }
+    if(currentTimeStamp - padTriggerTimeStamp > inflationTime) //After desired INFLATION time has passed
+      Deflate();
+    if(currentTimeStamp - padTriggerTimeStamp >= inflationTime + deflationTime) //After ALL desired time has passed
+      Shutdown();
   }
+}
 
+void Inflate()
+{
+  digitalWrite(dPin1, HIGH); //Turn the inflation pin(relay) ON
+  digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
+}
+
+void Deflate()
+{
+  digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
+  digitalWrite(dPin2, HIGH); //Turn the deflation pin(relay) ON
+}
+
+void Startup()
+{
+  padTriggerTimeStamp = millis(); //Record the starting time of the system
+  systemRunningFlag = true; //Set the system flag to true since the system is now running  
+}
+
+void Shutdown()
+{
+  digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
+  digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
+  delay(systemDelayTime); //Insert a delay before turning the system off to prevent an instant reset
+  systemRunningFlag = false; //Set the system flag to false since the system is now off
 }
