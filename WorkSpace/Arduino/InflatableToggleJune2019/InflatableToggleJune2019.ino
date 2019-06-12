@@ -8,7 +8,9 @@
 //Time-Management Vars
 unsigned long padTriggerTimeStamp; //Global var for holding starting time of pad trigger
 unsigned long currentTimeStamp; //Global var for holding current time stamp
-const unsigned long desiredRunTime = 10 * 1000; //Operations will run for this amount of time (in millis) ~10 seconds
+const unsigned long inflationTime = 10 * 1000; //Operations will run for this amount of time (in millis) ~10 seconds
+const unsigned long deflationTime = 10 * 1000; //Operations will run for this amount of time (in millis) ~10 seconds
+
 
 //Pin Control Vars
 const byte led1 = 2; //Built-in debug LED
@@ -57,14 +59,12 @@ void loop() {
   {
     currentTimeStamp = millis(); //Keep track of elapsed time since the system started
     
-    if(
-      currentTimeStamp - padTriggerTimeStamp >= desiredRunTime/2 &&
-      currentTimeStamp - padTriggerTimeStamp < desiredRunTime) //After half of the desired time has passed
+    if(currentTimeStamp - padTriggerTimeStamp > inflationTime) //After desired ON time has passed
     {
       digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
       digitalWrite(dPin2, HIGH); //Turn the deflation pin(relay) ON
     }
-    if(currentTimeStamp - padTriggerTimeStamp >= desiredRunTime) //If all desired time has passed
+    if(currentTimeStamp - padTriggerTimeStamp >= inflationTime + deflationTime) //If all desired time has passed
     {
       digitalWrite(dPin1, LOW); //Turn the inflation pin(relay) OFF
       digitalWrite(dPin2, LOW); //Turn the deflation pin(relay) OFF
