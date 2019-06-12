@@ -8,7 +8,7 @@ Lab 2 Guide
 Desert Ruins
 ---------------------
 
-In the North-West corner of of the map, a desert ruin lies smoldering in the sun. This part of the map contains multiple puzzle-levels built deeper and deeper into the Earth.
+In the North-West corner of the map, a desert ruin lies smoldering in the sun. This part of the map contains multiple puzzle-levels built deeper and deeper into the Earth.
 
 ## <center>You Are Here</center>
 
