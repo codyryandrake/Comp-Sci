@@ -10,6 +10,11 @@ let yoff;
 let noiseVector;
 let mouseVector;
 
+//GUI VARS
+var backgroundC = '#0099CC';
+var particleColor = ' #FFFF00';
+
+
 function setup() {
   createCanvas(800, 800);
   background(0);
